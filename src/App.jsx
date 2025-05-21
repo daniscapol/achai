@@ -530,7 +530,8 @@ const fetchCustomProducts = async () => {
     const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
     
     try {
-      const response = await fetch('http://localhost:3001/api/products', {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+      const response = await fetch(`${API_BASE_URL}/products`, {
         signal: controller.signal,
         headers: { 'Cache-Control': 'no-cache' }
       });
@@ -640,7 +641,8 @@ const getInitialData = async () => {
     
     try {
       // Fetch products from our AWS PostgreSQL API
-      const response = await fetch('http://localhost:3001/api/products?limit=50', {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+      const response = await fetch(`${API_BASE_URL}/products?limit=50`, {
         signal: controller.signal
       });
       

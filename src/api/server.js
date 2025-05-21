@@ -232,9 +232,17 @@ async function initDatabase() {
 // Middleware
 // Enable CORS for all routes with specific configuration
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174', 'http://127.0.0.1:5174'], // Allow these origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these methods
-  allowedHeaders: ['Content-Type', 'content-type', 'Authorization', 'authorization', 'Cache-Control', 'cache-control'] // Allow headers with different case formats
+  origin: [
+    'http://localhost:5173', 
+    'http://127.0.0.1:5173', 
+    'http://localhost:5174', 
+    'http://127.0.0.1:5174',
+    'https://achai-9epuqi7r9-daniscapols-projects.vercel.app',
+    'https://achai.vercel.app',
+    /\.vercel\.app$/  // Allow all vercel.app subdomains
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'content-type', 'Authorization', 'authorization', 'Cache-Control', 'cache-control']
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

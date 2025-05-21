@@ -19,7 +19,8 @@
       "Bash(sudo apt-get install:*)",
       "Bash(sed:*)",
       "Bash(cp:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": []
   }
