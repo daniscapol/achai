@@ -1,4 +1,4 @@
-import db from '../src/utils/db.js';
+import { getDataSourceInfo } from './_lib/db.js';
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     res.status(200).json({ 
       status: 'ok', 
       message: 'API is running',
-      dataSource: db.getDataSourceInfo()
+      dataSource: getDataSourceInfo()
     });
   } else {
     res.status(405).json({ error: 'Method not allowed' });

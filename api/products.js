@@ -1,5 +1,5 @@
-import db from '../src/utils/db.js';
-import Product from '../src/models/Product.js';
+import { testConnection, getDataSourceInfo } from './_lib/db.js';
+import Product from './_lib/Product.js';
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -15,16 +15,13 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
+      // Test connection first
+      await testConnection();
+      
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 100;
       
       const result = await Product.getAll(page, limit);
-      
-      // Add data status information
-      if (!result.dataStatus) {
-        result.dataStatus = db.getFallbackDataMessage();
-      }
-      
       res.status(200).json(result);
     } else {
       res.status(405).json({ error: 'Method not allowed' });

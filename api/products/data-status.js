@@ -1,4 +1,4 @@
-import db from '../../src/utils/db.js';
+import { testConnection, getDataSourceInfo } from '../_lib/db.js';
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -14,14 +14,17 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     try {
-      const dataStatus = db.getDataSourceInfo();
+      // Test connection first
+      await testConnection();
+      const dataStatus = getDataSourceInfo();
       res.status(200).json(dataStatus);
     } catch (error) {
       console.error('Error getting data status:', error);
       res.status(500).json({
         type: 'error',
         message: 'AWS Database connection required. Cannot proceed without database connection.',
-        source: 'none'
+        source: 'none',
+        error: error.message
       });
     }
   } else {
