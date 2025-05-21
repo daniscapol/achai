@@ -1,4 +1,4 @@
-import { testConnection, getDataSourceInfo } from '../_lib/db.js';
+import { testConnection, getDataSourceInfo } from './_lib/db.js';
 
 export default async function handler(req, res) {
   // Enable CORS

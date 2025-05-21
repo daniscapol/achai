@@ -20,7 +20,8 @@
       "Bash(sed:*)",
       "Bash(cp:*)",
       "Bash(npm run build:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }
