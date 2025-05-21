@@ -1,0 +1,74 @@
+[
+  {
+    "id": "databases-and-storage",
+    "name": "Databases & Storage",
+    "description": "MCP servers for database connections and data storage",
+    "subcategories": ["SQL", "NoSQL", "Object Storage", "Caching"]
+  },
+  {
+    "id": "web-and-search",
+    "name": "Web & Search",
+    "description": "MCP servers for web browsing, search, and scraping",
+    "subcategories": ["Web Browsers", "Search Engines", "Web Scraping"]
+  },
+  {
+    "id": "cloud-services",
+    "name": "Cloud Services",
+    "description": "MCP servers for cloud infrastructure and services",
+    "subcategories": ["AWS", "Azure", "GCP", "Infrastructure"]
+  },
+  {
+    "id": "version-control",
+    "name": "Version Control",
+    "description": "MCP servers for Git and other version control systems",
+    "subcategories": ["Git", "GitHub", "GitLab", "Repositories"]
+  },
+  {
+    "id": "utilities-and-files",
+    "name": "Utilities & Files",
+    "description": "MCP servers for file operations and utility functions",
+    "subcategories": ["Filesystem", "Documents", "Files", "Utils"]
+  },
+  {
+    "id": "communication",
+    "name": "Communication",
+    "description": "MCP servers for messaging and communication platforms",
+    "subcategories": ["Slack", "Email", "Chat", "Messaging"]
+  },
+  {
+    "id": "analytics",
+    "name": "Analytics",
+    "description": "MCP servers for analytics, metrics, and monitoring",
+    "subcategories": ["Metrics", "Monitoring", "Logging", "Tracking"]
+  },
+  {
+    "id": "security-and-auth",
+    "name": "Security & Auth",
+    "description": "MCP servers for security and authentication",
+    "subcategories": ["Authentication", "Authorization", "Encryption"]
+  },
+  {
+    "id": "desktop-applications",
+    "name": "Desktop Applications",
+    "description": "MCP clients that run as desktop applications",
+    "subcategories": ["Windows", "macOS", "Linux", "Cross-platform"]
+  },
+  {
+    "id": "web-applications",
+    "name": "Web Applications",
+    "description": "MCP clients that run in the browser",
+    "subcategories": ["Browser-based", "Web apps", "Online tools"]
+  },
+  {
+    "id": "code-editors",
+    "name": "Code Editors",
+    "description": "MCP-enabled code editors and IDEs",
+    "subcategories": ["IDEs", "Text editors", "Programming"]
+  },
+  {
+    "id": "cli-tools",
+    "name": "CLI Tools",
+    "description": "Command-line interface tools with MCP support",
+    "subcategories": ["Terminal", "Command-line", "Shell"]
+  }
+]

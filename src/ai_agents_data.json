@@ -1,0 +1,42 @@
+[
+  {
+    "id": "agent-01",
+    "name": "GPT Researcher",
+    "description": "An autonomous agent for conducting thorough web research on any topic",
+    "type": "ai-agent",
+    "category": "Research & Knowledge",
+    "official": false,
+    "stars_numeric": 1950,
+    "tags": ["research", "web", "autonomous"]
+  },
+  {
+    "id": "agent-02",
+    "name": "Auto-GPT",
+    "description": "An experimental open-source AI agent that autonomously achieves goals",
+    "type": "ai-agent",
+    "category": "Autonomous Agents",
+    "official": false,
+    "stars_numeric": 2850,
+    "tags": ["autonomous", "agent", "goal-oriented"]
+  },
+  {
+    "id": "agent-03",
+    "name": "BabyAGI",
+    "description": "A simple AI agent using task-driven autonomous execution",
+    "type": "ai-agent",
+    "category": "Task Management",
+    "official": false,
+    "stars_numeric": 1750,
+    "tags": ["task", "autonomous", "simple"]
+  },
+  {
+    "id": "agent-04",
+    "name": "CrewAI",
+    "description": "Framework for orchestrating AI agents that collaborate to achieve complex goals",
+    "type": "ai-agent",
+    "category": "Multi-agent Systems",
+    "official": false,
+    "stars_numeric": 2100,
+    "tags": ["collaboration", "framework", "multi-agent"]
+  }
+]

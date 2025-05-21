@@ -1,0 +1,574 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Badge } from './badge';
+import { Button } from './button';
+import { Slider } from './slider';
+import { Check, ChevronDown, ChevronUp, X, Filter, Star } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion";
+
+/**
+ * PremiumFilter component - A sophisticated, animated filter UI for product listings
+ * 
+ * @param {Object} props
+ * @param {Array} props.categories - Available categories for filtering
+ * @param {Function} props.onCategoryChange - Function called when category filter changes
+ * @param {Array} props.types - Available product types for filtering
+ * @param {Function} props.onTypeChange - Function called when type filter changes
+ * @param {Function} props.onPriceRangeChange - Function called when price range changes
+ * @param {Function} props.onRatingChange - Function called when rating filter changes
+ * @param {Function} props.onSortChange - Function called when sort option changes
+ * @param {Function} props.onClearFilters - Function called when filters are cleared
+ * @param {Object} props.activeFilters - Currently active filters
+ * @param {number} props.totalResults - Total number of results matching current filters
+ */
+const PremiumFilter = ({
+  categories = [],
+  types = [],
+  onCategoryChange,
+  onTypeChange,
+  onPriceRangeChange,
+  onRatingChange,
+  onSortChange,
+  onClearFilters,
+  activeFilters = {
+    categories: [],
+    types: [],
+    ratings: [],
+    priceRange: { min: 0, max: 1000 }
+  },
+  sortOption = 'featured',
+  totalResults = 0,
+  maxPrice = 1000
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('categories');
+  const [localPriceRange, setLocalPriceRange] = useState(activeFilters.priceRange);
+  const filterRef = useRef(null);
+  const [isSticky, setIsSticky] = useState(false);
+  
+  // Track if any filters are active
+  const hasActiveFilters = 
+    activeFilters.categories.length > 0 || 
+    activeFilters.types.length > 0 || 
+    activeFilters.ratings.length > 0 ||
+    activeFilters.priceRange.min > 0 || 
+    activeFilters.priceRange.max < maxPrice;
+  
+  // Handle price range change (debounced)
+  const handlePriceRangeChange = (values) => {
+    setLocalPriceRange({ min: values[0], max: values[1] });
+    
+    // Debounce the actual update to avoid too many rerenders
+    clearTimeout(priceRangeTimeout.current);
+    priceRangeTimeout.current = setTimeout(() => {
+      onPriceRangeChange({ min: values[0], max: values[1] });
+    }, 300);
+  };
+  const priceRangeTimeout = useRef(null);
+  
+  // Handle scroll to implement sticky behavior
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!filterRef.current) return;
+      
+      const filterTop = filterRef.current.getBoundingClientRect().top;
+      setIsSticky(filterTop <= 0);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  // Handle click outside to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+  
+  // Sort options with icons and descriptions
+  const sortOptions = [
+    { value: 'featured', label: 'Featured', icon: '✨', description: 'Our recommended products' },
+    { value: 'name_asc', label: 'A-Z', icon: 'A→Z', description: 'Alphabetical order' },
+    { value: 'name_desc', label: 'Z-A', icon: 'Z→A', description: 'Reverse alphabetical order' },
+    { value: 'rating_desc', label: 'Highest Rated', icon: '★', description: 'Best rated products first' },
+    { value: 'price_asc', label: 'Price: Low to High', icon: '$↑', description: 'Cheapest products first' },
+    { value: 'price_desc', label: 'Price: High to Low', icon: '$↓', description: 'Most expensive products first' },
+    { value: 'newest', label: 'Newest', icon: '🆕', description: 'Recently added products' }
+  ];
+  
+  // Get current sort option label
+  const currentSortLabel = sortOptions.find(opt => opt.value === sortOption)?.label || 'Featured';
+  
+  // Calculate total active filters count for badge
+  const activeFiltersCount = 
+    activeFilters.categories.length + 
+    activeFilters.types.length + 
+    activeFilters.ratings.length +
+    (activeFilters.priceRange.min > 0 || activeFilters.priceRange.max < maxPrice ? 1 : 0);
+  
+  return (
+    <div 
+      ref={filterRef}
+      className={`w-full transition-all duration-300 ${isSticky ? 'sticky top-0 z-40' : ''}`}
+    >
+      <div 
+        className={`bg-zinc-900/80 backdrop-blur-md rounded-xl border ${hasActiveFilters ? 'border-purple-500/30' : 'border-zinc-800/70'} shadow-lg transition-all duration-300 ${isSticky ? 'shadow-xl' : ''}`}
+      >
+        {/* Filter header - always visible */}
+        <div className="flex flex-col md:flex-row justify-between items-center p-3 md:p-4 gap-4">
+          {/* Left side - Filter button and active filters count */}
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            <Button
+              onClick={() => setIsOpen(!isOpen)}
+              className={`px-4 py-2 rounded-lg transition-all ${
+                isOpen ? 'bg-purple-600 text-white' : 'bg-zinc-800 text-white hover:bg-zinc-700'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4" />
+                <span className="hidden sm:inline">Filters</span>
+                {activeFiltersCount > 0 && (
+                  <Badge variant="secondary" className="bg-purple-700 text-white">
+                    {activeFiltersCount}
+                  </Badge>
+                )}
+                {isOpen ? (
+                  <ChevronUp className="h-4 w-4 ml-1" />
+                ) : (
+                  <ChevronDown className="h-4 w-4 ml-1" />
+                )}
+              </div>
+            </Button>
+            
+            {/* Active filters pills */}
+            <div className="flex flex-wrap gap-2 items-center">
+              {activeFilters.categories.map(category => (
+                <Badge
+                  key={`cat-${category}`}
+                  variant="outline"
+                  className="bg-purple-950/40 border-purple-500/30 text-purple-300 px-2 py-1 flex items-center gap-1 group"
+                >
+                  <span className="max-w-32 truncate">{category}</span>
+                  <button
+                    onClick={() => onCategoryChange(category)}
+                    className="text-purple-400 hover:text-white rounded-full p-0.5 transition-colors opacity-70 group-hover:opacity-100"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))}
+              
+              {activeFilters.types.map(type => (
+                <Badge
+                  key={`type-${type}`}
+                  variant="outline"
+                  className="bg-indigo-950/40 border-indigo-500/30 text-indigo-300 px-2 py-1 flex items-center gap-1 group"
+                >
+                  <span className="max-w-32 truncate">{type === 'custom-product' ? 'Product' : type}</span>
+                  <button
+                    onClick={() => onTypeChange(type)}
+                    className="text-indigo-400 hover:text-white rounded-full p-0.5 transition-colors opacity-70 group-hover:opacity-100"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))}
+              
+              {activeFilters.ratings.map(rating => (
+                <Badge
+                  key={`rating-${rating}`}
+                  variant="outline"
+                  className="bg-amber-950/40 border-amber-500/30 text-amber-300 px-2 py-1 flex items-center gap-1 group"
+                >
+                  <span className="flex items-center">
+                    {rating}+ <Star className="h-3 w-3 ml-0.5 fill-amber-400 text-amber-400" />
+                  </span>
+                  <button
+                    onClick={() => onRatingChange(rating)}
+                    className="text-amber-400 hover:text-white rounded-full p-0.5 transition-colors opacity-70 group-hover:opacity-100"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))}
+              
+              {(activeFilters.priceRange.min > 0 || activeFilters.priceRange.max < maxPrice) && (
+                <Badge
+                  variant="outline"
+                  className="bg-emerald-950/40 border-emerald-500/30 text-emerald-300 px-2 py-1 flex items-center gap-1 group"
+                >
+                  <span>${activeFilters.priceRange.min} - ${activeFilters.priceRange.max}</span>
+                  <button
+                    onClick={() => onPriceRangeChange({ min: 0, max: maxPrice })}
+                    className="text-emerald-400 hover:text-white rounded-full p-0.5 transition-colors opacity-70 group-hover:opacity-100"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              )}
+              
+              {hasActiveFilters && (
+                <button
+                  onClick={onClearFilters}
+                  className="text-xs text-purple-400 hover:text-purple-300 ml-1"
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
+          </div>
+          
+          {/* Right side - Sort dropdown and results count */}
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            {/* Results count */}
+            {totalResults > 0 && (
+              <div className="hidden md:flex text-sm text-gray-400 items-center">
+                <span>{totalResults} product{totalResults !== 1 ? 's' : ''}</span>
+              </div>
+            )}
+            
+            {/* Sort dropdown */}
+            <div className="group relative ml-auto">
+              <Button
+                variant="outline" 
+                className="bg-zinc-800 border-zinc-700 text-gray-300 hover:border-purple-500/50 transition-all duration-300"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveTab('sort');
+                  setIsOpen(!isOpen);
+                }}
+              >
+                <div className="flex items-center gap-2">
+                  <span>Sort: {currentSortLabel}</span>
+                  <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isOpen && activeTab === 'sort' ? 'rotate-180' : ''}`} />
+                </div>
+              </Button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Expandable filter panel */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <div className="px-4 pb-4 border-t border-zinc-800/70">
+                {/* Filter tabs */}
+                <div className="flex border-b border-zinc-800/70 -mx-4 px-4 mb-4">
+                  <button
+                    className={`px-4 py-3 text-sm font-medium transition-colors relative ${
+                      activeTab === 'categories' 
+                        ? 'text-purple-400' 
+                        : 'text-gray-400 hover:text-gray-300'
+                    }`}
+                    onClick={() => setActiveTab('categories')}
+                  >
+                    Categories
+                    {activeTab === 'categories' && (
+                      <motion.div 
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
+                        layoutId="activeTab"
+                      />
+                    )}
+                  </button>
+                  <button
+                    className={`px-4 py-3 text-sm font-medium transition-colors relative ${
+                      activeTab === 'types' 
+                        ? 'text-purple-400' 
+                        : 'text-gray-400 hover:text-gray-300'
+                    }`}
+                    onClick={() => setActiveTab('types')}
+                  >
+                    Product Types
+                    {activeTab === 'types' && (
+                      <motion.div 
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
+                        layoutId="activeTab"
+                      />
+                    )}
+                  </button>
+                  <button
+                    className={`px-4 py-3 text-sm font-medium transition-colors relative ${
+                      activeTab === 'price' 
+                        ? 'text-purple-400' 
+                        : 'text-gray-400 hover:text-gray-300'
+                    }`}
+                    onClick={() => setActiveTab('price')}
+                  >
+                    Price
+                    {activeTab === 'price' && (
+                      <motion.div 
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
+                        layoutId="activeTab"
+                      />
+                    )}
+                  </button>
+                  <button
+                    className={`px-4 py-3 text-sm font-medium transition-colors relative ${
+                      activeTab === 'ratings' 
+                        ? 'text-purple-400' 
+                        : 'text-gray-400 hover:text-gray-300'
+                    }`}
+                    onClick={() => setActiveTab('ratings')}
+                  >
+                    Ratings
+                    {activeTab === 'ratings' && (
+                      <motion.div 
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
+                        layoutId="activeTab"
+                      />
+                    )}
+                  </button>
+                  <button
+                    className={`px-4 py-3 text-sm font-medium transition-colors relative ${
+                      activeTab === 'sort' 
+                        ? 'text-purple-400' 
+                        : 'text-gray-400 hover:text-gray-300'
+                    }`}
+                    onClick={() => setActiveTab('sort')}
+                  >
+                    Sort
+                    {activeTab === 'sort' && (
+                      <motion.div 
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
+                        layoutId="activeTab"
+                      />
+                    )}
+                  </button>
+                </div>
+                
+                {/* Tab content */}
+                <div className="py-2">
+                  {/* Categories tab */}
+                  {activeTab === 'categories' && (
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2"
+                    >
+                      {categories.length > 0 ? (
+                        categories.map(category => (
+                          <Badge
+                            key={category}
+                            variant="outline"
+                            className={`py-2 px-3 cursor-pointer transition-all duration-300 flex items-center justify-between ${
+                              activeFilters.categories.includes(category)
+                                ? 'bg-purple-950/60 border-purple-500/50 text-purple-300 hover:bg-purple-900/60'
+                                : 'hover:border-zinc-600 hover:bg-zinc-800/70'
+                            }`}
+                            onClick={() => onCategoryChange(category)}
+                          >
+                            <span className="truncate mr-2">{category}</span>
+                            {activeFilters.categories.includes(category) && (
+                              <Check className="h-3.5 w-3.5 text-purple-400 flex-shrink-0" />
+                            )}
+                          </Badge>
+                        ))
+                      ) : (
+                        <div className="col-span-full text-gray-400 text-center py-6">
+                          No categories available
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                  
+                  {/* Types tab */}
+                  {activeTab === 'types' && (
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2"
+                    >
+                      {types.length > 0 ? (
+                        types.map(type => (
+                          <Badge
+                            key={type}
+                            variant="outline"
+                            className={`py-2 px-3 cursor-pointer transition-all duration-300 flex items-center justify-between ${
+                              activeFilters.types.includes(type)
+                                ? type === 'server' ? 'bg-indigo-950/60 border-indigo-500/50 text-indigo-300 hover:bg-indigo-900/60' : 
+                                  type === 'client' ? 'bg-blue-950/60 border-blue-500/50 text-blue-300 hover:bg-blue-900/60' : 
+                                  type === 'ai-agent' ? 'bg-rose-950/60 border-rose-500/50 text-rose-300 hover:bg-rose-900/60' : 
+                                  'bg-purple-950/60 border-purple-500/50 text-purple-300 hover:bg-purple-900/60'
+                                : 'hover:border-zinc-600 hover:bg-zinc-800/70'
+                            }`}
+                            onClick={() => onTypeChange(type)}
+                          >
+                            <span className="truncate mr-2">{type === 'custom-product' ? 'Product' : type}</span>
+                            {activeFilters.types.includes(type) && (
+                              <Check className={`h-3.5 w-3.5 flex-shrink-0 ${
+                                type === 'server' ? 'text-indigo-400' : 
+                                type === 'client' ? 'text-blue-400' : 
+                                type === 'ai-agent' ? 'text-rose-400' : 
+                                'text-purple-400'
+                              }`} />
+                            )}
+                          </Badge>
+                        ))
+                      ) : (
+                        <div className="col-span-full text-gray-400 text-center py-6">
+                          No product types available
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                  
+                  {/* Price tab */}
+                  {activeTab === 'price' && (
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="space-y-6 px-2"
+                    >
+                      <div className="pt-6 px-6">
+                        <Slider
+                          defaultValue={[localPriceRange.min, localPriceRange.max]}
+                          value={[localPriceRange.min, localPriceRange.max]}
+                          max={maxPrice}
+                          step={5}
+                          minStepsBetweenThumbs={1}
+                          onValueChange={handlePriceRangeChange}
+                          className="mb-6"
+                        />
+                        
+                        <div className="flex justify-between items-center mt-2">
+                          <div className="bg-zinc-800 rounded-md px-3 py-1.5 text-white min-w-16 text-center">
+                            ${localPriceRange.min}
+                          </div>
+                          <div className="text-gray-400 text-sm">to</div>
+                          <div className="bg-zinc-800 rounded-md px-3 py-1.5 text-white min-w-16 text-center">
+                            ${localPriceRange.max}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-center gap-3">
+                        <Button 
+                          variant="outline"
+                          className="bg-zinc-800 border-zinc-700 hover:border-purple-500/50 hover:bg-zinc-700"
+                          onClick={() => onPriceRangeChange({ min: 0, max: maxPrice })}
+                        >
+                          Reset
+                        </Button>
+                        <Button 
+                          className="bg-purple-600 hover:bg-purple-700 text-white"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Apply
+                        </Button>
+                      </div>
+                    </motion.div>
+                  )}
+                  
+                  {/* Ratings tab */}
+                  {activeTab === 'ratings' && (
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex flex-wrap gap-2 justify-center"
+                    >
+                      {[5, 4, 3, 2, 1].map(rating => (
+                        <Badge
+                          key={rating}
+                          variant="outline"
+                          className={`py-2 px-3 cursor-pointer transition-all duration-300 ${
+                            activeFilters.ratings.includes(rating)
+                              ? 'bg-amber-950/60 border-amber-500/50 text-amber-300 hover:bg-amber-900/60'
+                              : 'hover:border-zinc-600 hover:bg-zinc-800/70'
+                          }`}
+                          onClick={() => onRatingChange(rating)}
+                        >
+                          <div className="flex items-center">
+                            <span className="mr-1">{rating}+</span>
+                            {[...Array(5)].map((_, i) => (
+                              <Star 
+                                key={i} 
+                                className={`h-3.5 w-3.5 ${
+                                  i < rating 
+                                    ? 'text-amber-400 fill-amber-400' 
+                                    : 'text-gray-600'
+                                }`} 
+                              />
+                            ))}
+                            {activeFilters.ratings.includes(rating) && (
+                              <Check className="h-3.5 w-3.5 ml-1.5 text-amber-400" />
+                            )}
+                          </div>
+                        </Badge>
+                      ))}
+                    </motion.div>
+                  )}
+                  
+                  {/* Sort tab */}
+                  {activeTab === 'sort' && (
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="grid grid-cols-1 md:grid-cols-2 gap-2"
+                    >
+                      {sortOptions.map(option => (
+                        <div
+                          key={option.value}
+                          className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 ${
+                            sortOption === option.value
+                              ? 'bg-purple-950/60 border border-purple-500/50 text-white'
+                              : 'hover:bg-zinc-800/70 border border-zinc-800'
+                          }`}
+                          onClick={() => {
+                            onSortChange(option.value);
+                            setTimeout(() => setIsOpen(false), 300);
+                          }}
+                        >
+                          <div className={`mr-3 text-center flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                            sortOption === option.value
+                              ? 'bg-purple-700 text-white'
+                              : 'bg-zinc-800 text-gray-400'
+                          }`}>
+                            <span>{option.icon}</span>
+                          </div>
+                          <div className="flex-grow">
+                            <div className="text-sm font-medium">
+                              {option.label}
+                            </div>
+                            <div className="text-xs text-gray-400">
+                              {option.description}
+                            </div>
+                          </div>
+                          {sortOption === option.value && (
+                            <Check className="h-5 w-5 text-purple-400 ml-2" />
+                          )}
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+};
+
+export default PremiumFilter;

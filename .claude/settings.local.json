@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(killall:*)",
+      "Bash(grep:*)",
+      "Bash(chmod:*)",
+      "Bash(rm:*)",
+      "Bash(rg:*)",
+      "Bash(awk:*)",
+      "Bash(ls:*)",
+      "Bash(curl:*)",
+      "Bash(node:*)",
+      "Bash(pkill:*)",
+      "Bash(npm install:*)",
+      "Bash(find:*)",
+      "Bash(PGPASSWORD=TrinityPW1 psql:*)",
+      "Bash(sudo apt-get:*)",
+      "Bash(sudo apt-get install:*)",
+      "Bash(sed:*)",
+      "Bash(cp:*)",
+      "Bash(npm run build:*)"
+    ],
+    "deny": []
+  }
+}

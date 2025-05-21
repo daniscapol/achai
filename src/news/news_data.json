@@ -1,0 +1,58 @@
+[
+  {
+    "id": "anthropic-claude-3-opus",
+    "title": "Anthropic Releases Claude 3 Opus, Most Powerful Model Yet",
+    "summary": "Anthropic has released Claude 3 Opus, its most powerful AI model to date. Claude 3 Opus outperforms GPT-4 on multiple benchmarks including reasoning, mathematics, coding, and knowledge. The model features enhanced context understanding, improved reasoning capabilities, and stronger guardrails for safety.",
+    "date": "2024-03-04",
+    "source": "Anthropic",
+    "source_url": "https://www.anthropic.com/news",
+    "image_url": "/assets/news-images/claude3.jpg",
+    "image_color": "from-purple-500 to-indigo-600",
+    "image_icon": "brain",
+    "category": "Model Releases",
+    "tags": ["Anthropic", "Claude", "Large Language Models", "AI Safety"],
+    "full_article_url": "https://www.anthropic.com/news/claude-3-family"
+  },
+  {
+    "id": "gemini-1-5-pro-launch",
+    "title": "Google Launches Gemini 1.5 Pro with 1 Million Token Context Window",
+    "summary": "Google has launched Gemini 1.5 Pro, featuring a groundbreaking 1 million token context window. This massive increase in context capacity allows the model to process and reason across extremely long inputs, including entire codebases, books, or hours of video. Early testers have noted significant improvements in long-context tasks such as document analysis and complex reasoning over extended materials.",
+    "date": "2024-02-15",
+    "source": "Google DeepMind",
+    "source_url": "https://deepmind.google/blog/",
+    "image_url": "/assets/news-images/gemini.jpg",
+    "image_color": "from-indigo-500 to-blue-600",
+    "image_icon": "brain",
+    "category": "Model Releases",
+    "tags": ["Google", "Gemini", "LLMs", "Long Context"],
+    "full_article_url": "https://deepmind.google/technologies/gemini/1.5/"
+  },
+  {
+    "id": "openai-sora-video-generation",
+    "title": "OpenAI Introduces Sora: Text-to-Video AI Model",
+    "summary": "OpenAI has unveiled Sora, a new AI model capable of generating realistic and imaginative video from text prompts. Sora can create videos up to 60 seconds long, maintaining visual quality and adherence to the laws of physics. The model demonstrates understanding of complex scenes, multiple characters, specific camera movements, and accurate details of subjects in motion. While currently limited to select researchers and safety testers, Sora represents a significant advance in generative video capabilities.",
+    "date": "2024-02-15",
+    "source": "OpenAI",
+    "source_url": "https://openai.com/blog",
+    "image_url": "/assets/news-images/sora.jpg",
+    "image_color": "from-pink-500 to-purple-600",
+    "image_icon": "image",
+    "category": "Generative AI",
+    "tags": ["OpenAI", "Text-to-Video", "Generative AI", "Sora"],
+    "full_article_url": "https://openai.com/sora"
+  },
+  {
+    "id": "meta-llama-3-release",
+    "title": "Meta Releases Llama 3: Open Source LLM with Improved Capabilities",
+    "summary": "Meta has released Llama 3, the latest version of its open-source large language model family. The new model demonstrates significant improvements in reasoning, coding, and multilingual abilities compared to its predecessors. Available in 8B and 70B parameter sizes, Llama 3 narrows the gap with proprietary models while maintaining Meta's commitment to the open-source AI ecosystem. Researchers and developers can now access the models through Hugging Face or Meta's website.",
+    "date": "2024-04-18",
+    "source": "Meta AI",
+    "source_url": "https://ai.meta.com/blog/",
+    "image_url": "/assets/news-images/llama3.jpg",
+    "image_color": "from-green-500 to-teal-600",
+    "image_icon": "code-branch",
+    "category": "Open Source",
+    "tags": ["Meta", "Llama", "Open Source", "LLMs"],
+    "full_article_url": "https://ai.meta.com/blog/meta-llama-3/"
+  }
+]

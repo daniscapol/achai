@@ -1,0 +1,42 @@
+[
+  {
+    "id": "solution-01",
+    "name": "Ollama",
+    "description": "Run large language models locally on your machine",
+    "type": "ready-to-use",
+    "category": "AI Development",
+    "official": false,
+    "stars_numeric": 3200,
+    "tags": ["llm", "local", "ai"]
+  },
+  {
+    "id": "solution-02",
+    "name": "LangChain",
+    "description": "Framework for developing applications powered by language models",
+    "type": "ready-to-use",
+    "category": "AI Development",
+    "official": false,
+    "stars_numeric": 2950,
+    "tags": ["framework", "llm", "development"]
+  },
+  {
+    "id": "solution-03",
+    "name": "Dify",
+    "description": "The open-source LLM application development platform",
+    "type": "ready-to-use",
+    "category": "AI Applications",
+    "official": false,
+    "stars_numeric": 2750,
+    "tags": ["platform", "llm", "application"]
+  },
+  {
+    "id": "solution-04",
+    "name": "LlamaIndex",
+    "description": "Data framework for building LLM applications",
+    "type": "ready-to-use",
+    "category": "Data Processing",
+    "official": false,
+    "stars_numeric": 2500,
+    "tags": ["framework", "data", "llm"]
+  }
+]

@@ -1,0 +1,324 @@
+
+<!doctype html>
+<html lang="fr-FR">
+
+<head> <script type="text/javascript">if(!gform){document.addEventListener("gform_main_scripts_loaded",function(){gform.scriptsLoaded=!0}),window.addEventListener("DOMContentLoaded",function(){gform.domLoaded=!0});var gform={domLoaded:!1,scriptsLoaded:!1,initializeOnLoaded:function(o){gform.domLoaded&&gform.scriptsLoaded?o():!gform.domLoaded&&gform.scriptsLoaded?window.addEventListener("DOMContentLoaded",o):document.addEventListener("gform_main_scripts_loaded",o)},hooks:{action:{},filter:{}},addAction:function(o,n,r,t){gform.addHook("action",o,n,r,t)},addFilter:function(o,n,r,t){gform.addHook("filter",o,n,r,t)},doAction:function(o){gform.doHook("action",o,arguments)},applyFilters:function(o){return gform.doHook("filter",o,arguments)},removeAction:function(o,n){gform.removeHook("action",o,n)},removeFilter:function(o,n,r){gform.removeHook("filter",o,n,r)},addHook:function(o,n,r,t,i){null==gform.hooks[o][n]&&(gform.hooks[o][n]=[]);var e=gform.hooks[o][n];null==i&&(i=n+"_"+e.length),null==t&&(t=10),gform.hooks[o][n].push({tag:i,callable:r,priority:t})},doHook:function(o,n,r){if(r=Array.prototype.slice.call(r,1),null!=gform.hooks[o][n]){var t,i=gform.hooks[o][n];i.sort(function(o,n){return o.priority-n.priority});for(var e=0;e<i.length;e++)"function"!=typeof(t=i[e].callable)&&(t=window[t]),"action"==o?t.apply(null,r):r[0]=t.apply(null,r)}if("filter"==o)return r[0]},removeHook:function(o,n,r,t){if(null!=gform.hooks[o][n])for(var i=gform.hooks[o][n],e=i.length-1;0<=e;e--)null!=t&&t!=i[e].tag||null!=r&&r!=i[e].priority||i.splice(e,1)}}}</script>
+
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+			<meta property="og:image" content="https://cherrypulp.com/content/uploads/2020/11/visuarticle-scaled.jpg" />
+		<meta property="og:image:secure_url" content="https://cherrypulp.com/content/uploads/2020/11/visuarticle-scaled.jpg" />
+	
+	<title>Page not found - Cherry Pulp</title>
+
+<!-- This site is optimized with the Yoast SEO plugin v12.9.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="robots" content="noindex,follow"/>
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:type" content="object" />
+<meta property="og:title" content="Page not found - Cherry Pulp" />
+<meta property="og:url" content="/" />
+<meta property="og:site_name" content="Cherry Pulp" />
+<meta property="og:image" content="https://cherrypulp.com/content/uploads/2019/12/cherry-pulp-agence-web-share-facebook.jpg" />
+<meta property="og:image:secure_url" content="https://cherrypulp.com/content/uploads/2019/12/cherry-pulp-agence-web-share-facebook.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Page not found - Cherry Pulp" />
+<meta name="twitter:image" content="https://cherrypulp.com/content/uploads/2019/12/cherry-pulp-agence-web-share-facebook.jpg" />
+<script type='application/ld+json' class='yoast-schema-graph yoast-schema-graph--main'>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://cherrypulp.com/fr/#website","url":"https://cherrypulp.com/fr/","name":"Cherry Pulp","description":"Agence web guid\u00e9e par la performance","potentialAction":{"@type":"SearchAction","target":"https://cherrypulp.com/fr/?s={search_term_string}","query-input":"required name=search_term_string"}}]}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//www.googletagmanager.com' />
+<link rel='stylesheet' id='wpml-tm-admin-bar-css'  href='https://cherrypulp.com/content/plugins/wpml-translation-management/res/css/admin-bar-style.css?ver=2.9.5' type='text/css' media='all' />
+<link rel='stylesheet' id='cms-navigation-style-base-css'  href='https://cherrypulp.com/content/plugins/wpml-cms-nav/res/css/cms-navigation-base.css?ver=1.5.2' type='text/css' media='screen' />
+<link rel='stylesheet' id='cms-navigation-style-css'  href='https://cherrypulp.com/content/plugins/wpml-cms-nav/res/css/cms-navigation.css?ver=1.5.2' type='text/css' media='screen' />
+<link rel='stylesheet' id='main-css'  href='https://cherrypulp.com/content/themes/cherry/dist/css/app.css?id=83dee35b111f0184c69e&#038;ver=1' type='text/css' media='all' />
+
+<!-- Extrait Google Analytics ajouté par Site Kit -->
+<script type='text/javascript' src='https://www.googletagmanager.com/gtag/js?id=G-8KEVPGPWBW' async></script>
+<script type='text/javascript'>
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "G-8KEVPGPWBW");
+</script>
+
+<!-- Arrêter l&#039;extrait Google Analytics ajouté par Site Kit -->
+<meta name="generator" content="WPML ver:4.3.10 stt:1,4;" />
+<meta name="generator" content="Site Kit by Google 1.75.0" /><meta name="google-site-verification" content="dQQxoEQ4ar_7rgUDxVGYpua26ohlVzIwkkberDLmAnA">
+<!-- Extrait Google Tag Manager ajouté par Site Kit -->
+<script>
+			( function( w, d, s, l, i ) {
+				w[l] = w[l] || [];
+				w[l].push( {'gtm.start': new Date().getTime(), event: 'gtm.js'} );
+				var f = d.getElementsByTagName( s )[0],
+					j = d.createElement( s ), dl = l != 'dataLayer' ? '&l=' + l : '';
+				j.async = true;
+				j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+				f.parentNode.insertBefore( j, f );
+			} )( window, document, 'script', 'dataLayer', 'GTM-W8R5XGQ' );
+			
+</script>
+
+<!-- Arrêter l&#039;extrait Google Tag Manager ajouté par Site Kit -->
+		<style type="text/css" id="wp-custom-css">
+			.hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module widget-type-rich_text { padding-left: 5px !important;
+}		</style>
+		<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>	
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/a01dd20625.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+
+	<!-- Google Tag Manager -->
+	<script>
+		(function(w, d, s, l, i) {
+			w[l] = w[l] || [];
+			w[l].push({
+				'gtm.start': new Date().getTime(),
+				event: 'gtm.js'
+			});
+			var f = d.getElementsByTagName(s)[0],
+				j = d.createElement(s),
+				dl = l != 'dataLayer' ? '&l=' + l : '';
+			j.async = true;
+			j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+			f.parentNode.insertBefore(j, f);
+		})(window, document, 'script', 'dataLayer', 'GTM-W8R5XGQ');
+	</script>	
+	<!-- Start of HubSpot Embed Code -->
+	<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/7985071.js"></script>
+	<!-- End of HubSpot Embed Code -->
+
+</head>
+
+<body class="error404" itemscope="itemscope" itemtype="http://schema.org/WebPage" data-barba="wrapper">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W8R5XGQ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+<header class="main-header" role="banner" itemscope="itemscope" itemtype="http://schema.org/WPHeader">
+    <div class="container-fluid">
+        <nav class="navbar">
+            <!-- brand -->
+            <a class="navbar-brand" href="https://cherrypulp.com/fr/">
+                <img class="logo-color" src="https://cherrypulp.com/content/uploads/2019/11/cherry-pulp-logo-color.svg" alt="cherry-pulp-logo-color">
+                <img class="logo-white" src="https://cherrypulp.com/content/uploads/2019/11/cherry-pulp-logo-white.svg" alt="cherry-pulp-logo-white">
+            </a>
+            <!-- navbar -->
+            <ul class="navbar-nav">
+                <!-- menu -->
+                                                            <li class="nav-item nav-home">
+                            <a class="nav-link" href="https://cherrypulp.com/fr/">Accueil</a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link" href="https://cherrypulp.com/fr/agence-web-bruxelles/">Agence</a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link" href="https://cherrypulp.com/fr/services/">Services</a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link" href="https://cherrypulp.com/fr/projets/">Projets</a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link" href="https://cherrypulp.com/fr/carriere/">Carrière</a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link" href="https://cherrypulp.com/fr/blog/">Blog</a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link" href="https://cherrypulp.com/fr/contact/">Contact</a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link" href="https://cherrypulp.com/fr/devis/">Obtenez un devis gratuit</a>
+                        </li>
+                                                    <!-- lang -->
+                                    <li class="nav-item nav-language dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            fr                        </a>
+                        <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                                                            <a class="dropdown-item selected" href="https://cherrypulp.com/fr/">
+                                    fr                                </a>
+                                                            <a class="dropdown-item " href="https://cherrypulp.com/en/">
+                                    en                                </a>
+                                                    </div>
+                    </li>
+                            </ul>
+            <!-- social -->
+                            <ul class="navbar-social">
+                                                                        <li class="nav-item"><a href="https://www.facebook.com/cherrypulpcom" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                                                                                                <li class="nav-item"><a href="https://www.instagram.com/cherrypulpcom/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                                                                                <li class="nav-item"><a href="https://www.linkedin.com/company/cherry-pulp/" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                                                                                                <li class="nav-item"><a href="https://twitter.com/cherrypulpcom" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                                                                                        </ul>
+                    </nav>
+    </div>
+    <!-- mobile toggler -->
+    <button id="navbar-toggler" class="navbar-toggler" type="button" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="navbar-toggler-burger">
+            <span></span><span></span><span></span>
+        </div>
+        <span class="navbar-toggler-isOpen">Fermer</span>
+        <span class="navbar-toggler-isClosed">Menu</span>
+    </button>
+    <div class="header-mobile-backdrop"></div>
+</header>
+    <div class="wrap" role="document">
+
+        <main class="main page-post" id="main" role="main" data-barba="container" data-barba-namespace="post">
+            
+<div class="four-o-four-bg" style="background-image: url()">
+	<div class="container">
+		<div class="four-o-four-content">
+			<h1>
+				404: Oops la page n'a pas été trouvée.				<span>.</span>
+			</h1>
+			<p>Mais ne vous en faites pas, on en a plein d'autres</p>
+			<a href="https://cherrypulp.com/fr/" class="btn btn-primary">Revenir sur la homepage</a>
+			<button class="btn btn-ghost" onclick="document.location.reload(true)">Un nouveau GIF ! </button>
+		</div>
+	</div>
+</div>
+        </main>
+
+    </div>
+
+    <div id="app">
+        <script type="application/json" id="gdpr-levels">{"required":{"title":"Cookies de fonctionnement","content":"\u003Cdiv class=\"gdpr-modal__content\"\u003E\n\u003Cdiv\u003E\n\u003Cp\u003ECes cookies sont indispensables au fonctionnement du site.\u003C\/p\u003E\n\u003C\/div\u003E\n\u003C\/div\u003E\n","scripts":[{"position":"head","content":""},{"position":"body","content":""},{"position":"footer","content":""}]},"third_party":{"title":"Cookies de mesure d'audience","content":"\u003Cdiv class=\"gdpr-modal__content\"\u003E\n\u003Cdiv\u003E\n\u003Cp\u003ECes cookies mesurent la fr\u00e9quentation du site et nous permettent d\u2019en am\u00e9liorer les fonctionnalit\u00e9s.\u003C\/p\u003E\n\u003C\/div\u003E\n\u003C\/div\u003E\n","scripts":[{"position":"head","content":"\u003C!-- Google Tag Manager --\u003E\r\n\t\u003Cscript\u003E\r\n\t\t(function(w, d, s, l, i) {\r\n\t\t\tw[l] = w[l] || [];\r\n\t\t\tw[l].push({\r\n\t\t\t\t'gtm.start': new Date().getTime(),\r\n\t\t\t\tevent: 'gtm.js'\r\n\t\t\t});\r\n\t\t\tvar f = d.getElementsByTagName(s)[0],\r\n\t\t\t\tj = d.createElement(s),\r\n\t\t\t\tdl = l != 'dataLayer' ? '&l=' + l : '';\r\n\t\t\tj.async = true;\r\n\t\t\tj.src = 'https:\/\/www.googletagmanager.com\/gtm.js?id=' + i + dl;\r\n\t\t\tf.parentNode.insertBefore(j, f);\r\n\t\t})(window, document, 'script', 'dataLayer', 'GTM-W8R5XGQ');\r\n\t\u003C\/script\u003E"},{"position":"body","content":"\u003C!-- Google Tag Manager (noscript) --\u003E\r\n    \u003Cnoscript\u003E\u003Ciframe src=\"https:\/\/www.googletagmanager.com\/ns.html?id=GTM-W8R5XGQ\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"\u003E\u003C\/iframe\u003E\u003C\/noscript\u003E\r\n    \u003C!-- End Google Tag Manager (noscript) --\u003E"},{"position":"footer","content":""}]}}</script><gdpr-modal button-agreement="Soumettre vos préférences" button-close="" title="Vos choix en matière de cookies sur ce site" content="<div class='gdpr-modal__content'><div><p>Veuillez choisir si ce site peut utiliser des cookies de mesure d’audience</p></div></div>" label-active="Actif" label-inactive="Inactif" ></gdpr-modal><gdpr-bar button-agreement="J'accepte" button-preferences="Plus d’information" content="<p>Nous utilisons des cookies pour une meilleure expérience utilisateur : certains ne peuvent être désactivés. En utilisant ce site, vous acceptez notre utilisation de cookies conformément à notre politique des Cookies. Si vous n’êtes pas d’accord, merci de ne pas poursuivre sur ce site.</p>" :shortcodes="{'policy':'gdpr_policy','settings':'gdpr_settings'}" ></gdpr-bar>    </div>
+
+    
+    
+
+<section class="pre-footer" id="pre-footer">
+    <div class="container">
+        <div class="pre-footer-content">
+                            <h2 class="pre-footer-title" data-title="Devis">Demander un devis gratuit</h2>
+                <p>Du premier contact à la mise en ligne, nous vous accompagnons vers le succès.</p>
+<a class="btn btn-white"   href="/fr/devis/"  >Demander un devis gratuit</a>
+                    </div>
+    </div>
+</section>
+<footer class="footer" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<a href="https://cherrypulp.com/fr/">
+					<img class="footer-logo" src="https://cherrypulp.com/content/uploads/2019/11/cherry-pulp-logo-white.svg" alt="logo cherry pulp">
+				</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<p class="footer-label">Infos générales</p>
+				<p class="footer-value"><a href="mailto:fbraun@cbtw.tech">fbraun@cbtw.tech</a></p>
+
+				<p class="footer-label">Rejoindre l’équipe</p>
+				<p class="footer-value"><a href="mailto:fbraun@cbtw.tech">fbraun@cbtw.tech</a></p>
+
+				<p class="footer-label">Nous Téléphoner</p>
+				<p class="footer-value"><a href="tel:">Bureau: </a></p>
+				<p class="footer-value"><a href="tel:">Manager: </a></p>
+
+				<p class="footer-label">Venir chez nous</p>
+				<p class="footer-value">112 Chaussée de Charleroi</p>
+				<p class="footer-value">1060 Bruxelles, Belgique</p>
+				<p class="footer-value"><a href="https://www.google.be/maps/place/Cherry+Pulp+sprl/@50.8603189,4.365513,17z/data=!3m1!4b1!4m5!3m4!1s0x47c3c370d8662f29:0xba8799e0efcbe595!8m2!3d50.8603189!4d4.367707?hl=fr" target="_blank">Voir sur Google map</a></p>
+			</div>
+
+			<div class="col-md-4">
+				<div class="footer-no-mobile">
+					<!-- <div>
+						<p class="footer-label">Votre projet</p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/nouveau-site-web/">Nouveau site web</a></p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/ameliorer-site-web/">Améliorer site web</a></p>
+											</div> -->
+					<div>
+						<p class="footer-label">Nos services</p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/service/creation-site-vitrine/">Création site vitrine</a></p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/service/creation-ecommerce/">Création eCommerce</a></p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/service/creation-web-application/">Création application web</a></p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/service/outils-marketing/">Création outils marketing</a></p>
+											</div>
+				</div>
+			</div>
+
+			<div class="col-md-4 d-flex flex-column">
+				<div class="row">
+					<div class="col-md-6 footer-no-mobile">
+						<p class="footer-mobile-toggle">Sitemap</p>
+						<p class="footer-label">Sitemap</p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/">Accueil</a></p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/agence-web-bruxelles/">Agence</a></p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/services/">Services</a></p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/projets/">Projets</a></p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/carriere/">Carrière</a></p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/blog/">Blog</a></p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/contact/">Contact</a></p>
+													<p class="footer-value"><a href="https://cherrypulp.com/fr/devis/">Obtenez un devis gratuit</a></p>
+											</div>
+					<div class="col-md-6">
+						<p class="footer-label">Nous suivre</p>
+																					<p class="footer-value"><a href="https://www.facebook.com/cherrypulpcom" target="_blank">Facebook</a></p>
+																												<p class="footer-value"><a href="https://www.instagram.com/cherrypulpcom/" target="_blank">Instagram</a></p>
+																												<p class="footer-value"><a href="https://www.linkedin.com/company/cherry-pulp/" target="_blank">Linkedin</a></p>
+																												<p class="footer-value"><a href="https://twitter.com/cherrypulpcom" target="_blank">Twitter</a></p>
+																															</div>
+				</div>
+			</div>
+
+			<div class="">
+				<p class="footer-tagline">Une agence web guidée par la performance</p>
+
+				<div class="footer-tagline-bis">
+					Part of
+											<a class="tagline-logo" href="https://collaborationbetterstheworld.com/" target="_blank">
+							<img src="https://cherrypulp.com/content/uploads/2023/05/logo-cbtw-1.svg">
+						</a>
+					
+				</div>
+			</div>
+
+		</div>
+
+		<div class="subfooter">
+							<a href="/fr/conditions-de-vente" target="_blank">Conditions de vente</a> -
+							<a href="/fr/politique-de-confidentialite" target="_blank">Politique de confidentialité</a> -
+							<a href="/fr/politique-des-cookies" target="_blank">Politique des cookies</a> -
+						BCE-VAT BE 0515.998.824		</div>
+	</div>
+
+</footer>		<!-- Extrait Google Tag Manager (noscript) ajouté par Site Kit -->
+		<noscript>
+			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W8R5XGQ" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+		</noscript>
+		<!-- Arrêter l&#039;extrait Google Tag Manager (noscript) ajouté par Site Kit -->
+		<script type='text/javascript' src='https://cherrypulp.com/content/themes/cherry/dist/js/plugins.js?id=a8e2138418989062297f&#038;ver=20230511115851'></script>
+<script type='text/javascript' src='https://cherrypulp.com/content/themes/cherry/dist/js/main.js?id=841d81e9c4531726d4ac&#038;ver=20230511115851'></script>
+<script>window.lazyLoadOptions={elements_selector:"iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){return}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){return}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://cherrypulp.com/content/plugins/wp-rocket/assets/js/lazyload/12.0/lazyload.min.js"></script>
+</body>
+
+</html>

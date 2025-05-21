@@ -1,0 +1,4 @@
+This directory contains placeholder images for AI agents. 
+The images are named after the agent's name slug, e.g., autogpt.png for "AutoGPT".
+
+Actual images would need to be created or downloaded from relevant sources. For development purposes, we use fallback logic in the code to ensure the UI works properly even when images are not yet available.
