@@ -153,11 +153,11 @@ const ProductCard = ({ product, onClick }) => {
               {/* Show friendly UI name for product type */}
               {(() => {
                 // Mapping from database types to display names
-                if (product.product_type === 'mcp_server') return 'server';
-                if (product.product_type === 'mcp_client') return 'client';
-                if (product.product_type === 'ai_agent') return 'ai-agent';
-                if (product.product_type === 'ready_to_use') return 'ready-to-use';
-                return product.type || product.product_type || 'server';
+                if (product.product_type === 'mcp_server') return 'MCP Server';
+                if (product.product_type === 'mcp_client') return 'MCP Client';
+                if (product.product_type === 'ai_agent') return 'AI Agent';
+                if (product.product_type === 'ready_to_use') return 'Ready to Use';
+                return product.type || product.product_type || 'MCP Server';
               })()}
             </span>
           </div>

@@ -109,24 +109,70 @@ const AboutUsSection = ({ onExploreCategories }) => {
           </motion.p>
         </motion.div>
         
-        {/* Mission Statement - prerender for better performance */}
+        {/* Enhanced Mission Statement */}
         <div className="max-w-4xl mx-auto mb-16">
           <motion.div
-            className="p-8 rounded-2xl bg-gradient-to-b from-slate-800/50 to-slate-900/50 border border-white/10 backdrop-blur-sm"
+            className="relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/60 to-slate-900/60 border border-white/20 backdrop-blur-md shadow-2xl overflow-hidden"
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.5 }}
           >
-            <h3 className="text-2xl md:text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-300">
-              Our Mission
-            </h3>
-            <p className="text-lg text-zinc-300 mb-8 leading-relaxed">
-              At AchAI, we're committed to democratizing AI technology and making it accessible to everyone.
-              We believe in the transformative power of artificial intelligence and its potential to solve 
-              real-world problems. Our platform connects you with the best AI solutions, tutorials, and 
-              resources to help you harness this power, regardless of your technical expertise.
-            </p>
+            {/* Decorative background elements */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-600/20 to-transparent rounded-full blur-xl"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-indigo-600/20 to-transparent rounded-full blur-xl"></div>
+            
+            {/* Mission icon and title */}
+            <div className="relative z-10 flex items-center gap-4 mb-6">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-300">
+                  Our Mission
+                </h3>
+                <div className="flex items-center gap-2 mt-1">
+                  <div className="w-12 h-0.5 bg-gradient-to-r from-purple-600 to-indigo-600"></div>
+                  <span className="text-purple-400 text-sm">Democratizing AI</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Enhanced mission text with highlights */}
+            <div className="relative z-10 space-y-4">
+              <p className="text-lg text-zinc-300 leading-relaxed">
+                At <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400 font-semibold">AchAI</span>, we're committed to 
+                <span className="text-white font-medium"> democratizing AI technology</span> and making it accessible to everyone.
+              </p>
+              
+              <p className="text-lg text-zinc-300 leading-relaxed">
+                We believe in the <span className="text-emerald-400 font-medium">transformative power</span> of artificial intelligence 
+                and its potential to <span className="text-amber-400 font-medium">solve real-world problems</span>.
+              </p>
+              
+              <p className="text-lg text-zinc-300 leading-relaxed">
+                Our platform connects you with the <span className="text-blue-400 font-medium">best AI solutions</span>, tutorials, and 
+                resources to help you harness this power, <span className="text-purple-400 font-medium">regardless of your technical expertise</span>.
+              </p>
+            </div>
+            
+            {/* Key stats or highlights */}
+            <div className="relative z-10 mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center p-4 rounded-lg bg-white/5 border border-white/10">
+                <div className="text-2xl font-bold text-purple-400 mb-1">∞</div>
+                <div className="text-sm text-zinc-400">Unlimited Access</div>
+              </div>
+              <div className="text-center p-4 rounded-lg bg-white/5 border border-white/10">
+                <div className="text-2xl font-bold text-emerald-400 mb-1">🌍</div>
+                <div className="text-sm text-zinc-400">Global Community</div>
+              </div>
+              <div className="text-center p-4 rounded-lg bg-white/5 border border-white/10">
+                <div className="text-2xl font-bold text-amber-400 mb-1">🚀</div>
+                <div className="text-sm text-zinc-400">Innovation First</div>
+              </div>
+            </div>
           </motion.div>
         </div>
         

@@ -22,7 +22,8 @@
       "Bash(npm run build:*)",
       "Bash(mkdir:*)",
       "Bash(mv:*)",
-      "WebFetch(domain:www.achai.co)"
+      "WebFetch(domain:www.achai.co)",
+      "Bash(git checkout:*)"
     ],
     "deny": []
   }
