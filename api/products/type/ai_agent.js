@@ -18,35 +18,18 @@ export default async function handler(req, res) {
       // Test connection first
       await testConnection();
       
-      const { type } = req.query;
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 100;
       
-      // Map frontend types to database types
-      let productType;
-      switch(type) {
-        case 'mcp_client':
-          productType = 'client';
-          break;
-        case 'mcp_server':
-          productType = 'server';
-          break;
-        case 'ai_agent':
-          productType = 'agent';
-          break;
-        default:
-          productType = type;
-      }
-      
-      const result = await Product.getByType(productType, page, limit);
+      const result = await Product.getByType('agent', page, limit);
       res.status(200).json(result);
     } else {
       res.status(405).json({ error: 'Method not allowed' });
     }
   } catch (error) {
-    console.error('Error in products/type API:', error);
+    console.error('Error in products/type/ai_agent API:', error);
     res.status(500).json({ 
-      error: 'Failed to fetch products by type: ' + error.message,
+      error: 'Failed to fetch AI agents: ' + error.message,
       dataStatus: {
         type: 'error',
         message: 'AWS Database connection required.',
