@@ -18,10 +18,6 @@ import ConnectToClaudePage from './components/ConnectToClaudePage';
 import SubmitServerPage from './components/SubmitServerPage';
 import SecureAdminPage from './components/SecureAdminPage';
 // CompareServersPage removed as requested
-import TutorialsPage from './components/TutorialsPage';
-import TutorialDetailPage from './components/TutorialDetailPage';
-import NewsPage from './components/NewsPage';
-import NewsDetailPage from './components/NewsDetailPage';
 import LoginPage from './components/auth/LoginPage';
 import RegisterPage from './components/auth/RegisterPage';
 import ProfilePage from './components/auth/ProfilePage';
@@ -35,15 +31,6 @@ import { AnimatePresence, prefersReducedMotion } from './components/animations';
 import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
 
 // Wrapper components for routes that need params
-function TutorialDetailWrapper() {
-  const { id } = useParams();
-  return <TutorialDetailPage tutorialId={id} />;
-}
-
-function NewsDetailWrapper() {
-  const { id } = useParams();
-  return <NewsDetailPage articleId={id} />;
-}
 import solutionsData from './achai_solutions.json';
 import mcpServersData from './mcp_servers_data.json';
 import aiAgentsData from './ai_agents_data.json';
@@ -437,12 +424,6 @@ const getPageTransitionAnimation = (view) => {
       return 'slide-right';
     case 'compare':
       return 'slide-up';
-    case 'tutorials':
-    case 'tutorial-detail':
-      return 'slide-left';
-    case 'news':
-    case 'news-detail':
-      return 'slide-left';
     case 'ready-to-use':
       return 'slide-up';
     case 'about-us':
@@ -1314,32 +1295,6 @@ function App() {
         setSelectedProductId(null);
         setCurrentCategory(null);
       }
-      // Tutorials list page
-      else if (path === '/tutorials') {
-        setCurrentView('tutorials');
-        setSelectedProductId(null);
-        setCurrentCategory(null);
-      }
-      // Tutorial detail page
-      else if (path.startsWith('/tutorials/')) {
-        const tutorialId = path.substring('/tutorials/'.length);
-        setCurrentView('tutorial-detail');
-        setSelectedProductId(tutorialId); // We'll use the selectedProductId state to store the tutorial ID
-        setCurrentCategory(null);
-      }
-      // News list page
-      else if (path === '/news') {
-        setCurrentView('news');
-        setSelectedProductId(null);
-        setCurrentCategory(null);
-      }
-      // News article detail page
-      else if (path.startsWith('/news/')) {
-        const articleId = path.substring('/news/'.length);
-        setCurrentView('news-detail');
-        setSelectedProductId(articleId); // We'll use the selectedProductId state to store the article ID
-        setCurrentCategory(null);
-      }
       // Ready to Use page for affiliate products
       else if (path === '/ready-to-use') {
         setCurrentView('ready-to-use');
@@ -1564,21 +1519,6 @@ function App() {
     window.location.href = '/compare';
   };
   
-  const navigateToTutorials = () => {
-    window.location.href = '/tutorials';
-  };
-  
-  const navigateToTutorial = (tutorialId) => {
-    window.location.href = `/tutorials/${tutorialId}`;
-  };
-  
-  const navigateToNews = () => {
-    window.location.href = '/news';
-  };
-  
-  const navigateToNewsArticle = (articleId) => {
-    window.location.href = `/news/${articleId}`;
-  };
   
   const navigateToReadyToUse = () => {
     window.location.href = '/ready-to-use';
@@ -1616,8 +1556,6 @@ function App() {
       onNavigateToCategories={navigateToCategories}
       onNavigateToConnectToClaude={navigateToConnectToClaude}
       onNavigateToWhatIsMcp={navigateToWhatIsMcp}
-      onNavigateTutorials={navigateToTutorials}
-      onNavigateNews={navigateToNews}
     />;
   }
   // Product list view
@@ -1743,22 +1681,6 @@ function App() {
     />;
   }
   // Test pagination view removed
-  // Tutorials list view
-  else if (currentView === 'tutorials') {
-    viewComponent = <TutorialsPage />;
-  }
-  // Tutorial detail view
-  else if (currentView === 'tutorial-detail') {
-    viewComponent = <TutorialDetailPage tutorialId={selectedProductId} />;
-  }
-  // News list view
-  else if (currentView === 'news') {
-    viewComponent = <NewsPage />;
-  }
-  // News detail view
-  else if (currentView === 'news-detail') {
-    viewComponent = <NewsDetailPage articleId={selectedProductId} />;
-  }
   // Ready to Use view
   else if (currentView === 'ready-to-use') {
     viewComponent = <ReadyToUsePage />;
@@ -1861,8 +1783,6 @@ function App() {
                 onNavigateConnectToClaude={navigateToConnectToClaude}
                 onNavigateSubmit={navigateToSubmit}
                 onNavigateCompare={navigateToCompare}
-                onNavigateTutorials={navigateToTutorials}
-                onNavigateNews={navigateToNews}
                 onNavigateReadyToUse={navigateToReadyToUse}
                 onNavigateProducts={navigateToProducts}
                 onNavigateOriginalProducts={navigateToOriginalProducts}
@@ -1888,8 +1808,6 @@ function App() {
                       onNavigateToCategories={navigateToCategories}
                       onNavigateToConnectToClaude={navigateToConnectToClaude}
                       onNavigateToWhatIsMcp={navigateToWhatIsMcp}
-                      onNavigateTutorials={navigateToTutorials}
-                      onNavigateNews={navigateToNews}
                     />
                   </AnimatePresence>
                 } />
@@ -1905,10 +1823,6 @@ function App() {
                 <Route path="/admin" element={<SecureAdminPage />} />
                 <Route path="/secure-admin" element={<SecureAdminPage />} />
                 <Route path="/compare" element={<ProductListPage products={mcpData} onNavigateToDetail={navigateToDetail} currentCategory={currentCategory} />} />
-                <Route path="/tutorials" element={<TutorialsPage />} />
-                <Route path="/tutorials/:id" element={<TutorialDetailWrapper />} />
-                <Route path="/news" element={<NewsPage />} />
-                <Route path="/news/:id" element={<NewsDetailWrapper />} />
                 <Route path="/ready-to-use" element={<ReadyToUsePage />} />
                 <Route path="/about-us" element={<AboutUsPage onNavigateToCategories={navigateToCategories} />} />
                 <Route path="/login" element={<LoginPage />} />

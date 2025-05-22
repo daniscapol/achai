@@ -93,8 +93,6 @@ const Footer = () => {
                   { label: 'Categories', href: '#/categories' },
                   { label: 'Ready-to-Use Tools', href: '#/ready-to-use' },
                   { label: 'AI Agents', href: '#/ai-agents' },
-                  { label: 'Tutorials', href: '#/tutorials' },
-                  { label: 'AI News', href: '#/news' }
                 ].map((item) => (
                   <li key={item.label}>
                     <a 
@@ -132,8 +130,6 @@ const Footer = () => {
                   { label: 'Product Comparison', href: '#/compare' },
                   { label: 'Connect to Claude', href: '#/connect-to-claude' },
                   { label: 'Premium Features', href: '#/premium' },
-                  { label: 'Getting Started', href: '#/tutorials/getting-started' },
-                  { label: 'Best Practices', href: '#/tutorials/best-practices' }
                 ].map((item) => (
                   <li key={item.label}>
                     <a 

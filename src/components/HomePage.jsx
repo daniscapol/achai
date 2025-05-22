@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { validateArticle, getExampleArticles } from '../utils/newsUtilities';
 import FeaturedCarousel from './FeaturedCarousel';
 import { 
   ScrollReveal, 
@@ -360,10 +359,7 @@ const HomePage = ({
   onNavigateToCategories,
   onNavigateToConnectToClaude,
   onNavigateToWhatIsMcp,
-  onNavigateTutorials,
-  onNavigateNews 
-}) => {
-  const [latestNews, setLatestNews] = useState([]);
+) => {
   const [isLoading, setIsLoading] = useState(true);
   const [scrollY, setScrollY] = useState(0);
   
@@ -377,56 +373,6 @@ const HomePage = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Sample tutorials data (replace with actual data in a real implementation)
-  const tutorialsData = [
-    {
-      id: 'getting-started-mcp',
-      title: 'Getting Started with MCP Servers',
-      description: 'Learn how to set up your first MCP server and connect it to Claude for enhanced capabilities.',
-      level: 'Beginner',
-      duration: '15 min',
-      color: 'from-purple-500 to-indigo-600',
-      icon: 'brain'
-    },
-    {
-      id: 'building-custom-mcp',
-      title: 'Building a Custom MCP Server',
-      description: 'Create your own MCP server from scratch to integrate specific tools or data sources with Claude.',
-      level: 'Advanced',
-      duration: '45 min',
-      color: 'from-blue-500 to-cyan-600',
-      icon: 'code'
-    },
-    {
-      id: 'mcp-security-best-practices',
-      title: 'MCP Security Best Practices',
-      description: 'Learn how to secure your MCP servers and protect sensitive data when using external tools.',
-      level: 'Intermediate',
-      duration: '30 min',
-      color: 'from-green-500 to-emerald-600',
-      icon: 'shield-check'
-    }
-  ];
-  
-  // Fetch latest news articles on component mount
-  useEffect(() => {
-    // In a real implementation, this would fetch from an API
-    // Here we're using example data from the utility
-    const fetchNews = async () => {
-      try {
-        setIsLoading(true);
-        const articles = getExampleArticles();
-        setLatestNews(articles.slice(0, 3)); // Only show first 3 articles
-      } catch (error) {
-        console.error('Error fetching news:', error);
-        setLatestNews([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchNews();
-  }, []);
   
   // Group products by categories for category sections
   const getProductsByCategory = () => {
@@ -447,63 +393,6 @@ const HomePage = ({
   const productsByCategory = getProductsByCategory();
   const topCategories = Object.keys(productsByCategory).slice(0, 3);
   
-  // Tutorial card component with enhanced interactivity
-  const TutorialCard = ({ tutorial }) => {
-    return (
-      <div className="group bg-zinc-800 rounded-lg overflow-hidden shadow-lg border border-zinc-700 hover:border-purple-500/50 transition-all duration-300 h-full flex flex-col transform hover:translate-y-[-5px]">
-        {/* Tutorial header/image section */}
-        <div className="relative h-40 overflow-hidden">
-          {tutorial.image_url ? (
-            <img 
-              src={tutorial.image_url} 
-              alt={tutorial.title} 
-              className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-            />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-purple-900 to-indigo-900 flex items-center justify-center">
-              <span className="text-white text-2xl font-bold">{tutorial.title.charAt(0)}</span>
-            </div>
-          )}
-          
-          {/* Provider badge */}
-          <div className="absolute top-4 right-4">
-            <div className="px-2 py-1 bg-zinc-800/80 rounded-full text-xs font-medium backdrop-blur-sm">
-              {tutorial.provider || 'AchaAI'}
-            </div>
-          </div>
-        </div>
-        
-        {/* Metadata badges */}
-        <div className="flex px-4 pt-4 gap-2">
-          <span className="px-2 py-1 bg-purple-900/30 rounded-full text-xs text-purple-300">
-            {tutorial.level || 'Beginner'}
-          </span>
-          <span className="px-2 py-1 bg-indigo-900/30 rounded-full text-xs text-indigo-300">
-            {tutorial.duration || '30 min'}
-          </span>
-        </div>
-        
-        {/* Tutorial content */}
-        <div className="p-4 pt-2 flex-grow">
-          <h3 className="text-lg font-bold text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">{tutorial.title}</h3>
-          <p className="text-gray-400 text-sm">{tutorial.description}</p>
-        </div>
-        
-        {/* Tutorial footer */}
-        <div className="p-4 pt-0 mt-auto">
-          <button 
-            onClick={onNavigateTutorials}
-            className="w-full py-2 border border-purple-500/30 hover:border-purple-500 text-purple-400 hover:text-purple-300 rounded-lg transition-colors duration-300 flex items-center justify-center group-hover:bg-purple-500/10"
-          >
-            View Tutorial
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    );
-  };
   
   // Categories for interactive section
   const categories = [
@@ -722,13 +611,6 @@ const HomePage = ({
               href="#/connect-to-claude"
               color="bg-gradient-to-br from-indigo-600 to-indigo-700"
             />
-            <FeatureCard 
-              icon="globe"
-              title="Latest News"
-              description="Stay up to date with the latest developments in AI, MCP, and new server releases."
-              href="#/news"
-              color="bg-gradient-to-br from-blue-600 to-blue-700"
-            />
           </div>
         </ScrollReveal>
       </section>
@@ -817,32 +699,6 @@ const HomePage = ({
         </ScrollReveal>
       </section>
       
-      {/* Interactive Tutorials Section */}
-      <section className="py-10">
-        <ScrollReveal direction="up" once={true} delay={200}>
-          <div className="mb-8 flex justify-between items-center">
-            <h2 className="text-3xl font-bold text-white">Latest Tutorials</h2>
-            <EnhancedButton 
-              onClick={onNavigateTutorials}
-              variant="ghost" 
-              size="sm"
-            >
-              View All Tutorials
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </EnhancedButton>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {tutorialsData.map((tutorial, index) => (
-              <ScrollReveal key={tutorial.id} direction="up" delay={300 + (index * 100)} once={true}>
-                <TutorialCard tutorial={tutorial} />
-              </ScrollReveal>
-            ))}
-          </div>
-        </ScrollReveal>
-      </section>
       
       {/* Technical Diagram with interactive elements */}
       <section className="py-10">

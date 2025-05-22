@@ -9,8 +9,6 @@ const Header = ({
   onNavigateConnectToClaude, 
   onNavigateSubmit, 
   onNavigateCompare, 
-  onNavigateTutorials, 
-  onNavigateNews,
   onNavigateReadyToUse,
   onNavigateProducts,
   onNavigateOriginalProducts,
@@ -115,8 +113,6 @@ const Header = ({
             // Temporarily hide Netflix UI option since it's not fully implemented
             // { path: '/netflix-products', label: 'Netflix UI', href: '/netflix-products', badge: 'New', onClick: onNavigateNetflixProducts },
             // Removed Product Admin from top navbar - accessible via secure-admin route
-            { path: '/tutorials', label: 'Tutorials', href: '/tutorials', onClick: onNavigateTutorials },
-            { path: '/news', label: 'News', href: '/news', onClick: onNavigateNews }
           ].map((item) => (
             <a 
               key={item.path}
@@ -190,8 +186,6 @@ const Header = ({
                 // { path: '/netflix-products', label: 'Netflix UI', href: '/netflix-products', badge: 'New', onClick: onNavigateNetflixProducts },
                 // Removed Product Admin from mobile menu - accessible via secure-admin route
                 { path: '/what-is-an-mcp-server', label: 'About AchAI', href: '/what-is-an-mcp-server', onClick: onNavigateWhatIsMcp },
-                { path: '/tutorials', label: 'Tutorials', href: '/tutorials', onClick: onNavigateTutorials },
-                { path: '/news', label: 'News', href: '/news', onClick: onNavigateNews },
                 { path: '/submit', label: 'Submit', href: '/submit', onClick: onNavigateSubmit }
               ].map((item, index) => (
                 <a 

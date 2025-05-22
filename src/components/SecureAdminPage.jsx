@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import TechHubProductManagementDemo from './TechHubProductManagementDemo';
-import NewsAdminPanel from './NewsAdminPanel';
-import TutorialAdminPanel from './TutorialAdminPanel';
 import { useNavigate } from 'react-router-dom';
 
 const SecureAdminPage = () => {
@@ -127,40 +125,11 @@ const SecureAdminPage = () => {
             Product Management
           </button>
           
-          <button
-            className={`mr-2 inline-block py-4 px-4 text-sm font-medium text-center border-transparent border-b-2 rounded-t-lg ${
-              activeTab === 'news'
-                ? 'text-purple-500 border-purple-500'
-                : 'text-gray-400 hover:text-white hover:border-gray-300'
-            }`}
-            onClick={() => setActiveTab('news')}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M19 20a2 2 0 002-2V8a2 2 0 00-2-2h-5M19 20V10m0 0l-3-3m3 3l3-3" />
-            </svg>
-            News Management
-          </button>
-          
-          <button
-            className={`mr-2 inline-block py-4 px-4 text-sm font-medium text-center border-transparent border-b-2 rounded-t-lg ${
-              activeTab === 'tutorials'
-                ? 'text-purple-500 border-purple-500'
-                : 'text-gray-400 hover:text-white hover:border-gray-300'
-            }`}
-            onClick={() => setActiveTab('tutorials')}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-            Tutorials Management
-          </button>
         </div>
       </div>
       
       {/* Tab content */}
       {activeTab === 'products' && <TechHubProductManagementDemo />}
-      {activeTab === 'news' && <NewsAdminPanel />}
-      {activeTab === 'tutorials' && <TutorialAdminPanel />}
     </div>
   );
 };

@@ -12,8 +12,6 @@ export { default as HeroSection } from './HeroSection.jsx';
 export { default as DynamicHeroSection } from './DynamicHeroSection.jsx';
 export { default as AnimatedCounter } from './AnimatedCounter.jsx';
 export { default as FeaturedSection } from './FeaturedSection.jsx';
-export { default as NewsSection } from './NewsSection.jsx';
-export { default as TutorialsSection } from './TutorialsSection.jsx';
 export { default as TestimonialsSection } from './TestimonialsSection.jsx';
 export { default as AboutUsSection } from './AboutUsSection.jsx';
 export { default as MeshGradient } from './MeshGradient.jsx';

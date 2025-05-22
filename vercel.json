@@ -1,32 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/api/tutorials/([^/]+)",
-      "destination": "/api/v1.js"
-    },
-    {
-      "source": "/api/tutorials",
-      "destination": "/api/v1.js"
-    },
-    {
-      "source": "/api/news/([^/]+)",
-      "destination": "/api/v1.js"
-    },
-    {
-      "source": "/api/news",
-      "destination": "/api/v1.js"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
   "framework": "vite",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "functions": {
-    "api/v1.js": {
-      "includeFiles": "src/**/*"
-    }
-  }
+  "outputDirectory": "dist"
 }
