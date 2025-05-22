@@ -5,10 +5,8 @@ import DataStatusAlert from './components/DataStatusAlert';
 // Use the modernized premium homepage with consistent animations
 import HomePage from './components/ModernHomePage';
 import ProductListPage from './components/ProductListPage';
-import ProductDetailPage from './components/ProductDetailPage';
-// Using NetflixStyleProductsPage as the new products view, but keeping original for compatibility
+// Using ProductsPageEnhanced as OriginalProductsPage for compatibility
 import OriginalProductsPage from './components/ProductsPageEnhanced';
-import ProductsPageEnhanced from './components/SimpleProductsPage';
 import PremiumProductsPage from './components/PremiumProductsPage';
 import ProductDetailTech from './components/ProductDetailTech';
 import TechHubProductManagementDemo from './components/TechHubProductManagementDemo';
