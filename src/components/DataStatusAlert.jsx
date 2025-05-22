@@ -13,7 +13,7 @@ const DataStatusAlert = () => {
     const fetchDataStatus = async () => {
       try {
         const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
-        const response = await fetch(`${API_BASE_URL}/products/data-status`);
+        const response = await fetch(`${API_BASE_URL}/data-status`);
         if (response.ok) {
           const data = await response.json();
           setDataStatus(data);

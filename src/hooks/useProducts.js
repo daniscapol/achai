@@ -214,8 +214,12 @@ const useProducts = (initialPage = 1, initialLimit = 100) => {
     
     setLoading(true);
     try {
-      console.log(`Making request to: ${API_URL}/type/${encodeURIComponent(type)}?page=${page}&limit=${limit}`);
-      const response = await fetch(`${API_URL}/type/${encodeURIComponent(type)}?page=${page}&limit=${limit}`);
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ? 
+        `${import.meta.env.VITE_API_BASE_URL}` : 
+        'http://localhost:3001/api';
+      const typeEndpoint = `${API_BASE_URL}/products/type/${encodeURIComponent(type)}?page=${page}&limit=${limit}`;
+      console.log(`Making request to: ${typeEndpoint}`);
+      const response = await fetch(typeEndpoint);
       
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);

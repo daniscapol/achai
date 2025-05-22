@@ -50,6 +50,49 @@ export class Product {
       throw error;
     }
   }
+  
+  static async getByType(productType, page = 1, limit = 100) {
+    try {
+      const offset = (page - 1) * limit;
+      
+      // Get total count for this type
+      const countResult = await query(
+        'SELECT COUNT(*) FROM products WHERE product_type = $1 AND is_active = TRUE', 
+        [productType]
+      );
+      const total = parseInt(countResult.rows[0].count);
+      
+      // Get products of this type
+      const productsResult = await query(`
+        SELECT * FROM products 
+        WHERE product_type = $1 AND is_active = TRUE 
+        ORDER BY is_featured DESC, created_at DESC 
+        LIMIT $2 OFFSET $3
+      `, [productType, limit, offset]);
+      
+      const totalPages = Math.ceil(total / limit);
+      
+      return {
+        products: productsResult.rows,
+        pagination: {
+          total,
+          totalPages,
+          currentPage: page,
+          limit,
+          hasNext: page < totalPages,
+          hasPrev: page > 1
+        },
+        dataStatus: {
+          type: 'success',
+          source: 'postgres',
+          message: 'Connected to PostgreSQL database'
+        }
+      };
+    } catch (error) {
+      console.error('Error in Product.getByType:', error);
+      throw error;
+    }
+  }
 }
 
 export default Product;

@@ -21,7 +21,8 @@
       "Bash(cp:*)",
       "Bash(npm run build:*)",
       "Bash(mkdir:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "WebFetch(domain:www.achai.co)"
     ],
     "deny": []
   }
