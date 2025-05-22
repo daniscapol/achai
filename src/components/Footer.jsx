@@ -200,25 +200,6 @@ const Footer = () => {
           </div>
         </div>
         
-        {/* Newsletter subscription */}
-        <div className="mt-10 bg-gradient-to-r from-purple-900/20 to-indigo-900/20 backdrop-blur-sm rounded-lg p-6 border border-purple-500/10">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
-            <div className="md:col-span-3">
-              <h4 className="text-white font-medium mb-2">Stay updated with AchAI</h4>
-              <p className="text-sm text-gray-400">Subscribe to our newsletter for the latest AI tools, tutorials, and industry news</p>
-            </div>
-            <div className="md:col-span-2 flex">
-              <input 
-                type="email" 
-                placeholder="Your email address" 
-                className="flex-1 bg-zinc-800/60 border border-zinc-700 hover:border-purple-500/30 focus:border-purple-500/50 rounded-l-md px-4 py-2 text-gray-300 focus:outline-none transition-colors"
-              />
-              <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-medium px-4 py-2 rounded-r-md transition-colors">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
         
         {/* Bottom footer */}
         <div className="mt-12 pt-8 border-t border-zinc-700/50 flex flex-col md:flex-row justify-between items-center text-sm">
