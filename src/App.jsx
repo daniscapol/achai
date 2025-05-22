@@ -1486,7 +1486,7 @@ function App() {
   };
 
   const navigateToWhatIsMcp = () => {
-    window.location.href = '/what-is-an-mcp-server';
+    window.location.href = '/about-us';
   };
 
   const navigateToConnectToClaude = () => {
