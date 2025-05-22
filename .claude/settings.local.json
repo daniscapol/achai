@@ -24,7 +24,9 @@
       "Bash(mv:*)",
       "WebFetch(domain:www.achai.co)",
       "Bash(git checkout:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(npm run:*)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }
