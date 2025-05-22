@@ -21,7 +21,13 @@ export default async function handler(req, res) {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 100;
       
-      const result = await Product.getByType('agent', page, limit);
+      // Check for multiple possible AI agent types
+      let result = await Product.getByType('ai_agent', page, limit);
+      
+      // If no ai_agent found, try 'agent' type as fallback
+      if (result.products.length === 0) {
+        result = await Product.getByType('agent', page, limit);
+      }
       res.status(200).json(result);
     } else {
       res.status(405).json({ error: 'Method not allowed' });

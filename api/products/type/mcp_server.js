@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 100;
       
-      const result = await Product.getByType('server', page, limit);
+      const result = await Product.getByType('mcp_server', page, limit);
       res.status(200).json(result);
     } else {
       res.status(405).json({ error: 'Method not allowed' });
