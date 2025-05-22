@@ -235,6 +235,69 @@ export class Product {
       throw error;
     }
   }
+  
+  static async search(searchTerm, page = 1, limit = 100) {
+    try {
+      const offset = (page - 1) * limit;
+      const searchPattern = `%${searchTerm.toLowerCase()}%`;
+      
+      // Get total count for search results
+      const countResult = await query(`
+        SELECT COUNT(*) FROM products 
+        WHERE is_active = TRUE AND (
+          LOWER(name) LIKE $1 OR 
+          LOWER(description) LIKE $1 OR 
+          LOWER(category) LIKE $1 OR
+          LOWER(creator) LIKE $1 OR
+          LOWER(language) LIKE $1 OR
+          $2 = ANY(tags)
+        )
+      `, [searchPattern, searchTerm.toLowerCase()]);
+      
+      const total = parseInt(countResult.rows[0].count);
+      
+      // Get search results
+      const productsResult = await query(`
+        SELECT * FROM products 
+        WHERE is_active = TRUE AND (
+          LOWER(name) LIKE $1 OR 
+          LOWER(description) LIKE $1 OR 
+          LOWER(category) LIKE $1 OR
+          LOWER(creator) LIKE $1 OR
+          LOWER(language) LIKE $1 OR
+          $2 = ANY(tags)
+        )
+        ORDER BY 
+          CASE WHEN LOWER(name) LIKE $1 THEN 1 ELSE 2 END,
+          is_featured DESC, 
+          created_at DESC 
+        LIMIT $3 OFFSET $4
+      `, [searchPattern, searchTerm.toLowerCase(), limit, offset]);
+      
+      const totalPages = Math.ceil(total / limit);
+      
+      return {
+        products: productsResult.rows,
+        pagination: {
+          total,
+          totalPages,
+          currentPage: page,
+          limit,
+          hasNext: page < totalPages,
+          hasPrev: page > 1
+        },
+        searchTerm,
+        dataStatus: {
+          type: 'success',
+          source: 'postgres',
+          message: 'Connected to PostgreSQL database'
+        }
+      };
+    } catch (error) {
+      console.error('Error in Product.search:', error);
+      throw error;
+    }
+  }
 }
 
 export default Product;
