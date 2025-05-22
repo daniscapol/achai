@@ -420,8 +420,6 @@ const getPageTransitionAnimation = (view) => {
     case 'register':
     case 'profile':
       return 'scale';
-    case 'admin':
-      return 'slide-right';
     case 'compare':
       return 'slide-up';
     case 'ready-to-use':
@@ -1277,12 +1275,6 @@ function App() {
         setSelectedProductId(null);
         setCurrentCategory(null);
       } 
-      // Admin page
-      else if (path === '/admin') {
-        setCurrentView('admin');
-        setSelectedProductId(null);
-        setCurrentCategory(null);
-      }
       // Secure Admin page
       else if (path === '/secure-admin') {
         setCurrentView('secure-admin');
@@ -1507,9 +1499,6 @@ function App() {
     window.location.href = '/submit';
   };
   
-  const navigateToAdmin = () => {
-    window.location.href = '/admin';
-  };
   
   const navigateToSecureAdmin = () => {
     window.location.href = '/secure-admin';
@@ -1664,10 +1653,6 @@ function App() {
   else if (currentView === 'submit') {
     viewComponent = <SubmitServerPage />;
   } 
-  // Admin view
-  else if (currentView === 'admin') {
-    viewComponent = <EntityManager />;
-  }
   // Secure Admin view
   else if (currentView === 'secure-admin') {
     viewComponent = <SecureAdminPage />;
@@ -1820,7 +1805,6 @@ function App() {
                 <Route path="/what-is-an-mcp-server" element={<WhatIsAnMcpServerPage />} />
                 <Route path="/connect-to-claude" element={<ConnectToClaudePage />} />
                 <Route path="/submit" element={<SubmitServerPage />} />
-                <Route path="/admin" element={<SecureAdminPage />} />
                 <Route path="/secure-admin" element={<SecureAdminPage />} />
                 <Route path="/compare" element={<ProductListPage products={mcpData} onNavigateToDetail={navigateToDetail} currentCategory={currentCategory} />} />
                 <Route path="/ready-to-use" element={<ReadyToUsePage />} />
