@@ -159,44 +159,70 @@ const NewsAdminPanel = () => {
     // Prevent double-loading and flashing
     if (newsLoaded) return;
     
-    // Use a local variable to avoid race conditions during loading
-    let articles = [];
-    
-    try {
-      // Check for localStorage data first
-      const savedNews = localStorage.getItem('news_data');
-      if (savedNews) {
-        try {
-          articles = JSON.parse(savedNews);
-          console.log("Loaded news data from localStorage:", articles.length);
-        } catch (e) {
-          console.error("Error parsing saved news data:", e);
+    const loadNewsData = async () => {
+      try {
+        // First try to load from API/database
+        const { newsApi } = await import('../utils/apiService.js');
+        const result = await newsApi.getNewsArticles();
+        let articles = result.articles || [];
+        
+        if (articles.length > 0) {
+          console.log("Loaded news data from API/database:", articles.length);
+          
+          // Sort by date (newest first)
+          articles.sort((a, b) => new Date(b.published_at || b.date) - new Date(a.published_at || a.date));
+          
+          setNewsArticles(articles);
+          setNewsLoaded(true);
+          
+          // Cache for future loads
+          localStorage.setItem('news_data', JSON.stringify(articles));
+          return;
         }
+      } catch (error) {
+        console.error("Error loading news data from API:", error);
       }
       
-      // If localStorage empty or invalid, load from JSON file
-      if (!articles || articles.length === 0) {
-        // Load synchronously with static import to avoid race conditions
+      // Fallback to localStorage if API fails
+      try {
+        const savedNews = localStorage.getItem('news_data');
+        if (savedNews) {
+          const articles = JSON.parse(savedNews);
+          console.log("Loaded news data from localStorage:", articles.length);
+          
+          // Sort by date (newest first)
+          articles.sort((a, b) => new Date(b.date || b.published_at) - new Date(a.date || a.published_at));
+          
+          setNewsArticles(articles);
+          setNewsLoaded(true);
+          return;
+        }
+      } catch (e) {
+        console.error("Error parsing saved news data:", e);
+      }
+      
+      // Final fallback to static JSON file
+      try {
         const staticNewsData = require('../news/news_data.json');
-        articles = staticNewsData;
+        const articles = staticNewsData || [];
         console.log("Loaded news data from static file:", articles.length);
+        
+        // Sort by date (newest first)
+        articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        setNewsArticles(articles);
         
         // Cache for future loads
         localStorage.setItem('news_data', JSON.stringify(articles));
+      } catch (error) {
+        console.error("Error loading static news data:", error);
+        setNewsArticles([]);
+      } finally {
+        setNewsLoaded(true);
       }
-      
-      // Sort by date (newest first)
-      articles.sort((a, b) => new Date(b.date) - new Date(a.date));
-      
-      // Update state once, with sorted data
-      setNewsArticles(articles);
-      setNewsLoaded(true);
-    } catch (error) {
-      console.error("Error in news data loading:", error);
-      // Fallback to empty array if all loading methods fail
-      setNewsArticles([]);
-      setNewsLoaded(true);
-    }
+    };
+    
+    loadNewsData();
   }, []);
   
   // Load custom sources from localStorage or initialize empty
@@ -371,49 +397,108 @@ const NewsAdminPanel = () => {
   };
   
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     
-    // Process tags from comma-separated string to array
-    const processedTags = formData.tags 
-      ? (typeof formData.tags === 'string' 
-          ? formData.tags.split(',').map(tag => tag.trim())
-          : formData.tags)
-      : [];
-    
-    // Set themed icon and color based on category if not already set
-    const categoryIcon = getCategoryIcon(formData.category);
-    const categoryColor = getCategoryColor(formData.category);
-    
-    // Create the article object
-    const articleToSave = {
-      ...formData,
-      id: formData.id || formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-      image_url: null, // Always use themed icons instead of URLs
-      image_icon: formData.image_icon || categoryIcon,
-      image_color: formData.image_color || categoryColor,
-      tags: processedTags
-    };
-    
-    // Update existing or add new
-    if (selectedArticle) {
-      // Update existing article
-      const updatedArticles = newsArticles.map(article => 
-        article.id === selectedArticle.id ? articleToSave : article
-      );
+    try {
+      // Process tags from comma-separated string to array
+      const processedTags = formData.tags 
+        ? (typeof formData.tags === 'string' 
+            ? formData.tags.split(',').map(tag => tag.trim())
+            : formData.tags)
+        : [];
+      
+      // Set themed icon and color based on category if not already set
+      const categoryIcon = getCategoryIcon(formData.category);
+      const categoryColor = getCategoryColor(formData.category);
+      
+      // Create the article object for API
+      const articleToSave = {
+        title: formData.title,
+        summary: formData.summary,
+        source: formData.source,
+        source_url: formData.source_url,
+        category: formData.category,
+        external_url: formData.full_article_url,
+        image_icon: formData.image_icon || categoryIcon,
+        image_color: formData.image_color || categoryColor,
+        tags: processedTags,
+        slug: formData.id || formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+        published_at: formData.date
+      };
+      
+      // Import API service
+      const { newsApi } = await import('../utils/apiService.js');
+      const adminToken = 'admin-token'; // In production, this would come from auth context
+      
+      let savedArticle;
+      if (selectedArticle) {
+        // Update existing article via API
+        savedArticle = await newsApi.admin.updateNewsArticle(selectedArticle.id, articleToSave, adminToken);
+        setUpdateStatus({ type: 'success', message: 'Article updated successfully in database!' });
+      } else {
+        // Create new article via API
+        savedArticle = await newsApi.admin.createNewsArticle(articleToSave, adminToken);
+        setUpdateStatus({ type: 'success', message: 'New article created successfully in database!' });
+      }
+      
+      // Refresh the articles list from the database
+      const result = await newsApi.getNewsArticles();
+      const updatedArticles = result.articles || [];
+      
+      // Sort by date (newest first)
+      updatedArticles.sort((a, b) => new Date(b.published_at || b.date) - new Date(a.published_at || a.date));
+      
       setNewsArticles(updatedArticles);
-      saveArticlesToLocalStorage(updatedArticles);
-      setUpdateStatus({ type: 'success', message: 'Article updated successfully!' });
-    } else {
-      // Add new article
-      const newArticles = [articleToSave, ...newsArticles];
-      setNewsArticles(newArticles);
-      saveArticlesToLocalStorage(newArticles);
-      setUpdateStatus({ type: 'success', message: 'New article added successfully!' });
+      
+      // Also update localStorage for faster loading
+      localStorage.setItem('news_data', JSON.stringify(updatedArticles));
+      
+      // Exit edit mode
+      setEditMode(false);
+    } catch (error) {
+      console.error('Error saving article:', error);
+      setUpdateStatus({ 
+        type: 'error', 
+        message: `Failed to save article: ${error.message}. Article will be saved locally only.` 
+      });
+      
+      // Fallback to localStorage only if API fails
+      const processedTags = formData.tags 
+        ? (typeof formData.tags === 'string' 
+            ? formData.tags.split(',').map(tag => tag.trim())
+            : formData.tags)
+        : [];
+      
+      const categoryIcon = getCategoryIcon(formData.category);
+      const categoryColor = getCategoryColor(formData.category);
+      
+      const localArticle = {
+        ...formData,
+        id: formData.id || formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+        image_url: null,
+        image_icon: formData.image_icon || categoryIcon,
+        image_color: formData.image_color || categoryColor,
+        tags: processedTags
+      };
+      
+      if (selectedArticle) {
+        const updatedArticles = newsArticles.map(article => 
+          article.id === selectedArticle.id ? localArticle : article
+        );
+        setNewsArticles(updatedArticles);
+        saveArticlesToLocalStorage(updatedArticles);
+      } else {
+        const newArticles = [localArticle, ...newsArticles];
+        setNewsArticles(newArticles);
+        saveArticlesToLocalStorage(newArticles);
+      }
+      
+      setEditMode(false);
+    } finally {
+      setIsLoading(false);
     }
-    
-    // Exit edit mode
-    setEditMode(false);
   };
   
   // Save articles to localStorage
@@ -428,12 +513,43 @@ const NewsAdminPanel = () => {
   };
   
   // Handle article deletion
-  const handleDelete = (articleId) => {
+  const handleDelete = async (articleId) => {
     if (window.confirm('Are you sure you want to delete this article? This action cannot be undone.')) {
-      const updatedArticles = newsArticles.filter(article => article.id !== articleId);
-      setNewsArticles(updatedArticles);
-      saveArticlesToLocalStorage(updatedArticles);
-      setUpdateStatus({ type: 'success', message: 'Article deleted successfully!' });
+      setIsLoading(true);
+      
+      try {
+        // Import API service and delete from database
+        const { newsApi } = await import('../utils/apiService.js');
+        const adminToken = 'admin-token'; // In production, this would come from auth context
+        
+        await newsApi.admin.deleteNewsArticle(articleId, adminToken);
+        setUpdateStatus({ type: 'success', message: 'Article deleted successfully from database!' });
+        
+        // Refresh the articles list from the database
+        const result = await newsApi.getNewsArticles();
+        const updatedArticles = result.articles || [];
+        
+        // Sort by date (newest first)
+        updatedArticles.sort((a, b) => new Date(b.published_at || b.date) - new Date(a.published_at || a.date));
+        
+        setNewsArticles(updatedArticles);
+        
+        // Also update localStorage
+        localStorage.setItem('news_data', JSON.stringify(updatedArticles));
+      } catch (error) {
+        console.error('Error deleting article:', error);
+        setUpdateStatus({ 
+          type: 'error', 
+          message: `Failed to delete article from database: ${error.message}. Removing from local list only.` 
+        });
+        
+        // Fallback to localStorage only if API fails
+        const updatedArticles = newsArticles.filter(article => article.id !== articleId);
+        setNewsArticles(updatedArticles);
+        saveArticlesToLocalStorage(updatedArticles);
+      } finally {
+        setIsLoading(false);
+      }
       
       // Exit edit mode if we were editing this article
       if (selectedArticle && selectedArticle.id === articleId) {
