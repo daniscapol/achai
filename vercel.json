@@ -2,19 +2,19 @@
   "rewrites": [
     {
       "source": "/api/tutorials/([^/]+)",
-      "destination": "/api/tutorials/[id].js?id=$1"
+      "destination": "/api/v1.js"
     },
     {
       "source": "/api/tutorials",
-      "destination": "/api/tutorials.js"
+      "destination": "/api/v1.js"
     },
     {
       "source": "/api/news/([^/]+)",
-      "destination": "/api/news/[id].js?id=$1"
+      "destination": "/api/v1.js"
     },
     {
       "source": "/api/news",
-      "destination": "/api/news.js"
+      "destination": "/api/v1.js"
     },
     {
       "source": "/(.*)",
@@ -25,16 +25,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "functions": {
-    "api/tutorials.js": {
-      "includeFiles": "src/**/*"
-    },
-    "api/tutorials/[id].js": {
-      "includeFiles": "src/**/*"
-    },
-    "api/news.js": {
-      "includeFiles": "src/**/*"
-    },
-    "api/news/[id].js": {
+    "api/v1.js": {
       "includeFiles": "src/**/*"
     }
   }
