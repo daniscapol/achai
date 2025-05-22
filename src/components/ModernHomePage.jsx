@@ -5,10 +5,7 @@ import {
 } from './animations';
 // Import AboutUsSection separately to optimize loading
 import AboutUsSection from './animations/AboutUsSection';
-// Import product data files
-import { readyToUseProducts, excludeFromReadyToUse } from '../utils/readyToUseData';
-import { mcpClientProducts } from '../utils/mcpClientsData';
-import { aiAgentProducts } from '../utils/aiAgentsData';
+// Product data comes from window.mcpServersDirectData (same source as ProductDetailTech)
 
 /**
  * ModernHomePage - A completely revamped homepage with premium animations
@@ -105,12 +102,13 @@ const ModernHomePage = ({
     }
   };
   
-  // Combine featuredProducts with our specific products from each category
+  // Use the same data source as ProductDetailTech for consistency
+  const globalProducts = window.mcpServersDirectData || [];
+  
+  // Combine featuredProducts with global products data
   const combinedProducts = [
     ...featuredProducts,
-    ...readyToUseProducts,
-    ...mcpClientProducts,
-    ...aiAgentProducts
+    ...globalProducts
   ];
   
   // Add category type based on product properties with fallback rules to ensure coverage
@@ -120,6 +118,16 @@ const ModernHomePage = ({
     // If product already has a categoryType, use it
     if (product.categoryType) {
       categoryType = product.categoryType;
+    }
+    // Map product types from database to our category types
+    else if (product.product_type === 'ready_to_use') {
+      categoryType = 'ready-to-use';
+    } else if (product.product_type === 'mcp_client' || product.type === 'client') {
+      categoryType = 'mcp-client';
+    } else if (product.product_type === 'mcp_server' || product.type === 'server') {
+      categoryType = 'mcp-server';
+    } else if (product.product_type === 'ai_agent' || product.type === 'agent') {
+      categoryType = 'ai-agent';
     }
     // If product has a type that matches our categories, use it
     else if (product.type === 'ready-to-use' || product.type === 'mcp-client' || 
@@ -143,15 +151,9 @@ const ModernHomePage = ({
       const description = (product.description || '').toLowerCase();
       const tags = (product.tags || []).map(t => t.toLowerCase());
       
-      // Check for Ready to Use solutions, but exclude specific products like Ollama
-      const isExcluded = excludeFromReadyToUse.some(exclude => 
-        name.includes(exclude.toLowerCase())
-      );
-      
-      if (!isExcluded && (
-          name.includes('ready') || description.includes('ready to use') || 
-          tags.includes('ready-to-use') || category.includes('saas')
-         )) {
+      // Check for Ready to Use solutions
+      if (name.includes('ready') || description.includes('ready to use') || 
+          tags.includes('ready-to-use') || category.includes('saas')) {
         categoryType = 'ready-to-use';
       }
       // Check for MCP clients
@@ -215,74 +217,33 @@ const ModernHomePage = ({
     mainCategories.forEach(category => {
       let productsForCategory = [];
       
-      // Special handling for specific categories
-      if (category === 'mcp-client') {
-        // Ensure Claude Desktop is first
-        const claudeDesktop = categorizedProducts.find(p => 
-          p.id === 'claude-desktop' || (p.name && p.name.includes('Claude Desktop'))
-        );
-        
-        if (claudeDesktop) {
-          productsForCategory.push(claudeDesktop);
-        }
-        
-        // Add other client products if available
-        if (groupedProducts['mcp-client'] && groupedProducts['mcp-client'].length > 0) {
-          const otherClients = groupedProducts['mcp-client'].filter(p => 
-            p.id !== 'claude-desktop' && (!p.name || !p.name.includes('Claude Desktop'))
-          );
+      // Get products for this category, prioritizing higher-quality ones
+      if (groupedProducts[category] && groupedProducts[category].length > 0) {
+        // Sort by priority: official first, then by stars, then by name
+        const sortedProducts = groupedProducts[category].sort((a, b) => {
+          // Official products first
+          if (a.official && !b.official) return -1;
+          if (!a.official && b.official) return 1;
           
-          // Add up to 2 more clients
-          productsForCategory = [...productsForCategory, ...otherClients.slice(0, 3 - productsForCategory.length)];
-        }
-      } 
-      else if (category === 'ai-agent') {
-        // Ensure CrewAI is first
-        const crewAI = categorizedProducts.find(p => 
-          p.id === 'crewai' || (p.name && p.name.includes('CrewAI'))
-        );
-        
-        if (crewAI) {
-          productsForCategory.push(crewAI);
-        }
-        
-        // Add other AI Agent products if available
-        if (groupedProducts['ai-agent'] && groupedProducts['ai-agent'].length > 0) {
-          const otherAgents = groupedProducts['ai-agent'].filter(p => 
-            p.id !== 'crewai' && (!p.name || !p.name.includes('CrewAI'))
-          );
+          // Then by stars/popularity
+          const aStars = a.stars_numeric || a.stars || 0;
+          const bStars = b.stars_numeric || b.stars || 0;
+          if (aStars !== bStars) return bStars - aStars;
           
-          // Add up to 2 more agents
-          productsForCategory = [...productsForCategory, ...otherAgents.slice(0, 3 - productsForCategory.length)];
-        }
-      }
-      // Handle other categories normally
-      else if (groupedProducts[category] && groupedProducts[category].length > 0) {
-        // Take up to 3 products for other categories
-        productsForCategory = groupedProducts[category].slice(0, 3);
+          // Finally by name alphabetically
+          return (a.name || '').localeCompare(b.name || '');
+        });
+        
+        // Take up to 3 best products for this category
+        productsForCategory = sortedProducts.slice(0, 3);
       }
       
-      // If we have fewer than 3 products, fill with placeholders
-      while (productsForCategory.length < 3) {
-        // Find a product to convert to this category
-        const placeholderSource = categorizedProducts.find(p => 
-          !result.includes(p) && !productsForCategory.includes(p)
-        ) || categorizedProducts[0];
-        
-        if (placeholderSource) {
-          const placeholder = {
-            ...placeholderSource,
-            categoryType: category,
-            // Add a note to the name to indicate it's been recategorized
-            name: `${placeholderSource.name} (${category.replace(/-/g, ' ')})`
-          };
-          
-          productsForCategory.push(placeholder);
-        }
-      }
+      // If we have fewer than 3 products, we won't fill with placeholders
+      // This prevents showing products in wrong categories
+      // Instead, we'll just show what we have
       
-      // Ensure we take exactly 3 products
-      result = [...result, ...productsForCategory.slice(0, 3)];
+      // Add the products for this category to the result
+      result = [...result, ...productsForCategory];
     });
     
     return result;
