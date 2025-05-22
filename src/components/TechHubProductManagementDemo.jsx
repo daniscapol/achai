@@ -314,7 +314,7 @@ const TechHubProductManagementDemo = () => {
       console.log('Updating product:', processedData);
       
       // Update in database via API
-      const response = await fetch(`${API_BASE_URL}/products/${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/product?id=${currentProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -358,7 +358,7 @@ const TechHubProductManagementDemo = () => {
   const handleDeleteProduct = async () => {
     try {
       // Delete from database via API
-      const response = await fetch(`${API_BASE_URL}/products/${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/product?id=${currentProduct.id}`, {
         method: 'DELETE'
       });
       

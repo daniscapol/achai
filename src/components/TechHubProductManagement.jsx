@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+
+// API base URL configuration
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 import { useNavigate } from 'react-router-dom';
 import { 
   Table, 
@@ -206,7 +209,7 @@ const TechHubProductManagement = () => {
   const fetchProducts = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3001/api/products');
+      const response = await fetch(`${API_BASE_URL}/products`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -271,7 +274,7 @@ const TechHubProductManagement = () => {
         processedData.id = `${processedData.product_type}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
       }
       
-      const response = await fetch('http://localhost:3001/api/products', {
+      const response = await fetch(`${API_BASE_URL}/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -332,7 +335,7 @@ const TechHubProductManagement = () => {
       
       console.log('Sending updated product data:', processedData);
       
-      const response = await fetch(`http://localhost:3001/api/products/${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/product?id=${currentProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -375,7 +378,7 @@ const TechHubProductManagement = () => {
   // Handle delete product
   const handleDeleteProduct = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/products/${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/product?id=${currentProduct.id}`, {
         method: 'DELETE'
       });
 
@@ -425,7 +428,7 @@ const TechHubProductManagement = () => {
       console.log(`Importing ${productsData.length} products...`);
       
       // Send bulk create request
-      const response = await fetch('http://localhost:3001/api/products/bulk', {
+      const response = await fetch(`${API_BASE_URL}/products/bulk`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

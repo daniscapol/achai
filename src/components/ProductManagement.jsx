@@ -286,7 +286,7 @@ const ProductManagement = () => {
       
       console.log('Sending updated product data:', processedData);
       
-      const response = await fetch(`${API_BASE_URL}/products/${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/product?id=${currentProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -326,7 +326,7 @@ const ProductManagement = () => {
   // Handle delete product
   const handleDeleteProduct = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/products/${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/product?id=${currentProduct.id}`, {
         method: 'DELETE'
       });
 
