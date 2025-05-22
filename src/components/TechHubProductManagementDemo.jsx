@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// API base URL configuration
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 import { 
   Table, 
   TableBody, 
@@ -177,7 +180,7 @@ const TechHubProductManagementDemo = () => {
       setIsLoading(true);
       try {
         // Fetch products from API with pagination
-        const response = await fetch(`http://localhost:3001/api/products?page=${currentPage}&limit=${itemsPerPage}`);
+        const response = await fetch(`${API_BASE_URL}/products?page=${currentPage}&limit=${itemsPerPage}`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -250,7 +253,7 @@ const TechHubProductManagementDemo = () => {
       console.log('Adding product:', processedData);
       
       // Save to database via API
-      const response = await fetch('http://localhost:3001/api/products', {
+      const response = await fetch(`${API_BASE_URL}/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -311,7 +314,7 @@ const TechHubProductManagementDemo = () => {
       console.log('Updating product:', processedData);
       
       // Update in database via API
-      const response = await fetch(`http://localhost:3001/api/products/${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/products/${currentProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -355,7 +358,7 @@ const TechHubProductManagementDemo = () => {
   const handleDeleteProduct = async () => {
     try {
       // Delete from database via API
-      const response = await fetch(`http://localhost:3001/api/products/${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/products/${currentProduct.id}`, {
         method: 'DELETE'
       });
       
@@ -409,7 +412,7 @@ const TechHubProductManagementDemo = () => {
       console.log(`Importing ${productsData.length} products to database...`);
       
       // Use the bulk create API endpoint
-      const response = await fetch('http://localhost:3001/api/products/bulk', {
+      const response = await fetch(`${API_BASE_URL}/products/bulk`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -426,7 +429,7 @@ const TechHubProductManagementDemo = () => {
       const createdProducts = await response.json();
       
       // Refresh products from the database to ensure we have the latest data
-      const refreshResponse = await fetch('http://localhost:3001/api/products');
+      const refreshResponse = await fetch(`${API_BASE_URL}/products`);
       const refreshData = await refreshResponse.json();
       setProducts(refreshData.products);
       
@@ -453,7 +456,7 @@ const TechHubProductManagementDemo = () => {
   const handleBulkExport = async () => {
     try {
       // Fetch the latest products from the database first
-      const response = await fetch('http://localhost:3001/api/products?limit=1000');
+      const response = await fetch(`${API_BASE_URL}/products?limit=1000`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);

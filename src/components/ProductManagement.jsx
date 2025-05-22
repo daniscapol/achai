@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+
+// API base URL configuration
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 import { useNavigate } from 'react-router-dom';
 import useProducts from '../hooks/useProducts';
 import { 
@@ -141,7 +144,7 @@ const ProductManagement = () => {
   const fetchProducts = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3001/api/products');
+      const response = await fetch(`${API_BASE_URL}/products`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -229,7 +232,7 @@ const ProductManagement = () => {
         processedData.sku = `SKU-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
       }
       
-      const response = await fetch('http://localhost:3001/api/products', {
+      const response = await fetch(`${API_BASE_URL}/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -283,7 +286,7 @@ const ProductManagement = () => {
       
       console.log('Sending updated product data:', processedData);
       
-      const response = await fetch(`http://localhost:3001/api/products/${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/products/${currentProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -323,7 +326,7 @@ const ProductManagement = () => {
   // Handle delete product
   const handleDeleteProduct = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/products/${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/products/${currentProduct.id}`, {
         method: 'DELETE'
       });
 
