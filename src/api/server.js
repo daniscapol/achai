@@ -39,23 +39,9 @@ async function initDatabase() {
     await db.testConnection();
     console.log('PostgreSQL database connection successful');
     
-    // Initialize tutorials schema if files exist
-    const tutorialSchemaPath = path.join(__dirname, '../models/schemas/tutorials_schema.sql');
-    if (fs.existsSync(tutorialSchemaPath)) {
-      const tutorialSchema = fs.readFileSync(tutorialSchemaPath, 'utf8');
-      await db.query(tutorialSchema);
-      console.log('Tutorials schema initialized successfully');
-    }
+    // Initialize tutorials schema if files exist    const tutorialSchemaPath = path.join(__dirname, '../models/schemas/tutorials_schema.sql');    if (fs.existsSync(tutorialSchemaPath)) {      try {        const tutorialSchema = fs.readFileSync(tutorialSchemaPath, 'utf8');        await db.query(tutorialSchema);        console.log('Tutorials schema initialized successfully');      } catch (error) {        console.warn('Warning: Could not initialize tutorials schema:', error.message);        // Try to add missing columns to existing tutorials table        const tutorialColumns = [          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS is_featured BOOLEAN DEFAULT FALSE;`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS is_published BOOLEAN DEFAULT TRUE;`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS slug VARCHAR(255);`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS categories TEXT[] DEFAULT ARRAY[]::TEXT[];`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS tags TEXT[] DEFAULT ARRAY[]::TEXT[];`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS difficulty_level VARCHAR(50) DEFAULT 'Beginner';`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS estimated_reading_time INTEGER DEFAULT 5;`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS author_name VARCHAR(100) DEFAULT 'AchaAI Team';`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS view_count INTEGER DEFAULT 0;`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS rating_average DECIMAL(3,2) DEFAULT 0.0;`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS rating_count INTEGER DEFAULT 0;`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;`,          `ALTER TABLE tutorials ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;`        ];                for (const query of tutorialColumns) {          try {            await db.query(query);          } catch (err) {            if (!err.message.includes('already exists')) {              console.warn(`Warning: Could not add tutorial column: ${err.message}`);            }          }        }        console.log('Tutorials table columns updated');      }    }        // Initialize news schema if files exist    const newsSchemaPath = path.join(__dirname, '../models/schemas/news_schema.sql');    if (fs.existsSync(newsSchemaPath)) {      try {        const newsSchema = fs.readFileSync(newsSchemaPath, 'utf8');        await db.query(newsSchema);        console.log('News schema initialized successfully');      } catch (error) {        console.warn('Warning: Could not initialize news schema:', error.message);        // Try to add missing columns to existing news table        const newsColumns = [          `ALTER TABLE news ADD COLUMN IF NOT EXISTS is_breaking BOOLEAN DEFAULT FALSE;`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS is_featured BOOLEAN DEFAULT FALSE;`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS is_published BOOLEAN DEFAULT TRUE;`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS slug VARCHAR(255);`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS summary TEXT;`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS featured_image_url VARCHAR(512);`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS author_name VARCHAR(100) DEFAULT 'AchaAI Team';`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS view_count INTEGER DEFAULT 0;`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS share_count INTEGER DEFAULT 0;`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS comment_count INTEGER DEFAULT 0;`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS tags TEXT[] DEFAULT ARRAY[]::TEXT[];`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;`,          `ALTER TABLE news ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;`        ];                for (const query of newsColumns) {          try {            await db.query(query);          } catch (err) {            if (!err.message.includes('already exists')) {              console.warn(`Warning: Could not add news column: ${err.message}`);            }          }        }        console.log('News table columns updated');      }    }
     
-    // Initialize news schema if files exist
-    const newsSchemaPath = path.join(__dirname, '../models/schemas/news_schema.sql');
-    if (fs.existsSync(newsSchemaPath)) {
-      const newsSchema = fs.readFileSync(newsSchemaPath, 'utf8');
-      await db.query(newsSchema);
-      console.log('News schema initialized successfully');
-    }
-    
-    // First ensure the products table exists
+    // First ensure the products table exists with proper schema
     const createTableQuery = `
       CREATE TABLE IF NOT EXISTS products (
         id SERIAL PRIMARY KEY,
@@ -81,7 +67,7 @@ async function initDatabase() {
         inventory_count INTEGER DEFAULT 0,
         is_featured BOOLEAN DEFAULT FALSE,
         is_active BOOLEAN DEFAULT TRUE,
-        slug VARCHAR(255) NOT NULL,
+        slug VARCHAR(255),
         stars_numeric INTEGER DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -90,8 +76,42 @@ async function initDatabase() {
     
     await db.query(createTableQuery);
     console.log('Products table created or verified');
+
+    // Add missing columns if they don't exist (for existing tables)
+    const alterTableQueries = [
+      `ALTER TABLE products ADD COLUMN IF NOT EXISTS is_featured BOOLEAN DEFAULT FALSE;`,
+      `ALTER TABLE products ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;`,
+      `ALTER TABLE products ADD COLUMN IF NOT EXISTS slug VARCHAR(255);`,
+      `ALTER TABLE products ADD COLUMN IF NOT EXISTS stars_numeric INTEGER DEFAULT 0;`,
+      `ALTER TABLE products ADD COLUMN IF NOT EXISTS categories TEXT[];`,
+      `ALTER TABLE products ADD COLUMN IF NOT EXISTS tags TEXT[];`,
+      `ALTER TABLE products ADD COLUMN IF NOT EXISTS product_type VARCHAR(50) DEFAULT 'mcp_server';`,
+      `ALTER TABLE products ADD COLUMN IF NOT EXISTS official BOOLEAN DEFAULT FALSE;`,
+      `ALTER TABLE products ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;`,
+      `ALTER TABLE products ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;`
+    ];
+
+    for (const query of alterTableQueries) {
+      try {
+        await db.query(query);
+      } catch (err) {
+        // Ignore errors for columns that already exist
+        if (!err.message.includes('already exists')) {
+          console.warn(`Warning: Could not add column: ${err.message}`);
+        }
+      }
+    }
+
+    // Update existing rows to have proper slug values if missing
+    await db.query(`
+      UPDATE products 
+      SET slug = COALESCE(slug, LOWER(REGEXP_REPLACE(name, '[^a-zA-Z0-9]+', '-', 'g'))) 
+      WHERE slug IS NULL OR slug = '';
+    `);
+
+    console.log('Products table schema updated successfully');
     
-    // Create indexes if they don't exist
+    // Create indexes if they don't exist (now safe since columns exist)
     const createIndexesQuery = `
       CREATE INDEX IF NOT EXISTS idx_products_name ON products(name);
       CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);

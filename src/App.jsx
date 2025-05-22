@@ -25,6 +25,8 @@ import GlobalSearchBar from './components/GlobalSearchBar';
 import AuthRequired from './components/auth/AuthRequired';
 import ReadyToUsePage from './components/ReadyToUsePage';
 import AboutUsPage from './components/AboutUsPage';
+import TutorialsPage from './components/TutorialsPage';
+import NewsPage from './components/NewsPage';
 import { AnimatePresence, prefersReducedMotion } from './components/animations';
 import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
 
@@ -1322,6 +1324,18 @@ function App() {
         setSelectedProductId(null);
         setCurrentCategory(null);
       }
+      // Tutorials page
+      else if (path === '/tutorials') {
+        setCurrentView('tutorials');
+        setSelectedProductId(null);
+        setCurrentCategory(null);
+      }
+      // News page
+      else if (path === '/news') {
+        setCurrentView('news');
+        setSelectedProductId(null);
+        setCurrentCategory(null);
+      }
       // Unified search page
       else if (path === '/search') {
         setCurrentView('search');
@@ -1531,6 +1545,14 @@ function App() {
     window.location.href = '/product-management';
   };
 
+  const navigateToTutorials = () => {
+    window.location.href = '/tutorials';
+  };
+
+  const navigateToNews = () => {
+    window.location.href = '/news';
+  };
+
   // Determine which component to render based on current view
   let viewComponent;
   
@@ -1688,6 +1710,14 @@ function App() {
   else if (currentView === 'product-management') {
     viewComponent = <TechHubProductManagementDemo />;
   }
+  // Tutorials view
+  else if (currentView === 'tutorials') {
+    viewComponent = <TutorialsPage />;
+  }
+  // News view
+  else if (currentView === 'news') {
+    viewComponent = <NewsPage />;
+  }
   // Search results view
   else if (currentView === 'search') {
     viewComponent = (
@@ -1770,6 +1800,8 @@ function App() {
                 onNavigateProducts={navigateToProducts}
                 onNavigateOriginalProducts={navigateToOriginalProducts}
                 onNavigateProductManagement={navigateToProductManagement}
+                onNavigateTutorials={navigateToTutorials}
+                onNavigateNews={navigateToNews}
                 searchComponent={<GlobalSearchBar />}
               />
             </>
@@ -1809,6 +1841,8 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/tutorials" element={<TutorialsPage />} />
+                <Route path="/news" element={<NewsPage />} />
                 <Route path="/search" element={
                   <SearchResultsLayout>
                     <SearchResultsPage />

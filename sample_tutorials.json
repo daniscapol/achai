@@ -1,0 +1,147 @@
+[
+  {
+    "title": "Getting Started with MCP Servers",
+    "description": "Learn how to set up and configure your first Model Context Protocol (MCP) server from scratch.",
+    "content": "# Getting Started with MCP Servers\n\nModel Context Protocol (MCP) servers are powerful tools that enable AI models to interact with external data sources and tools. In this comprehensive tutorial, we'll walk you through setting up your first MCP server.\n\n## What is an MCP Server?\n\nAn MCP server is a service that implements the Model Context Protocol, allowing AI models like Claude to access external resources such as databases, APIs, files, and more.\n\n## Prerequisites\n\nBefore we begin, make sure you have:\n- Node.js 18+ installed\n- Basic knowledge of JavaScript/TypeScript\n- Understanding of REST APIs\n\n## Step 1: Installation\n\nFirst, install the MCP SDK:\n\n```bash\nnpm install @modelcontextprotocol/sdk\n```\n\n## Step 2: Basic Server Setup\n\nCreate a new file called `server.js`:\n\n```javascript\nimport { Server } from '@modelcontextprotocol/sdk/server/index.js';\nimport { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';\n\nconst server = new Server(\n  {\n    name: 'my-first-mcp-server',\n    version: '1.0.0',\n  },\n  {\n    capabilities: {\n      resources: {},\n      tools: {},\n    },\n  }\n);\n\nasync function main() {\n  const transport = new StdioServerTransport();\n  await server.connect(transport);\n  console.log('MCP server running on stdio');\n}\n\nmain().catch(console.error);\n```\n\n## Step 3: Adding Resources\n\nResources are read-only data that the server can provide. Let's add a simple resource:\n\n```javascript\nserver.setRequestHandler(ListResourcesRequestSchema, async () => {\n  return {\n    resources: [\n      {\n        uri: 'file://example.txt',\n        name: 'Example file',\n        description: 'An example text file',\n        mimeType: 'text/plain',\n      },\n    ],\n  };\n});\n```\n\n## Conclusion\n\nYou've successfully created your first MCP server! This is just the beginning - you can now add more complex resources, tools, and capabilities to make your server more powerful.",
+    "category": "Getting Started",
+    "categories": ["Getting Started", "MCP", "Tutorial"],
+    "tags": ["mcp", "server", "setup", "beginner", "tutorial"],
+    "difficulty_level": "Beginner",
+    "estimated_reading_time": 8,
+    "author_name": "AchaAI Team",
+    "author_email": "team@achai.co",
+    "featured_image_url": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop",
+    "is_featured": true,
+    "sections": [
+      {
+        "title": "Introduction",
+        "content": "Understanding the basics of MCP servers",
+        "order": 1
+      },
+      {
+        "title": "Setup",
+        "content": "Installing and configuring your environment",
+        "order": 2
+      },
+      {
+        "title": "Implementation",
+        "content": "Writing your first server code",
+        "order": 3
+      }
+    ],
+    "prerequisites": ["Basic JavaScript knowledge", "Node.js installed", "Terminal familiarity"],
+    "learning_outcomes": ["Understand MCP concepts", "Create a basic server", "Implement resources"],
+    "resources": [
+      {
+        "title": "MCP Documentation",
+        "url": "https://modelcontextprotocol.io/docs",
+        "type": "documentation"
+      },
+      {
+        "title": "GitHub Repository",
+        "url": "https://github.com/modelcontextprotocol/servers",
+        "type": "code"
+      }
+    ]
+  },
+  {
+    "title": "Building AI Agents with Browser Automation",
+    "description": "Create intelligent agents that can interact with web browsers to automate tasks and gather information.",
+    "content": "# Building AI Agents with Browser Automation\n\nIn this advanced tutorial, we'll explore how to build AI agents that can control web browsers, interact with web pages, and perform automated tasks.\n\n## Overview\n\nBrowser automation combined with AI creates powerful agents capable of:\n- Web scraping and data collection\n- Form filling and submission\n- User interface testing\n- Content generation and publishing\n\n## Tools We'll Use\n\n- **Browser Use MCP Server**: For browser control\n- **Claude API**: For AI decision making\n- **Playwright**: For browser automation\n\n## Setting Up Browser Automation\n\nFirst, install the necessary packages:\n\n```bash\nnpm install playwright @anthropic-ai/browser-use\n```\n\n## Creating Your First Agent\n\nLet's create an agent that can search for information:\n\n```javascript\nimport { chromium } from 'playwright';\nimport { BrowserUse } from '@anthropic-ai/browser-use';\n\nclass WebSearchAgent {\n  constructor() {\n    this.browser = null;\n    this.page = null;\n  }\n\n  async initialize() {\n    this.browser = await chromium.launch({ headless: false });\n    this.page = await this.browser.newPage();\n  }\n\n  async search(query) {\n    await this.page.goto('https://google.com');\n    await this.page.fill('input[name=\"q\"]', query);\n    await this.page.press('input[name=\"q\"]', 'Enter');\n    \n    // Wait for results\n    await this.page.waitForSelector('.g');\n    \n    // Extract search results\n    const results = await this.page.$$eval('.g', elements => \n      elements.slice(0, 5).map(el => ({\n        title: el.querySelector('h3')?.textContent,\n        url: el.querySelector('a')?.href,\n        description: el.querySelector('.VwiC3b')?.textContent\n      }))\n    );\n    \n    return results;\n  }\n\n  async cleanup() {\n    await this.browser?.close();\n  }\n}\n```\n\n## Advanced Agent Patterns\n\nFor more sophisticated agents, consider implementing:\n\n1. **State Management**: Track agent state across interactions\n2. **Error Handling**: Robust error recovery mechanisms\n3. **Rate Limiting**: Respect website rate limits\n4. **Security**: Proper credential management\n\n## Best Practices\n\n- Always respect robots.txt and website terms of service\n- Implement proper error handling and timeouts\n- Use appropriate delays between actions\n- Monitor and log agent activities\n\n## Conclusion\n\nBrowser automation with AI opens up countless possibilities for intelligent web agents. Start with simple tasks and gradually build more complex behaviors.",
+    "category": "AI Agents",
+    "categories": ["AI Agents", "Browser Automation", "Advanced"],
+    "tags": ["ai", "agents", "browser", "automation", "playwright", "claude"],
+    "difficulty_level": "Advanced",
+    "estimated_reading_time": 15,
+    "author_name": "Sarah Chen",
+    "author_email": "sarah@achai.co",
+    "featured_image_url": "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800&h=400&fit=crop",
+    "is_featured": true,
+    "sections": [
+      {
+        "title": "Introduction to Browser Automation",
+        "content": "Understanding browser automation concepts",
+        "order": 1
+      },
+      {
+        "title": "Setting Up Your Environment",
+        "content": "Installing and configuring necessary tools",
+        "order": 2
+      },
+      {
+        "title": "Building Your First Agent",
+        "content": "Creating a simple web search agent",
+        "order": 3
+      },
+      {
+        "title": "Advanced Patterns",
+        "content": "Implementing sophisticated agent behaviors",
+        "order": 4
+      }
+    ],
+    "prerequisites": ["Advanced JavaScript knowledge", "Understanding of web technologies", "Experience with APIs"],
+    "learning_outcomes": ["Build browser automation agents", "Implement AI decision making", "Handle complex web interactions"],
+    "resources": [
+      {
+        "title": "Playwright Documentation",
+        "url": "https://playwright.dev/docs",
+        "type": "documentation"
+      },
+      {
+        "title": "Browser Use GitHub",
+        "url": "https://github.com/anthropics/anthropic-cookbook/tree/main/browser_use",
+        "type": "code"
+      }
+    ]
+  },
+  {
+    "title": "Integrating Claude with Your Applications",
+    "description": "Learn how to seamlessly integrate Claude AI into your web applications with practical examples and best practices.",
+    "content": "# Integrating Claude with Your Applications\n\nClaude is a powerful AI assistant that can be integrated into your applications to provide intelligent features. This tutorial covers various integration patterns and best practices.\n\n## Getting Started\n\nBefore integrating Claude, you'll need:\n- An Anthropic API key\n- Understanding of REST APIs\n- Knowledge of your chosen programming language\n\n## Basic Integration\n\nHere's a simple example using JavaScript:\n\n```javascript\nimport Anthropic from '@anthropic-ai/sdk';\n\nconst anthropic = new Anthropic({\n  apiKey: process.env.ANTHROPIC_API_KEY,\n});\n\nasync function askClaude(message) {\n  const response = await anthropic.messages.create({\n    model: 'claude-3-sonnet-20240229',\n    max_tokens: 1024,\n    messages: [{\n      role: 'user',\n      content: message\n    }]\n  });\n  \n  return response.content[0].text;\n}\n```\n\n## Web Application Integration\n\nFor web applications, create an API endpoint:\n\n```javascript\n// Express.js example\napp.post('/api/chat', async (req, res) => {\n  try {\n    const { message } = req.body;\n    const response = await askClaude(message);\n    res.json({ response });\n  } catch (error) {\n    res.status(500).json({ error: error.message });\n  }\n});\n```\n\n## Advanced Features\n\n### Streaming Responses\n\nFor real-time responses:\n\n```javascript\nasync function streamClaude(message, onToken) {\n  const stream = await anthropic.messages.create({\n    model: 'claude-3-sonnet-20240229',\n    max_tokens: 1024,\n    messages: [{ role: 'user', content: message }],\n    stream: true\n  });\n  \n  for await (const chunk of stream) {\n    if (chunk.type === 'content_block_delta') {\n      onToken(chunk.delta.text);\n    }\n  }\n}\n```\n\n### Context Management\n\nMaintain conversation context:\n\n```javascript\nclass ConversationManager {\n  constructor() {\n    this.messages = [];\n  }\n  \n  async addMessage(role, content) {\n    this.messages.push({ role, content });\n    \n    if (this.messages.length > 20) {\n      // Keep conversation manageable\n      this.messages = this.messages.slice(-20);\n    }\n  }\n  \n  async getClaude Response() {\n    const response = await anthropic.messages.create({\n      model: 'claude-3-sonnet-20240229',\n      max_tokens: 1024,\n      messages: this.messages\n    });\n    \n    await this.addMessage('assistant', response.content[0].text);\n    return response.content[0].text;\n  }\n}\n```\n\n## Best Practices\n\n1. **Rate Limiting**: Implement proper rate limiting\n2. **Error Handling**: Handle API errors gracefully\n3. **Security**: Never expose API keys to clients\n4. **Caching**: Cache responses when appropriate\n5. **Monitoring**: Log usage and monitor costs\n\n## Common Use Cases\n\n- **Customer Support**: Automated help desk\n- **Content Generation**: Blog posts, emails, documentation\n- **Code Analysis**: Code review and suggestions\n- **Data Analysis**: Insights from structured data\n\n## Conclusion\n\nIntegrating Claude into your applications opens up powerful AI capabilities. Start with simple use cases and gradually expand to more complex scenarios.",
+    "category": "Integration",
+    "categories": ["Integration", "API", "Development"],
+    "tags": ["claude", "api", "integration", "javascript", "development"],
+    "difficulty_level": "Intermediate",
+    "estimated_reading_time": 12,
+    "author_name": "Michael Rodriguez",
+    "author_email": "michael@achai.co",
+    "featured_image_url": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=400&fit=crop",
+    "is_featured": false,
+    "sections": [
+      {
+        "title": "API Setup",
+        "content": "Getting started with the Anthropic API",
+        "order": 1
+      },
+      {
+        "title": "Basic Integration",
+        "content": "Simple integration examples",
+        "order": 2
+      },
+      {
+        "title": "Advanced Features",
+        "content": "Streaming and context management",
+        "order": 3
+      },
+      {
+        "title": "Best Practices",
+        "content": "Production-ready implementation tips",
+        "order": 4
+      }
+    ],
+    "prerequisites": ["JavaScript/Node.js knowledge", "REST API understanding", "Basic web development"],
+    "learning_outcomes": ["Integrate Claude API", "Handle streaming responses", "Manage conversation context"],
+    "resources": [
+      {
+        "title": "Anthropic API Documentation",
+        "url": "https://docs.anthropic.com",
+        "type": "documentation"
+      },
+      {
+        "title": "Claude SDK",
+        "url": "https://github.com/anthropics/anthropic-sdk-typescript",
+        "type": "code"
+      }
+    ]
+  }
+] 
