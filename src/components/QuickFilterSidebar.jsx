@@ -132,7 +132,7 @@ const QuickFilterSidebar = ({
           <div className="mb-6">
             <div className="flex items-center justify-between mb-2 px-2">
               <h3 className="text-xs uppercase font-semibold text-gray-400">Popular Categories</h3>
-              <a href="#/categories" className="text-xs text-purple-400 hover:text-purple-300">
+              <a href="#/browse-categories" className="text-xs text-purple-400 hover:text-purple-300">
                 View all
               </a>
             </div>

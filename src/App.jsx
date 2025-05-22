@@ -1232,7 +1232,7 @@ function App() {
         }
       } 
       // Categories page - both paths work and use the new component
-      else if (path === '/categories' || path === '/browse-categories') {
+      else if (path === '/browse-categories') {
         setCurrentView('categories-new');
         setSelectedProductId(null);
         setCurrentCategory(null);
@@ -1798,7 +1798,6 @@ function App() {
                 <Route path="/products" element={<PremiumProductsPage />} />
                 <Route path="/products-original" element={<OriginalProductsPage />} />
                 <Route path="/product-management" element={<TechHubProductManagementDemo />} />
-                <Route path="/categories" element={<NewCategoriesPage onNavigateToCategorySearch={navigateToList} />} />
                 <Route path="/browse-categories" element={<NewCategoriesPage onNavigateToCategorySearch={navigateToList} />} />
                 <Route path="/what-is-an-mcp-server" element={<WhatIsAnMcpServerPage />} />
                 <Route path="/connect-to-claude" element={<ConnectToClaudePage />} />

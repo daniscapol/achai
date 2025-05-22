@@ -63,7 +63,7 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
       icon: "🤝",
       gradient: "from-amber-500 to-orange-600",
       buttonText: "Meet Partners",
-      buttonLink: "#/categories"
+      buttonLink: "#/browse-categories"
     }
   ];
 

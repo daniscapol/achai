@@ -156,7 +156,7 @@ const WhatIsAnMcpServerPage = () => {
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <a 
-            href="#/categories" 
+            href="#/browse-categories" 
             className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-lg"
           >
             Browse MCP Servers

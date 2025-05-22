@@ -90,7 +90,7 @@ const Footer = () => {
               </h3>
               <ul className="space-y-3 text-sm">
                 {[
-                  { label: 'Categories', href: '#/categories' },
+                  { label: 'Categories', href: '#/browse-categories' },
                   { label: 'Ready-to-Use Tools', href: '#/ready-to-use' },
                   { label: 'AI Agents', href: '#/ai-agents' },
                 ].map((item) => (
