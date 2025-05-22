@@ -13,6 +13,27 @@ const SimpleProductsPage = () => {
     'ai-agent': 0,
     'ready-to-use': 0
   });
+
+  // Helper function to format product type display names
+  const formatProductType = (type) => {
+    if (!type) return '';
+    
+    switch(type) {
+      case 'mcp_server':
+      case 'server':
+        return 'MCP Server';
+      case 'mcp_client':
+      case 'client':
+        return 'MCP Client';
+      case 'ai_agent':
+      case 'ai-agent':
+        return 'AI Agent';
+      case 'ready-to-use':
+        return 'Ready to Use';
+      default:
+        return type.charAt(0).toUpperCase() + type.slice(1);
+    }
+  };
   
   // Get products from AWS database with our hook
   const {
@@ -206,7 +227,7 @@ const SimpleProductsPage = () => {
                             'bg-purple-600/90'
                           }`}
                         >
-                          {product.type || product.product_type}
+                          {formatProductType(product.type || product.product_type)}
                         </div>
                       )}
                       

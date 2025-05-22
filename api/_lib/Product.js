@@ -236,6 +236,22 @@ export class Product {
     }
   }
   
+  static async getByCategory(category, limit = 10) {
+    try {
+      const result = await query(`
+        SELECT * FROM products 
+        WHERE category = $1 AND is_active = TRUE 
+        ORDER BY is_featured DESC, created_at DESC 
+        LIMIT $2
+      `, [category, limit]);
+      
+      return result.rows;
+    } catch (error) {
+      console.error('Error in Product.getByCategory:', error);
+      throw error;
+    }
+  }
+
   static async search(searchTerm, page = 1, limit = 100) {
     try {
       const offset = (page - 1) * limit;

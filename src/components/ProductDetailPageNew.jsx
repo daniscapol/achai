@@ -7,7 +7,8 @@ import { Separator } from './ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { 
   ArrowLeft, Star, ExternalLink, Github, Package, FileCode, 
-  Bookmark, Server, Laptop, Code, Sparkles, ChevronLeft, ChevronRight
+  Bookmark, Server, Laptop, Code, Sparkles, ChevronLeft, ChevronRight,
+  Download, Code2
 } from 'lucide-react';
 
 const ProductDetailPageNew = () => {
@@ -169,7 +170,8 @@ const ProductDetailPageNew = () => {
       
       // If not found or we're in the regular interface, fetch from API with timeout protection
       try {
-        const response = await fetch(`http://localhost:3001/api/products/category/${category}?limit=4`, {
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
+        const response = await fetch(`${apiBaseUrl}/api/products/category/${category}?limit=4`, {
           signal: controller.signal,
           headers: { 'Cache-Control': 'no-cache' }
         });
@@ -701,15 +703,15 @@ const ProductDetailPageNew = () => {
               </div>
             </div>
             
-            {/* GitHub button */}
+            {/* Download/Source Code button */}
             <Button 
-              onClick={() => window.open(product.githubUrl || 'https://github.com', '_blank')}
+              onClick={() => window.open(product.githubUrl || product.github_url || 'https://github.com', '_blank')}
               variant="outline"
-              className="w-full mb-3 hover:bg-zinc-700"
+              className="w-full mb-3 hover:bg-emerald-700 border-emerald-500 text-emerald-400 hover:text-emerald-300"
             >
               <span className="flex items-center justify-center">
-                <Github className="w-4 h-4 mr-2" />
-                GitHub Repository
+                <Code2 className="w-4 h-4 mr-2" />
+                View Source Code
               </span>
             </Button>
             

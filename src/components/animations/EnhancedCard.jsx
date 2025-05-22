@@ -73,13 +73,17 @@ export const EnhancedProductCard = ({
   const getBadgeInfo = () => {
     switch (product_type) {
       case 'mcp_server':
-        return { color: 'bg-purple-500', icon: 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9', label: 'Server' };
+      case 'server':
+        return { color: 'bg-purple-500', icon: 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9', label: 'MCP Server' };
       case 'mcp_client':
-        return { color: 'bg-blue-500', icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', label: 'Client' };
+      case 'client':
+        return { color: 'bg-blue-500', icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', label: 'MCP Client' };
       case 'ai_agent':
-        return { color: 'bg-green-500', icon: 'M13 10V3L4 14h7v7l9-11h-7z', label: 'Agent' };
+      case 'ai-agent':
+        return { color: 'bg-green-500', icon: 'M13 10V3L4 14h7v7l9-11h-7z', label: 'AI Agent' };
       case 'ready_to_use':
-        return { color: 'bg-amber-500', icon: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z', label: 'Ready' };
+      case 'ready-to-use':
+        return { color: 'bg-amber-500', icon: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z', label: 'Ready to Use' };
       default:
         return { color: 'bg-gray-500', icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z', label: 'MCP' };
     }
