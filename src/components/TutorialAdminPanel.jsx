@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { tutorialApi } from '../utils/apiService';
 
 const TutorialAdminPanel = () => {
   const [tutorials, setTutorials] = useState([]);
@@ -34,13 +35,7 @@ const TutorialAdminPanel = () => {
     const fetchTutorials = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3001/api/tutorials?limit=50');
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch tutorials: ${response.status} ${response.statusText}`);
-        }
-        
-        const data = await response.json();
+        const data = await tutorialApi.getTutorials({ limit: 50 });
         // Ensure proper data formatting
         const formattedTutorials = (data.tutorials || []).map(tutorial => ({
           ...tutorial,
@@ -190,21 +185,7 @@ const TutorialAdminPanel = () => {
         return;
       }
       
-      const response = await fetch('http://localhost:3001/api/tutorials', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer admin-token' // Simple auth for demo
-        },
-        body: JSON.stringify(formData)
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to create tutorial');
-      }
-      
-      const newTutorial = await response.json();
+      const newTutorial = await tutorialApi.admin.createTutorial(formData, 'admin-token');
       
       // Update the tutorials list
       setTutorials(prev => [newTutorial, ...prev]);
@@ -243,21 +224,11 @@ const TutorialAdminPanel = () => {
         return;
       }
       
-      const response = await fetch(`http://localhost:3001/api/tutorials/${currentTutorial.id || currentTutorial.slug}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer admin-token' // Simple auth for demo
-        },
-        body: JSON.stringify(formData)
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update tutorial');
-      }
-      
-      const updatedTutorial = await response.json();
+      const updatedTutorial = await tutorialApi.admin.updateTutorial(
+        currentTutorial.id || currentTutorial.slug, 
+        formData, 
+        'admin-token'
+      );
       
       // Update the tutorials list
       setTutorials(prev => prev.map(t => 
@@ -290,17 +261,7 @@ const TutorialAdminPanel = () => {
     }
     
     try {
-      const response = await fetch(`http://localhost:3001/api/tutorials/${tutorial.id || tutorial.slug}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': 'Bearer admin-token' // Simple auth for demo
-        }
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to delete tutorial');
-      }
+      await tutorialApi.admin.deleteTutorial(tutorial.id || tutorial.slug, 'admin-token');
       
       // Update the tutorials list
       setTutorials(prev => prev.filter(t => t.id !== tutorial.id));

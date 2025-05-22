@@ -239,6 +239,8 @@ app.use(cors({
     'http://127.0.0.1:5174',
     'https://achai-9epuqi7r9-daniscapols-projects.vercel.app',
     'https://achai.vercel.app',
+    'https://www.achai.co',
+    'https://achai.co',
     /\.vercel\.app$/  // Allow all vercel.app subdomains
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
