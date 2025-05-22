@@ -18,9 +18,9 @@ export default async function handler(req, res) {
     const path = url.split('?')[0]; // Remove query parameters
     
     // Parse the route
-    const pathParts = path.split('/').filter(Boolean); // ['api', 'v1', 'tutorials', 'id']
-    const resource = pathParts[2]; // 'tutorials' or 'news'
-    const id = pathParts[3]; // individual resource ID (optional)
+    const pathParts = path.split('/').filter(Boolean); // ['api', 'news'] or ['api', 'tutorials']
+    const resource = pathParts[1]; // 'tutorials' or 'news'
+    const id = pathParts[2]; // individual resource ID (optional)
     
     // Route to appropriate handler
     if (resource === 'tutorials') {
