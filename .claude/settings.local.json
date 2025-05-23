@@ -58,7 +58,12 @@
       "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg -n \"useTranslation\" /home/pumba/websiteloco/good/src/components/animations/FeaturedSection.jsx)",
       "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg -n \"All Categories\" /home/pumba/websiteloco/good/src/components/ModernHomePage.jsx)",
       "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg -C3 \"All.*ategories\" /home/pumba/websiteloco/good/src/components/ModernHomePage.jsx)",
-      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"All.*Categories\" /home/pumba/websiteloco/good/src/components/ModernHomePage.jsx)"
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"All.*Categories\" /home/pumba/websiteloco/good/src/components/ModernHomePage.jsx)",
+      "Bash(export:*)",
+      "Bash(export DB_PORT=\"5432\")",
+      "Bash(export DB_USER=\"achai\")",
+      "Bash(export DB_PASSWORD=\"TrinityPW1\")",
+      "Bash(export DB_NAME=\"achai\")"
     ],
     "deny": []
   }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // Use environment variable for API URL with localhost fallback
 const API_URL = import.meta.env.VITE_API_BASE_URL ? 
@@ -6,6 +7,7 @@ const API_URL = import.meta.env.VITE_API_BASE_URL ?
   'http://localhost:3001/api/products';
 
 const useProducts = (initialPage = 1, initialLimit = 100) => {
+  const { currentLanguage } = useLanguage();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,8 +22,9 @@ const useProducts = (initialPage = 1, initialLimit = 100) => {
   const fetchProducts = async (page = initialPage, limit = initialLimit) => {
     setLoading(true);
     try {
-      console.log(`Making request to: ${API_URL}?page=${page}&limit=${limit}`);
-      const response = await fetch(`${API_URL}?page=${page}&limit=${limit}`);
+      const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
+      console.log(`Making request to: ${API_URL}?page=${page}&limit=${limit}&language=${langParam}`);
+      const response = await fetch(`${API_URL}?page=${page}&limit=${limit}&language=${langParam}`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -76,7 +79,7 @@ const useProducts = (initialPage = 1, initialLimit = 100) => {
 
   useEffect(() => {
     fetchProducts(pagination.currentPage, pagination.limit);
-  }, [pagination.currentPage, pagination.limit]);
+  }, [pagination.currentPage, pagination.limit, currentLanguage]);
 
   const changePage = (newPage) => {
     if (newPage >= 1 && newPage <= pagination.totalPages) {
@@ -100,10 +103,11 @@ const useProducts = (initialPage = 1, initialLimit = 100) => {
 
     setLoading(true);
     try {
+      const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ? 
         `${import.meta.env.VITE_API_BASE_URL}` : 
         'http://localhost:3001/api';
-      const response = await fetch(`${API_BASE_URL}/products/search?q=${encodeURIComponent(query)}`);
+      const response = await fetch(`${API_BASE_URL}/products?search=${encodeURIComponent(query)}&language=${langParam}`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -147,7 +151,8 @@ const useProducts = (initialPage = 1, initialLimit = 100) => {
 
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/category/${encodeURIComponent(category)}`);
+      const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
+      const response = await fetch(`${API_URL}?category=${encodeURIComponent(category)}&language=${langParam}`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -217,10 +222,11 @@ const useProducts = (initialPage = 1, initialLimit = 100) => {
     
     setLoading(true);
     try {
+      const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ? 
         `${import.meta.env.VITE_API_BASE_URL}` : 
         'http://localhost:3001/api';
-      const typeEndpoint = `${API_BASE_URL}/products/type/${encodeURIComponent(type)}?page=${page}&limit=${limit}`;
+      const typeEndpoint = `${API_BASE_URL}/products?type=${encodeURIComponent(type)}&page=${page}&limit=${limit}&language=${langParam}`;
       console.log(`Making request to: ${typeEndpoint}`);
       const response = await fetch(typeEndpoint);
       

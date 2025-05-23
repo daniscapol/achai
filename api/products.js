@@ -1,5 +1,6 @@
 import { testConnection, getDataSourceInfo } from './_lib/db.js';
 import Product from './_lib/Product.js';
+import ProductMultilingual from './_lib/ProductMultilingual.js';
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -20,8 +21,32 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 100;
+      const language = req.query.language || req.query.lang || 'en';
+      const search = req.query.search || req.query.q;
+      const type = req.query.type;
+      const category = req.query.category;
       
-      const result = await Product.getAll(page, limit);
+      let result;
+      
+      if (search) {
+        // Use multilingual search
+        result = await ProductMultilingual.search(search, page, limit, language);
+      } else if (type) {
+        // Get by type with language preference
+        result = await ProductMultilingual.getByType(type, page, limit, language);
+      } else if (category) {
+        // Get by category with language preference  
+        const products = await ProductMultilingual.getByCategory(category, limit, language);
+        result = {
+          products,
+          pagination: { currentPage: 1, totalPages: 1, total: products.length },
+          dataStatus: { type: 'success', source: 'postgres', message: 'Connected to PostgreSQL database', language }
+        };
+      } else {
+        // Get all with language preference
+        result = await ProductMultilingual.getAll(page, limit, language);
+      }
+      
       res.status(200).json(result);
       
     } else if (req.method === 'POST') {

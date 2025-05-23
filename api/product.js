@@ -1,5 +1,6 @@
 import { testConnection } from './_lib/db.js';
 import Product from './_lib/Product.js';
+import ProductMultilingual from './_lib/ProductMultilingual.js';
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -24,8 +25,9 @@ export default async function handler(req, res) {
     }
     
     if (req.method === 'GET') {
-      // Get single product by ID
-      const product = await Product.getById(id);
+      // Get single product by ID with language preference
+      const language = req.query.language || req.query.lang || 'en';
+      const product = await ProductMultilingual.getById(id, language);
       if (!product) {
         return res.status(404).json({ error: 'Product not found' });
       }

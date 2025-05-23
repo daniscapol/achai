@@ -268,7 +268,7 @@ const DynamicHeroSection = ({
         </motion.div>
         
         {/* Scroll indicator - simplified for performance */}
-        <div className="absolute bottom-12 left-[45%] transform -translate-x-1/2 flex flex-col items-center z-20 opacity-60">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-20 opacity-60">
           <div className="bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-purple-500/30 flex flex-col items-center">
             <span className="text-sm font-medium text-purple-100 mb-2">{translationValues.scrollToExplore}</span>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-purple-400">

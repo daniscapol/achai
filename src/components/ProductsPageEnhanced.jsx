@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../contexts/LanguageContext';
 import useProducts from '../hooks/useProducts';
 import Pagination from './Pagination';
 import {
@@ -23,6 +24,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const ProductsPageEnhanced = () => {
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -115,21 +117,77 @@ const ProductsPageEnhanced = () => {
     }
   };
 
+  // Translation mapping for MCP data
+  const translateMcpData = (mcpItems) => {
+    if (currentLanguage !== 'pt') return mcpItems;
+    
+    const translations = {
+      // Names
+      'Visual Studio Code': 'Visual Studio Code',
+      'Cursor': 'Cursor',
+      'FileStash': 'FileStash',
+      'Sourcegraph Cody': 'Sourcegraph Cody',
+      'Claude Code': 'Claude Code',
+      'Claude CLI': 'Claude CLI',
+      'GitHub': 'GitHub',
+      'PostgreSQL MCP Server': 'Servidor MCP PostgreSQL',
+      'MCP CLI Client': 'Cliente MCP CLI',
+      'Claude Desktop': 'Claude Desktop',
+      'VSCode MCP Extension': 'Extensão MCP VSCode',
+      
+      // Descriptions
+      'Popular code editor with MCP integration for AI-powered development assistance.': 'Editor de código popular com integração MCP para assistência de desenvolvimento com IA.',
+      'AI-powered code editor with MCP integration for advanced code completion and editing.': 'Editor de código alimentado por IA com integração MCP para autocompletar e edição avançada.',
+      'Remote Storage Access service that supports SFTP, S3, FTP, SMB, NFS, WebDAV, GIT, FTPS, gcloud, azure blob, sharepoint, and more through a unified MCP interface.': 'Serviço de acesso a armazenamento remoto que suporta SFTP, S3, FTP, SMB, NFS, WebDAV, GIT, FTPS, gcloud, azure blob, sharepoint e mais através de uma interface MCP unificada.',
+      'AI coding assistant with MCP integration for advanced code analysis, generation, and documentation.': 'Assistente de codificação IA com integração MCP para análise, geração e documentação avançada de código.',
+      'Official CLI tool for writing and refactoring code with Claude. Integrates seamlessly with your development workflow.': 'Ferramenta CLI oficial para escrever e refatorar código com Claude. Integra-se perfeitamente ao seu fluxo de trabalho de desenvolvimento.',
+      'Command-line interface for Anthropic Claude with MCP support. Access Claude and all your MCP servers through a simple command line tool.': 'Interface de linha de comando para Anthropic Claude com suporte MCP. Acesse Claude e todos os seus servidores MCP através de uma ferramenta simples de linha de comando.',
+      'GitHub API integration for repository management, PRs, issues, and more. Enables AI to interact with and manage GitHub repositories and workflows.': 'Integração da API GitHub para gerenciamento de repositórios, PRs, issues e mais. Permite à IA interagir e gerenciar repositórios e fluxos de trabalho do GitHub.',
+      
+      // Categories
+      'Code Editor': 'Editor de Código',
+      'Development Tool': 'Ferramenta de Desenvolvimento',
+      'File Systems': 'Sistemas de Arquivos',
+      'Remote Storage': 'Armazenamento Remoto',
+      'Coding Assistant': 'Assistente de Codificação',
+      'CLI Tool': 'Ferramenta CLI',
+      'Terminal': 'Terminal',
+      'Version Control': 'Controle de Versão',
+      'CLI': 'CLI',
+      'Desktop Applications': 'Aplicações Desktop',
+      'IDE Extensions': 'Extensões IDE'
+    };
+    
+    return mcpItems.map(item => ({
+      ...item,
+      name: translations[item.name] || item.name,
+      description: translations[item.description] || item.description,
+      shortDescription: translations[item.shortDescription] || translations[item.description] || item.shortDescription,
+      category: translations[item.category] || item.category,
+      categories: item.categories?.map(cat => translations[cat] || cat) || item.categories
+    }));
+  };
+
   // Function to fetch MCP unified data for integration
   const fetchMcpData = async () => {
     try {
+      let mcpData = [];
+      
       // Check if window.mcpServersDirectData is available
       if (window.mcpServersDirectData && Array.isArray(window.mcpServersDirectData)) {
-        return window.mcpServersDirectData;
+        mcpData = window.mcpServersDirectData;
       }
-      
       // As a fallback, try loading unified data
-      if (window.unifiedSearchData && Array.isArray(window.unifiedSearchData)) {
-        return window.unifiedSearchData;
+      else if (window.unifiedSearchData && Array.isArray(window.unifiedSearchData)) {
+        mcpData = window.unifiedSearchData;
+      }
+      // If we don't have MCP data, just use our DB products
+      else {
+        mcpData = [];
       }
       
-      // If we don't have MCP data, just use our DB products
-      return [];
+      // Apply translations if in Portuguese
+      return translateMcpData(mcpData);
     } catch (error) {
       console.error("Error fetching MCP data:", error);
       return [];
@@ -326,7 +384,7 @@ const ProductsPageEnhanced = () => {
   // Load combined data when products change or filters change
   useEffect(() => {
     combineProductData();
-  }, [dbProducts, activeTab, categoryFilter, searchQuery, sortOption, selectedFilters]);
+  }, [dbProducts, activeTab, categoryFilter, searchQuery, sortOption, selectedFilters, currentLanguage]);
   
   // Update URL when state changes
   useEffect(() => {
