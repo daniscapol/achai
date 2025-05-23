@@ -3,8 +3,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import productRoutes from './productRoutes.js';
 import updateImageRoutes from './updateImageRoutes.js';
-import tutorialRoutes from './tutorialRoutes.js';
-import newsRoutes from './newsRoutes.js';
 import db from '../utils/db.js';
 import fs from 'fs';
 import path from 'path';
@@ -39,7 +37,6 @@ async function initDatabase() {
     await db.testConnection();
     console.log('PostgreSQL database connection successful');
     
-    // Initialize tutorials schema - try direct creation first, then add missing columns    try {      // First try to create the tutorials table directly      await db.query(`        CREATE TABLE IF NOT EXISTS tutorials (          id SERIAL PRIMARY KEY,          title VARCHAR(255) NOT NULL,          slug VARCHAR(255) UNIQUE,          description TEXT,          content TEXT NOT NULL,          featured_image_url VARCHAR(512),          category VARCHAR(100) NOT NULL DEFAULT 'General',          categories TEXT[] DEFAULT ARRAY[]::TEXT[],          tags TEXT[] DEFAULT ARRAY[]::TEXT[],          difficulty_level VARCHAR(50) DEFAULT 'Beginner',          estimated_reading_time INTEGER DEFAULT 5,          author_name VARCHAR(100) DEFAULT 'AchaAI Team',          author_email VARCHAR(255),          author_avatar_url VARCHAR(512),          meta_title VARCHAR(255),          meta_description TEXT,          is_featured BOOLEAN DEFAULT FALSE,          is_published BOOLEAN DEFAULT TRUE,          view_count INTEGER DEFAULT 0,          like_count INTEGER DEFAULT 0,          rating_average DECIMAL(3,2) DEFAULT 0.0,          rating_count INTEGER DEFAULT 0,          prerequisites TEXT[] DEFAULT ARRAY[]::TEXT[],          learning_outcomes TEXT[] DEFAULT ARRAY[]::TEXT[],          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,          published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP        );      `);      console.log('Tutorials table created or verified');    } catch (error) {      console.warn('Warning: Could not create tutorials table:', error.message);    }    // Initialize news schema - try direct creation first    try {      await db.query(`        CREATE TABLE IF NOT EXISTS news (          id SERIAL PRIMARY KEY,          title VARCHAR(255) NOT NULL,          slug VARCHAR(255) UNIQUE,          description TEXT,          content TEXT NOT NULL,          excerpt TEXT,          summary TEXT,          featured_image_url VARCHAR(512),          category VARCHAR(100) NOT NULL DEFAULT 'General',          categories TEXT[] DEFAULT ARRAY[]::TEXT[],          tags TEXT[] DEFAULT ARRAY[]::TEXT[],          author_name VARCHAR(100) DEFAULT 'AchaAI Team',          author_email VARCHAR(255),          author_avatar_url VARCHAR(512),          meta_title VARCHAR(255),          meta_description TEXT,          is_breaking BOOLEAN DEFAULT FALSE,          is_featured BOOLEAN DEFAULT FALSE,          is_published BOOLEAN DEFAULT TRUE,          view_count INTEGER DEFAULT 0,          like_count INTEGER DEFAULT 0,          share_count INTEGER DEFAULT 0,          comment_count INTEGER DEFAULT 0,          reading_time INTEGER DEFAULT 5,          source_name VARCHAR(255),          source_url VARCHAR(512),          related_products TEXT[] DEFAULT ARRAY[]::TEXT[],          external_links JSONB DEFAULT '[]'::JSONB,          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,          published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,          scheduled_publish_at TIMESTAMP        );      `);      console.log('News table created or verified');    } catch (error) {      console.warn('Warning: Could not create news table:', error.message);    }
     
     // First ensure the products table exists with proper schema
     const createTableQuery = `
@@ -272,8 +269,6 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/products', productRoutes);
 app.use('/api/admin', updateImageRoutes);
-app.use('/api', tutorialRoutes);
-app.use('/api', newsRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

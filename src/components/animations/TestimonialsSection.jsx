@@ -32,7 +32,7 @@ const TestimonialsSection = ({ className = "" }) => {
       role: "Product Manager",
       company: "InnovateAI",
       image: "https://randomuser.me/api/portraits/women/45.jpg",
-      quote: "The documentation and tutorials made implementation incredibly straightforward. Our team was able to get up and running in minutes, not days. The MCP solutions have become an essential part of our tech stack.",
+      quote: "The documentation and guides made implementation incredibly straightforward. Our team was able to get up and running in minutes, not days. The MCP solutions have become an essential part of our tech stack.",
       rating: 4
     },
     {

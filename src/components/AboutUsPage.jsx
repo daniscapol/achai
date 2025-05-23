@@ -35,7 +35,7 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
   const coreValues = [
     {
       title: "Free Content",
-      description: "Providing high-quality AI resources, tutorials, and news accessible to everyone.",
+      description: "Providing high-quality AI resources and tools accessible to everyone.",
       icon: "📚",
       gradient: "from-purple-600 to-indigo-600",
       buttonText: "Explore Resources",
@@ -55,7 +55,7 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
       icon: "🌍",
       gradient: "from-emerald-600 to-green-600",
       buttonText: "Learn How",
-      buttonLink: "#/tutorials"
+      buttonLink: "#/search?category=ai-learning"
     },
     {
       title: "Partnership Network",
@@ -142,7 +142,7 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-zinc-300 max-w-3xl">
-              AchAI is your go-to destination for AI news, tutorials, materials, and projects.
+              AchAI is your go-to destination for AI tools, materials, and projects.
             </p>
           </motion.div>
         </div>

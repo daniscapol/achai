@@ -13,8 +13,6 @@ const Header = ({
   onNavigateProducts,
   onNavigateOriginalProducts,
   onNavigateProductManagement,
-  onNavigateTutorials,
-  onNavigateNews,
   searchComponent
 }) => {
   // Fallback for Netflix UI since it's not implemented yet
@@ -112,8 +110,6 @@ const Header = ({
             { path: '/ready-to-use', label: 'Ready to Use', href: '/ready-to-use', badge: 'New', onClick: onNavigateReadyToUse },
             { path: '/browse-categories', label: 'Categories', href: '/browse-categories', onClick: onNavigateNewCategories },
             { path: '/products', label: 'Products', href: '/products', onClick: onNavigateProducts },
-            { path: '/tutorials', label: 'Tutorials', href: '/tutorials', onClick: onNavigateTutorials },
-            { path: '/news', label: 'News', href: '/news', onClick: onNavigateNews },
             // Temporarily hide Netflix UI option since it's not fully implemented
             // { path: '/netflix-products', label: 'Netflix UI', href: '/netflix-products', badge: 'New', onClick: onNavigateNetflixProducts },
             // Removed Product Admin from top navbar - accessible via secure-admin route
@@ -186,8 +182,6 @@ const Header = ({
                 { path: '/ready-to-use', label: 'Ready to Use', href: '/ready-to-use', badge: 'New', onClick: onNavigateReadyToUse },
                 { path: '/browse-categories', label: 'Categories', href: '/browse-categories', onClick: onNavigateNewCategories },
                 { path: '/products', label: 'Products', href: '/products', onClick: onNavigateProducts },
-                { path: '/tutorials', label: 'Tutorials', href: '/tutorials', onClick: onNavigateTutorials },
-                { path: '/news', label: 'News', href: '/news', onClick: onNavigateNews },
                 // Temporarily hide Netflix UI option since it's not fully implemented
                 // { path: '/netflix-products', label: 'Netflix UI', href: '/netflix-products', badge: 'New', onClick: onNavigateNetflixProducts },
                 // Removed Product Admin from mobile menu - accessible via secure-admin route

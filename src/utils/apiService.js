@@ -1,6 +1,6 @@
 /**
  * API Service for interacting with the backend API
- * Handles tutorials and news article data fetching
+ * Handles product data fetching
  */
 
 // API base URL - defaults to localhost in development
@@ -34,158 +34,72 @@ async function fetchApi(endpoint, options = {}) {
 }
 
 /**
- * Tutorial API Services
+ * Product API Services
  */
-export const tutorialApi = {
-  // Get all tutorials with optional filtering
-  async getTutorials(params = {}) {
+export const productApi = {
+  // Get all products with optional filtering
+  async getProducts(params = {}) {
     const queryString = new URLSearchParams(params).toString();
-    return fetchApi(`/tutorials${queryString ? `?${queryString}` : ''}`);
+    return fetchApi(`/products${queryString ? `?${queryString}` : ''}`);
   },
 
-  // Get tutorial by ID or slug
-  async getTutorialByIdOrSlug(idOrSlug) {
-    return fetchApi(`/tutorials/${idOrSlug}`);
+  // Get product by ID or slug
+  async getProductByIdOrSlug(idOrSlug) {
+    return fetchApi(`/products/${idOrSlug}`);
   },
 
-  // Get featured tutorials
-  async getFeaturedTutorials(limit = 6) {
-    return fetchApi(`/tutorials/featured?limit=${limit}`);
+  // Get featured products
+  async getFeaturedProducts(limit = 6) {
+    return fetchApi(`/products/featured?limit=${limit}`);
   },
 
-  // Get tutorial categories
-  async getTutorialCategories() {
-    return fetchApi('/tutorials/categories');
+  // Get product categories
+  async getProductCategories() {
+    return fetchApi('/products/categories');
   },
 
-  // Get recent tutorials
-  async getRecentTutorials(limit = 5) {
-    return fetchApi(`/tutorials/recent?limit=${limit}`);
+  // Get recent products
+  async getRecentProducts(limit = 5) {
+    return fetchApi(`/products/recent?limit=${limit}`);
   },
 
-  // Get popular tutorials
-  async getPopularTutorials(limit = 5) {
-    return fetchApi(`/tutorials/popular?limit=${limit}`);
+  // Search products
+  async searchProducts(query, page = 1, limit = 20) {
+    return fetchApi(`/products?search=${encodeURIComponent(query)}&page=${page}&limit=${limit}`);
   },
 
-  // Search tutorials
-  async searchTutorials(query, page = 1, limit = 20) {
-    return fetchApi(`/tutorials?search=${encodeURIComponent(query)}&page=${page}&limit=${limit}`);
-  },
-
-  // Filter tutorials by category
-  async filterTutorialsByCategory(category, page = 1, limit = 20) {
-    return fetchApi(`/tutorials?category=${encodeURIComponent(category)}&page=${page}&limit=${limit}`);
+  // Filter products by category
+  async filterProductsByCategory(category, page = 1, limit = 20) {
+    return fetchApi(`/products?category=${encodeURIComponent(category)}&page=${page}&limit=${limit}`);
   },
 
   // Admin methods (require authentication)
   admin: {
-    // Create a new tutorial
-    async createTutorial(tutorialData, token) {
-      return fetchApi('/tutorials', {
+    // Create a new product
+    async createProduct(productData, token) {
+      return fetchApi('/products', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(tutorialData),
+        body: JSON.stringify(productData),
       });
     },
 
-    // Update an existing tutorial
-    async updateTutorial(idOrSlug, tutorialData, token) {
-      return fetchApi(`/tutorials/${idOrSlug}`, {
+    // Update an existing product
+    async updateProduct(idOrSlug, productData, token) {
+      return fetchApi(`/products/${idOrSlug}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(tutorialData),
+        body: JSON.stringify(productData),
       });
     },
 
-    // Delete a tutorial
-    async deleteTutorial(idOrSlug, token) {
-      return fetchApi(`/tutorials/${idOrSlug}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    },
-  },
-};
-
-/**
- * News API Services
- */
-export const newsApi = {
-  // Get all news articles with optional filtering
-  async getNewsArticles(params = {}) {
-    const queryString = new URLSearchParams(params).toString();
-    return fetchApi(`/news${queryString ? `?${queryString}` : ''}`);
-  },
-
-  // Get news article by ID or slug
-  async getNewsArticleByIdOrSlug(idOrSlug) {
-    return fetchApi(`/news/${idOrSlug}`);
-  },
-
-  // Get featured news articles
-  async getFeaturedNews(limit = 6) {
-    return fetchApi(`/news/featured?limit=${limit}`);
-  },
-
-  // Get news categories
-  async getNewsCategories() {
-    return fetchApi('/news/categories');
-  },
-
-  // Get recent news
-  async getRecentNews(limit = 5) {
-    return fetchApi(`/news/recent?limit=${limit}`);
-  },
-
-  // Get popular news
-  async getPopularNews(limit = 5) {
-    return fetchApi(`/news/popular?limit=${limit}`);
-  },
-
-  // Search news articles
-  async searchNews(query, page = 1, limit = 20) {
-    return fetchApi(`/news?search=${encodeURIComponent(query)}&page=${page}&limit=${limit}`);
-  },
-
-  // Filter news by category
-  async filterNewsByCategory(category, page = 1, limit = 20) {
-    return fetchApi(`/news?category=${encodeURIComponent(category)}&page=${page}&limit=${limit}`);
-  },
-
-  // Admin methods (require authentication)
-  admin: {
-    // Create a new news article
-    async createNewsArticle(articleData, token) {
-      return fetchApi('/news', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(articleData),
-      });
-    },
-
-    // Update an existing news article
-    async updateNewsArticle(idOrSlug, articleData, token) {
-      return fetchApi(`/news/${idOrSlug}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(articleData),
-      });
-    },
-
-    // Delete a news article
-    async deleteNewsArticle(idOrSlug, token) {
-      return fetchApi(`/news/${idOrSlug}`, {
+    // Delete a product
+    async deleteProduct(idOrSlug, token) {
+      return fetchApi(`/products/${idOrSlug}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -196,6 +110,5 @@ export const newsApi = {
 };
 
 export default {
-  tutorial: tutorialApi,
-  news: newsApi,
+  product: productApi,
 };

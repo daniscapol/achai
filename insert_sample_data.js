@@ -5,60 +5,47 @@ import { dirname, join } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Read sample data
-const tutorialsData = JSON.parse(fs.readFileSync(join(__dirname, 'sample_tutorials.json'), 'utf8'));
-const newsData = JSON.parse(fs.readFileSync(join(__dirname, 'sample_news.json'), 'utf8'));
-
 const API_BASE_URL = 'http://localhost:3001/api';
 
-async function insertTutorials() {
-  console.log('\n📚 Inserting sample tutorials...');
+async function insertProducts() {
+  console.log('\n📦 Inserting sample products...');
   
-  for (const tutorial of tutorialsData) {
+  // Read MCP servers data
+  const serversData = JSON.parse(fs.readFileSync(join(__dirname, 'src/mcp_servers_data.json'), 'utf8'));
+  
+  for (const product of serversData.slice(0, 10)) { // Only insert first 10 for testing
     try {
-      const response = await fetch(`${API_BASE_URL}/tutorials`, {
+      const response = await fetch(`${API_BASE_URL}/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(tutorial)
+        body: JSON.stringify({
+          name: product.name,
+          description: product.description || '',
+          price: product.price || 0,
+          image_url: product.image_url || '',
+          category: product.category || 'Uncategorized',
+          product_type: 'server',
+          github_url: product.github_url || '',
+          official: product.official || false,
+          docs_url: product.docs_url || '',
+          stars_numeric: product.stars_numeric || 0,
+          tags: product.tags || [],
+          is_featured: product.is_featured || false,
+          slug: product.id?.replace(/[^a-z0-9]+/g, '-').toLowerCase() || `server-${Math.random()}`
+        })
       });
       
       if (response.ok) {
         const result = await response.json();
-        console.log(`✅ Created tutorial: "${result.title}"`);
+        console.log(`✅ Created product: "${result.name}"`);
       } else {
         const error = await response.json();
-        console.log(`❌ Failed to create tutorial "${tutorial.title}": ${error.error}`);
+        console.log(`❌ Failed to create product "${product.name}": ${error.error}`);
       }
     } catch (error) {
-      console.log(`❌ Error creating tutorial "${tutorial.title}": ${error.message}`);
-    }
-  }
-}
-
-async function insertNews() {
-  console.log('\n📰 Inserting sample news articles...');
-  
-  for (const article of newsData) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/news`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(article)
-      });
-      
-      if (response.ok) {
-        const result = await response.json();
-        console.log(`✅ Created news article: "${result.title}"`);
-      } else {
-        const error = await response.json();
-        console.log(`❌ Failed to create news article "${article.title}": ${error.error}`);
-      }
-    } catch (error) {
-      console.log(`❌ Error creating news article "${article.title}": ${error.message}`);
+      console.log(`❌ Error creating product "${product.name}": ${error.message}`);
     }
   }
 }
@@ -92,17 +79,15 @@ async function main() {
   }
   
   // Insert sample data
-  await insertTutorials();
-  await insertNews();
+  await insertProducts();
   
   console.log('\n✨ Sample data insertion completed!');
   console.log('\nYou can now:');
-  console.log('1. View tutorials at: http://localhost:3001/api/tutorials');
-  console.log('2. View news at: http://localhost:3001/api/news');
-  console.log('3. Start the frontend with: npm run dev');
+  console.log('1. View products at: http://localhost:3001/api/products');
+  console.log('2. Start the frontend with: npm run dev');
 }
 
 main().catch(error => {
   console.error('❌ Script failed:', error);
   process.exit(1);
-}); 
+});
