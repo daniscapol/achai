@@ -203,7 +203,7 @@ const AboutUsSection = ({ onExploreCategories }) => {
           
           <div className="inline-flex p-0.5 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600">
             <a 
-              href="/about" 
+              href="/about-us" 
               className="px-6 py-3 rounded-md bg-slate-950 text-white font-medium hover:bg-slate-900/80 transition-colors duration-300"
             >
               {t('about_us.community.button')}

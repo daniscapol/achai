@@ -162,7 +162,7 @@ const Footer = () => {
               <ul className="space-y-3 text-sm">
                 {[
                   { label: t('navigation.submit_server'), href: '#/submit' },
-                  { label: t('navigation.about_us'), href: '#/about' },
+                  { label: t('navigation.about_us'), href: '#/about-us' },
                   { label: t('footer.contact'), href: '#/contact' },
                   { label: t('footer.affiliate_program', 'Affiliate Program'), href: '#/affiliate' },
                   { label: t('footer.developer_api', 'Developer API'), href: '#/api', badge: t('common.new') }

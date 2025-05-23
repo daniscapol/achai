@@ -322,7 +322,7 @@ const ModernHomePage = ({
             </button>
             
             <a
-              href="#/about"
+              href="#/about-us"
               className="px-8 py-4 bg-white/5 border border-purple-500/30 backdrop-blur-md rounded-lg text-white font-bold text-lg hover:bg-white/10 transition-colors duration-300 inline-flex items-center"
             >
               <span className="mr-2">{t('navigation.about_us')}</span>

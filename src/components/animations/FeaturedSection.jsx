@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 /**
  * FeaturedSection - A premium featured products section that maintains the same visual style
@@ -15,6 +16,7 @@ const FeaturedSection = ({
   className = ""
 }) => {
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isReady, setIsReady] = useState(false);
   
@@ -40,8 +42,8 @@ const FeaturedSection = ({
   const getCategoryConfig = (categoryType) => {
     const baseConfigs = {
       'ready-to-use': {
-        title: 'Ready to Use',
-        description: 'Plug & play solutions with no setup required',
+        title: t('categories.ready_to_use.title'),
+        description: t('categories.ready_to_use.description'),
         gradient: 'from-red-600 to-orange-500',
         icon: (
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -53,8 +55,8 @@ const FeaturedSection = ({
         badgeClass: 'bg-gradient-to-r from-red-500/20 to-orange-500/20 border-red-500/30'
       },
       'mcp-client': {
-        title: 'MCP Clients',
-        description: 'Applications to connect Claude with external tools',
+        title: t('categories.mcp_clients.title'),
+        description: t('categories.mcp_clients.description'),
         gradient: 'from-blue-600 to-cyan-600',
         icon: (
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,8 +68,8 @@ const FeaturedSection = ({
         badgeClass: 'bg-gradient-to-r from-blue-500/20 to-cyan-600/20 border-blue-500/30'
       },
       'mcp-server': {
-        title: 'MCP Servers',
-        description: 'Extend Claude\'s capabilities with powerful servers',
+        title: t('categories.mcp_servers.title'),
+        description: t('categories.mcp_servers.description'),
         gradient: 'from-purple-600 to-indigo-600',
         icon: (
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -79,8 +81,8 @@ const FeaturedSection = ({
         badgeClass: 'bg-gradient-to-r from-purple-500/20 to-indigo-600/20 border-purple-500/30'
       },
       'ai-agent': {
-        title: 'AI Agents',
-        description: 'Autonomous AI systems for complex tasks',
+        title: t('categories.ai_agents.title'),
+        description: t('categories.ai_agents.description'),
         gradient: 'from-amber-500 to-orange-600',
         icon: (
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -225,7 +227,7 @@ const FeaturedSection = ({
                     </div>
                     <div>
                       <span className={`inline-block px-3 py-1 rounded-full ${config.badgeClass} text-sm font-medium mb-1`}>
-                        Category
+                        {currentLanguage === 'pt' ? 'Categoria' : 'Category'}
                       </span>
                       <h3 className={`text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${config.gradient}`}>
                         {config.title}

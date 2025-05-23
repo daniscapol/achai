@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SkeletonLoader from './animations/SkeletonLoader';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -16,6 +17,7 @@ const ProductDetailTech = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t, i18n } = useTranslation();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -631,7 +633,7 @@ const ProductDetailTech = () => {
                   className="flex items-center gap-2 px-5 py-2.5 bg-zinc-800/70 hover:bg-zinc-800 text-white rounded-lg border border-zinc-700/50 transition-all duration-200 shadow-md hover:shadow-purple-900/20"
                 >
                   <Github className="h-5 w-5" />
-                  <span>GitHub Repository</span>
+                  <span>{t('product_detail.common.github_repository')}</span>
                 </a>
               )}
               
@@ -644,7 +646,7 @@ const ProductDetailTech = () => {
                   className="flex items-center gap-2 px-5 py-2.5 bg-zinc-800/70 hover:bg-zinc-800 text-white rounded-lg border border-zinc-700/50 transition-all duration-200 shadow-md hover:shadow-purple-900/20"
                 >
                   <Github className="h-5 w-5" />
-                  <span>Download</span>
+                  <span>{t('product_detail.common.download')}</span>
                 </a>
               ) : (
                 <button 
@@ -676,7 +678,7 @@ const ProductDetailTech = () => {
                   }}
                 >
                   <Code className="h-5 w-5" />
-                  <span>Copy Install Command</span>
+                  <span>{t('product_detail.common.copy_install_command')}</span>
                 </Button>
               )}
               
@@ -688,7 +690,7 @@ const ProductDetailTech = () => {
                   className="flex items-center gap-2 px-5 py-2.5 bg-zinc-800/70 hover:bg-zinc-800 text-white rounded-lg border border-zinc-700/50 transition-all duration-200 shadow-md hover:shadow-purple-900/20"
                 >
                   <FileCode className="h-5 w-5" />
-                  <span>Documentation</span>
+                  <span>{t('product_detail.common.documentation')}</span>
                 </a>
               )}
             </div>
@@ -708,14 +710,14 @@ const ProductDetailTech = () => {
                     value="about" 
                     className="text-zinc-400 hover:text-zinc-200 data-[state=active]:bg-purple-600/10 data-[state=active]:text-purple-300 data-[state=active]:border-b-2 data-[state=active]:border-purple-500 rounded-none h-full px-6"
                   >
-                    About
+                    {t('product_detail.common.about')}
                   </TabsTrigger>
                   {product.keyFeatures && product.keyFeatures.length > 0 && (
                     <TabsTrigger 
                       value="features" 
                       className="text-zinc-400 hover:text-zinc-200 data-[state=active]:bg-purple-600/10 data-[state=active]:text-purple-300 data-[state=active]:border-b-2 data-[state=active]:border-purple-500 rounded-none h-full px-6"
                     >
-                      Features
+                      {t('product_detail.common.features')}
                     </TabsTrigger>
                   )}
                   {product.useCases && product.useCases.length > 0 && (
@@ -723,7 +725,7 @@ const ProductDetailTech = () => {
                       value="usecases" 
                       className="text-zinc-400 hover:text-zinc-200 data-[state=active]:bg-purple-600/10 data-[state=active]:text-purple-300 data-[state=active]:border-b-2 data-[state=active]:border-purple-500 rounded-none h-full px-6"
                     >
-                      Use Cases
+                      {t('product_detail.common.use_cases')}
                     </TabsTrigger>
                   )}
                   {product.installation_command && (
@@ -731,14 +733,14 @@ const ProductDetailTech = () => {
                       value="installation" 
                       className="text-zinc-400 hover:text-zinc-200 data-[state=active]:bg-purple-600/10 data-[state=active]:text-purple-300 data-[state=active]:border-b-2 data-[state=active]:border-purple-500 rounded-none h-full px-6"
                     >
-                      Installation
+                      {t('product_detail.common.installation')}
                     </TabsTrigger>
                   )}
                   <TabsTrigger 
                     value="reviews" 
                     className="text-zinc-400 hover:text-zinc-200 data-[state=active]:bg-purple-600/10 data-[state=active]:text-purple-300 data-[state=active]:border-b-2 data-[state=active]:border-purple-500 rounded-none h-full px-6"
                   >
-                    Reviews
+                    {t('product_detail.common.reviews')}
                   </TabsTrigger>
                 </TabsList>
               </div>
@@ -759,25 +761,25 @@ const ProductDetailTech = () => {
                     {/* Language and technical info card if available */}
                     {(product.language || product.creator || product.license) && (
                       <div>
-                        <h2 className="text-2xl font-bold text-white mb-4">Technical Details</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">{t('product_detail.common.technical_details')}</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                           {product.language && (
                             <div className="bg-zinc-800/30 rounded-xl p-6 border border-zinc-700/40">
-                              <h3 className="text-lg font-medium text-white mb-2">Language</h3>
+                              <h3 className="text-lg font-medium text-white mb-2">{t('product_detail.common.language')}</h3>
                               <p className="text-gray-300">{product.language}</p>
                             </div>
                           )}
                           
                           {(product.createdBy || product.creator) && (
                             <div className="bg-zinc-800/30 rounded-xl p-6 border border-zinc-700/40">
-                              <h3 className="text-lg font-medium text-white mb-2">Creator</h3>
+                              <h3 className="text-lg font-medium text-white mb-2">{t('product_detail.common.creator')}</h3>
                               <p className="text-gray-300">{product.createdBy || product.creator}</p>
                             </div>
                           )}
                           
                           {product.license && (
                             <div className="bg-zinc-800/30 rounded-xl p-6 border border-zinc-700/40">
-                              <h3 className="text-lg font-medium text-white mb-2">License</h3>
+                              <h3 className="text-lg font-medium text-white mb-2">{t('product_detail.common.license')}</h3>
                               <p className="text-gray-300">{product.license}</p>
                             </div>
                           )}
@@ -919,7 +921,7 @@ const ProductDetailTech = () => {
               <TabsContent value="reviews" className="p-8">
                 <div className="prose prose-invert prose-purple max-w-none">
                   <div className="flex flex-col items-center bg-gradient-to-br from-purple-900/10 to-indigo-900/5 p-8 rounded-xl mb-8 border border-purple-700/20">
-                    <h2 className="text-2xl font-bold text-white mb-4">Customer Reviews</h2>
+                    <h2 className="text-2xl font-bold text-white mb-4">{t('product_detail.common.customer_reviews')}</h2>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="flex">
                         {[1, 2, 3, 4, 5].map(star => (
@@ -952,7 +954,7 @@ const ProductDetailTech = () => {
                         <div key={index} className="bg-zinc-800/30 rounded-xl p-6 border border-zinc-700/40 mb-6">
                           <div className="flex justify-between items-start mb-4">
                             <div>
-                              <h4 className="text-white font-medium text-lg">{review.author || 'Anonymous'}</h4>
+                              <h4 className="text-white font-medium text-lg">{review.author || t('product_detail.common.anonymous')}</h4>
                               <div className="flex items-center mt-1">
                                 <div className="flex">
                                   {[1, 2, 3, 4, 5].map(star => (
@@ -976,7 +978,7 @@ const ProductDetailTech = () => {
                       ))
                     ) : (
                       <div className="bg-zinc-800/30 rounded-xl p-8 border border-zinc-700/40 text-center">
-                        <p className="text-gray-500">No reviews yet. Be the first to review this product.</p>
+                        <p className="text-gray-500">{t('product_detail.common.no_reviews')}</p>
                       </div>
                     )}
                   </div>
@@ -993,18 +995,18 @@ const ProductDetailTech = () => {
                   <span className="bg-indigo-900/30 p-1.5 rounded-lg mr-3">
                     <Server className="h-5 w-5 text-indigo-300" />
                   </span>
-                  MCP Server Integration Guide
+                  {t('product_detail.mcp_server.title')}
                 </h2>
                 
                 <div className="grid grid-cols-1 gap-6">
                   {/* Server quick setup */}
                   <div className="bg-gradient-to-br from-zinc-800/30 to-zinc-800/10 rounded-xl p-6 border border-zinc-700/40">
-                    <h3 className="text-xl font-medium text-white mb-4">Quick Setup</h3>
+                    <h3 className="text-xl font-medium text-white mb-4">{t('product_detail.mcp_server.quick_setup')}</h3>
                     
                     <div className="space-y-4">
                       <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700/30">
-                        <h4 className="text-lg font-medium text-white mb-2">Using Claude Desktop</h4>
-                        <p className="text-gray-300 mb-4">Add this to your <code className="bg-zinc-800 px-1 py-0.5 rounded text-purple-300">claude_desktop_config.json</code>:</p>
+                        <h4 className="text-lg font-medium text-white mb-2">{t('product_detail.mcp_server.using_claude_desktop')}</h4>
+                        <p className="text-gray-300 mb-4">{t('product_detail.mcp_server.claude_desktop_config')}</p>
                         
                         <div className="bg-zinc-900 rounded-lg p-4 font-mono text-sm text-gray-300 overflow-x-auto mb-2 relative group">
 {`{
@@ -1043,12 +1045,12 @@ const ProductDetailTech = () => {
                             </svg>
                           </button>
                         </div>
-                        <p className="text-gray-400 text-sm">Replace parameters as needed based on the documentation.</p>
+                        <p className="text-gray-400 text-sm">{t('product_detail.mcp_server.replace_parameters')}</p>
                       </div>
                       
                       <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700/30">
-                        <h4 className="text-lg font-medium text-white mb-2">Using VS Code</h4>
-                        <p className="text-gray-300 mb-4">Add this to your <code className="bg-zinc-800 px-1 py-0.5 rounded text-purple-300">.vscode/mcp.json</code>:</p>
+                        <h4 className="text-lg font-medium text-white mb-2">{t('product_detail.mcp_server.using_vs_code')}</h4>
+                        <p className="text-gray-300 mb-4">{t('product_detail.mcp_server.vs_code_config')}</p>
                         
                         <div className="bg-zinc-900 rounded-lg p-4 font-mono text-sm text-gray-300 overflow-x-auto mb-2 relative group">
 {`{
@@ -1093,7 +1095,7 @@ const ProductDetailTech = () => {
                   
                   {/* Security considerations */}
                   <div className="bg-gradient-to-br from-zinc-800/30 to-zinc-800/10 rounded-xl p-6 border border-zinc-700/40">
-                    <h3 className="text-xl font-medium text-white mb-4">Security Considerations</h3>
+                    <h3 className="text-xl font-medium text-white mb-4">{t('product_detail.mcp_server.security_considerations')}</h3>
                     <div className="flex gap-4">
                       <div className="mt-1 flex-shrink-0">
                         <div className="bg-amber-900/30 p-2 rounded-lg">
@@ -1103,13 +1105,13 @@ const ProductDetailTech = () => {
                         </div>
                       </div>
                       <div>
-                        <p className="text-gray-300 mb-3">When using MCP servers, be mindful of these security best practices:</p>
+                        <p className="text-gray-300 mb-3">{t('product_detail.mcp_server.security_intro')}</p>
                         <ul className="list-disc pl-5 space-y-2 text-gray-300">
-                          <li>Verify the source of your MCP servers before using them</li>
-                          <li>Check the permissions granted to the server carefully</li>
-                          <li>For sensitive data, consider using self-hosted servers</li>
-                          <li>Keep your MCP server implementations updated to the latest version</li>
-                          {product.language && <li>This server is written in {product.language}, ensure your environment has proper isolation</li>}
+                          <li>{t('product_detail.mcp_server.verify_source')}</li>
+                          <li>{t('product_detail.mcp_server.check_permissions')}</li>
+                          <li>{t('product_detail.mcp_server.sensitive_data')}</li>
+                          <li>{t('product_detail.mcp_server.keep_updated')}</li>
+                          {product.language && <li>{t('product_detail.mcp_server.environment_isolation', { language: product.language })}</li>}
                         </ul>
                       </div>
                     </div>
@@ -1117,23 +1119,23 @@ const ProductDetailTech = () => {
                   
                   {/* MCP Server capabilities */}
                   <div className="bg-gradient-to-br from-zinc-800/30 to-zinc-800/10 rounded-xl p-6 border border-zinc-700/40">
-                    <h3 className="text-xl font-medium text-white mb-4">MCP Server Capabilities</h3>
+                    <h3 className="text-xl font-medium text-white mb-4">{t('product_detail.mcp_server.server_capabilities')}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="bg-zinc-900/50 rounded-lg p-4 hover:border hover:border-indigo-500/40 transition-all duration-300">
                         <h4 className="font-medium text-white mb-2 flex items-center gap-2">
                           <svg className="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                           </svg>
-                          Resources
+                          {t('product_detail.mcp_server.resources')}
                         </h4>
-                        <p className="text-gray-300">Provides structured data that Claude can reference and analyze</p>
+                        <p className="text-gray-300">{t('product_detail.mcp_server.resources_description')}</p>
                         {product.name.toLowerCase().includes('database') || 
                          product.name.toLowerCase().includes('postgres') || 
                          product.name.toLowerCase().includes('sql') ? (
                           <p className="text-indigo-300 text-sm mt-2">This server provides database records as structured resources</p>
                         ) : product.name.toLowerCase().includes('file') || 
                            product.name.toLowerCase().includes('filesystem') ? (
-                          <p className="text-indigo-300 text-sm mt-2">This server provides file contents as readable resources</p>
+                          <p className="text-indigo-300 text-sm mt-2">{t('product_detail.mcp_server.resources_server_description')}</p>
                         ) : product.name.toLowerCase().includes('github') || 
                            product.name.toLowerCase().includes('git') ? (
                           <p className="text-indigo-300 text-sm mt-2">This server provides repository data as browsable resources</p>
@@ -1151,16 +1153,16 @@ const ProductDetailTech = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                           </svg>
-                          Tools
+                          {t('product_detail.mcp_server.tools')}
                         </h4>
-                        <p className="text-gray-300">Functions that Claude can invoke through the server for specific tasks</p>
+                        <p className="text-gray-300">{t('product_detail.mcp_server.tools_description')}</p>
                         {product.name.toLowerCase().includes('database') || 
                          product.name.toLowerCase().includes('postgres') || 
                          product.name.toLowerCase().includes('sql') ? (
                           <p className="text-indigo-300 text-sm mt-2">Provides tools for executing SQL queries and database operations</p>
                         ) : product.name.toLowerCase().includes('file') || 
                            product.name.toLowerCase().includes('filesystem') ? (
-                          <p className="text-indigo-300 text-sm mt-2">Provides tools for reading, writing, and managing files securely</p>
+                          <p className="text-indigo-300 text-sm mt-2">{t('product_detail.mcp_server.tools_server_description')}</p>
                         ) : product.name.toLowerCase().includes('github') || 
                            product.name.toLowerCase().includes('git') ? (
                           <p className="text-indigo-300 text-sm mt-2">Provides tools for repo operations, PR management, and code analysis</p>
@@ -1177,10 +1179,10 @@ const ProductDetailTech = () => {
                           <svg className="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
-                          Prompts
+                          {t('product_detail.mcp_server.prompts')}
                         </h4>
-                        <p className="text-gray-300">Pre-configured instructions that guide model behavior for specific tasks</p>
-                        <p className="text-indigo-300 text-sm mt-2">Includes optimized prompts for common operations with this server type</p>
+                        <p className="text-gray-300">{t('product_detail.mcp_server.prompts_description')}</p>
+                        <p className="text-indigo-300 text-sm mt-2">{t('product_detail.mcp_server.prompts_server_description')}</p>
                       </div>
                       
                       <div className="bg-zinc-900/50 rounded-lg p-4 hover:border hover:border-indigo-500/40 transition-all duration-300">
@@ -1188,10 +1190,10 @@ const ProductDetailTech = () => {
                           <svg className="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                           </svg>
-                          Security
+                          {t('product_detail.mcp_server.security')}
                         </h4>
-                        <p className="text-gray-300">Controls and permissions that help maintain data privacy and security</p>
-                        <p className="text-indigo-300 text-sm mt-2">Implements MCP permission protocols to protect sensitive data</p>
+                        <p className="text-gray-300">{t('product_detail.mcp_server.security_description')}</p>
+                        <p className="text-indigo-300 text-sm mt-2">{t('product_detail.mcp_server.security_server_description')}</p>
                       </div>
                     </div>
                     
@@ -1200,7 +1202,7 @@ const ProductDetailTech = () => {
                         <svg className="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Why Use {product.name}?
+                        {t('product_detail.mcp_server.why_use', { name: product.name })}
                       </h4>
                       {product.name.toLowerCase().includes('database') || 
                        product.name.toLowerCase().includes('postgres') || 
@@ -1223,7 +1225,7 @@ const ProductDetailTech = () => {
                   
                   {/* Resources for Developers */}
                   <div className="bg-gradient-to-br from-indigo-900/10 to-purple-900/10 rounded-xl p-6 border border-indigo-700/30">
-                    <h3 className="text-xl font-medium text-white mb-4">Developer Resources</h3>
+                    <h3 className="text-xl font-medium text-white mb-4">{t('product_detail.mcp_server.developer_resources')}</h3>
                     
                     <div className="space-y-3">
                       <a 
@@ -1235,7 +1237,7 @@ const ProductDetailTech = () => {
                         <svg className="h-5 w-5 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
-                        <span>MCP Documentation</span>
+                        <span>{t('product_detail.common.mcp_documentation')}</span>
                         <ExternalLink className="h-4 w-4 ml-auto" />
                       </a>
                       
@@ -1246,7 +1248,7 @@ const ProductDetailTech = () => {
                         className="flex items-center gap-3 p-3 rounded-lg bg-zinc-800/70 border border-zinc-700/40 text-white hover:bg-purple-900/20 hover:border-purple-700/40 transition-all duration-300"
                       >
                         <Github className="h-5 w-5 text-indigo-300" />
-                        <span>MCP Servers Repository</span>
+                        <span>{t('product_detail.common.mcp_servers_repository')}</span>
                         <ExternalLink className="h-4 w-4 ml-auto" />
                       </a>
                       
@@ -1259,7 +1261,7 @@ const ProductDetailTech = () => {
                         <svg className="h-5 w-5 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                         </svg>
-                        <span>Anthropic MCP Guide</span>
+                        <span>{t('product_detail.common.anthropic_mcp_guide')}</span>
                         <ExternalLink className="h-4 w-4 ml-auto" />
                       </a>
                     </div>
@@ -1272,18 +1274,18 @@ const ProductDetailTech = () => {
                   <span className="bg-blue-900/30 p-1.5 rounded-lg mr-3">
                     <Laptop className="h-5 w-5 text-blue-300" />
                   </span>
-                  MCP Client Guide
+                  {t('product_detail.mcp_client.title')}
                 </h2>
                 
                 <div className="grid grid-cols-1 gap-6">
                   {/* Client overview */}
                   <div className="bg-gradient-to-br from-zinc-800/30 to-zinc-800/10 rounded-xl p-6 border border-zinc-700/40">
-                    <h3 className="text-xl font-medium text-white mb-4">Client Overview</h3>
+                    <h3 className="text-xl font-medium text-white mb-4">{t('product_detail.mcp_client.client_overview')}</h3>
                     
                     <div className="space-y-4">
                       <div className="bg-zinc-900/50 rounded-lg p-5 border border-zinc-700/30">
-                        <h4 className="text-lg font-medium text-white mb-3">What MCP Clients Do</h4>
-                        <p className="text-gray-300 mb-4">MCP clients allow AI models like Claude to access external data and tools through the Model Context Protocol. They provide a standardized interface between the AI and various data sources, tools, and systems.</p>
+                        <h4 className="text-lg font-medium text-white mb-3">{t('product_detail.mcp_client.what_clients_do')}</h4>
+                        <p className="text-gray-300 mb-4">{t('product_detail.mcp_client.what_clients_do_description')}</p>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                           <div className="flex gap-3">
@@ -1295,8 +1297,8 @@ const ProductDetailTech = () => {
                               </div>
                             </div>
                             <div>
-                              <h5 className="font-medium text-white mb-1">Enhanced AI Capabilities</h5>
-                              <p className="text-gray-400 text-sm">Enables AI to interact with various tools and data sources securely</p>
+                              <h5 className="font-medium text-white mb-1">{t('product_detail.mcp_client.enhanced_ai_capabilities')}</h5>
+                              <p className="text-gray-400 text-sm">{t('product_detail.mcp_client.enhanced_ai_capabilities_description')}</p>
                             </div>
                           </div>
                           
@@ -1309,8 +1311,8 @@ const ProductDetailTech = () => {
                               </div>
                             </div>
                             <div>
-                              <h5 className="font-medium text-white mb-1">Security Control</h5>
-                              <p className="text-gray-400 text-sm">Manages permissions and access to sensitive information</p>
+                              <h5 className="font-medium text-white mb-1">{t('product_detail.mcp_client.security_control')}</h5>
+                              <p className="text-gray-400 text-sm">{t('product_detail.mcp_client.security_control_description')}</p>
                             </div>
                           </div>
                           
@@ -1323,8 +1325,8 @@ const ProductDetailTech = () => {
                               </div>
                             </div>
                             <div>
-                              <h5 className="font-medium text-white mb-1">Standardized Integration</h5>
-                              <p className="text-gray-400 text-sm">Works with any MCP-compatible server for expanded functionality</p>
+                              <h5 className="font-medium text-white mb-1">{t('product_detail.mcp_client.standardized_integration')}</h5>
+                              <p className="text-gray-400 text-sm">{t('product_detail.mcp_client.standardized_integration_description')}</p>
                             </div>
                           </div>
                           
@@ -1337,8 +1339,8 @@ const ProductDetailTech = () => {
                               </div>
                             </div>
                             <div>
-                              <h5 className="font-medium text-white mb-1">Developer Experience</h5>
-                              <p className="text-gray-400 text-sm">Streamlines building AI-powered applications with external capabilities</p>
+                              <h5 className="font-medium text-white mb-1">{t('product_detail.mcp_client.developer_experience')}</h5>
+                              <p className="text-gray-400 text-sm">{t('product_detail.mcp_client.developer_experience_description')}</p>
                             </div>
                           </div>
                         </div>
@@ -1348,11 +1350,11 @@ const ProductDetailTech = () => {
                   
                   {/* Client setup */}
                   <div className="bg-gradient-to-br from-zinc-800/30 to-zinc-800/10 rounded-xl p-6 border border-zinc-700/40">
-                    <h3 className="text-xl font-medium text-white mb-4">Getting Started with {product.name}</h3>
+                    <h3 className="text-xl font-medium text-white mb-4">{t('product_detail.mcp_client.getting_started', { name: product.name })}</h3>
                     
                     <div className="space-y-5">
                       <div className="bg-zinc-900/50 rounded-lg p-5 border border-zinc-700/30">
-                        <h4 className="text-lg font-medium text-white mb-3">Installation</h4>
+                        <h4 className="text-lg font-medium text-white mb-3">{t('product_detail.mcp_client.installation')}</h4>
                         
                         {product.installation_command ? (
                           <div className="bg-zinc-900 rounded-lg p-4 font-mono text-sm text-gray-300 overflow-x-auto relative group">
@@ -1373,13 +1375,13 @@ const ProductDetailTech = () => {
                             </button>
                           </div>
                         ) : (
-                          <p className="text-gray-300">Visit the GitHub repository for detailed installation instructions.</p>
+                          <p className="text-gray-300">{t('product_detail.mcp_client.installation_description')}</p>
                         )}
                       </div>
                       
                       <div className="bg-zinc-900/50 rounded-lg p-5 border border-zinc-700/30">
-                        <h4 className="text-lg font-medium text-white mb-3">Basic Usage</h4>
-                        <p className="text-gray-300 mb-4">Here's how to get started with {product.name}:</p>
+                        <h4 className="text-lg font-medium text-white mb-3">{t('product_detail.mcp_client.basic_usage')}</h4>
+                        <p className="text-gray-300 mb-4">{t('product_detail.mcp_client.basic_usage_description', { name: product.name })}</p>
                         
                         <ol className="list-decimal pl-5 space-y-2 text-gray-300">
                           <li>Install {product.name} following the instructions above</li>
@@ -1393,8 +1395,8 @@ const ProductDetailTech = () => {
                   
                   {/* Compatible MCP Servers */}
                   <div className="bg-gradient-to-br from-blue-900/10 to-indigo-900/10 rounded-xl p-6 border border-blue-700/30">
-                    <h3 className="text-xl font-medium text-white mb-4">Compatible MCP Servers</h3>
-                    <p className="text-gray-300 mb-5">{product.name} works with these popular MCP servers:</p>
+                    <h3 className="text-xl font-medium text-white mb-4">{t('product_detail.mcp_client.compatible_servers')}</h3>
+                    <p className="text-gray-300 mb-5">{t('product_detail.mcp_client.compatible_servers_description', { name: product.name })}</p>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                       <div className="bg-zinc-800/60 rounded-lg p-4 border border-zinc-700/40 hover:border-blue-500/30 transition-colors">
@@ -1436,18 +1438,18 @@ const ProductDetailTech = () => {
                   <span className="bg-amber-900/30 p-1.5 rounded-lg mr-3">
                     <Bot className="h-5 w-5 text-amber-300" />
                   </span>
-                  AI Agent Framework
+                  {t('product_detail.ai_agent.title')}
                 </h2>
                 
                 <div className="grid grid-cols-1 gap-6">
                   {/* Agent overview */}
                   <div className="bg-gradient-to-br from-zinc-800/30 to-zinc-800/10 rounded-xl p-6 border border-zinc-700/40">
-                    <h3 className="text-xl font-medium text-white mb-4">Framework Overview</h3>
+                    <h3 className="text-xl font-medium text-white mb-4">{t('product_detail.ai_agent.agent_overview')}</h3>
                     
                     <div className="space-y-4">
                       <div className="bg-zinc-900/50 rounded-lg p-5 border border-zinc-700/30">
-                        <h4 className="text-lg font-medium text-white mb-3">AI Agent Capabilities</h4>
-                        <p className="text-gray-300 mb-4">{product.name} is an AI agent framework that enables the creation of autonomous, task-specific agents powered by large language models. These agents can collaborate, use tools, access external data, and perform complex tasks through well-designed workflows.</p>
+                        <h4 className="text-lg font-medium text-white mb-3">{t('product_detail.ai_agent.agent_capabilities')}</h4>
+                        <p className="text-gray-300 mb-4">{t('product_detail.ai_agent.agent_description', { name: product.name })}</p>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                           <div className="flex gap-3 p-3 bg-zinc-800/50 rounded-lg border border-zinc-700/30 hover:border-amber-600/30 transition-colors duration-300">
@@ -1459,8 +1461,8 @@ const ProductDetailTech = () => {
                               </div>
                             </div>
                             <div>
-                              <h5 className="font-medium text-white mb-1">Tool Integration</h5>
-                              <p className="text-gray-400 text-sm">Access external APIs, databases, and services</p>
+                              <h5 className="font-medium text-white mb-1">{t('product_detail.ai_agent.tool_integration')}</h5>
+                              <p className="text-gray-400 text-sm">{t('product_detail.ai_agent.tool_integration_description')}</p>
                               {product.name.toLowerCase().includes('autogen') ? (
                                 <p className="text-amber-300/80 text-xs mt-1">AutoGen's tool-calling protocol supports function calling with chat models</p>
                               ) : product.name.toLowerCase().includes('crew') ? (
@@ -1468,7 +1470,7 @@ const ProductDetailTech = () => {
                               ) : product.name.toLowerCase().includes('langchain') ? (
                                 <p className="text-amber-300/80 text-xs mt-1">LangChain's tools module provides a unified interface for external services</p>
                               ) : (
-                                <p className="text-amber-300/80 text-xs mt-1">Streamlined access to external services through standardized interfaces</p>
+                                <p className="text-amber-300/80 text-xs mt-1">{t('product_detail.ai_agent.tool_integration_detail')}</p>
                               )}
                             </div>
                           </div>
@@ -1482,8 +1484,8 @@ const ProductDetailTech = () => {
                               </div>
                             </div>
                             <div>
-                              <h5 className="font-medium text-white mb-1">Multi-Agent Collaboration</h5>
-                              <p className="text-gray-400 text-sm">Specialized agents working together on complex tasks</p>
+                              <h5 className="font-medium text-white mb-1">{t('product_detail.ai_agent.multi_agent_collaboration')}</h5>
+                              <p className="text-gray-400 text-sm">{t('product_detail.ai_agent.multi_agent_description')}</p>
                               {product.name.toLowerCase().includes('autogen') ? (
                                 <p className="text-amber-300/80 text-xs mt-1">AutoGen's multi-agent conversations enable complex problem-solving</p>
                               ) : product.name.toLowerCase().includes('crew') ? (
@@ -1491,7 +1493,7 @@ const ProductDetailTech = () => {
                               ) : product.name.toLowerCase().includes('langchain') ? (
                                 <p className="text-amber-300/80 text-xs mt-1">LangChain's agent framework enables collaborative workflows</p>
                               ) : (
-                                <p className="text-amber-300/80 text-xs mt-1">Coordinated agent interactions for complex task completion</p>
+                                <p className="text-amber-300/80 text-xs mt-1">{t('product_detail.ai_agent.multi_agent_detail')}</p>
                               )}
                             </div>
                           </div>
@@ -1505,8 +1507,8 @@ const ProductDetailTech = () => {
                               </div>
                             </div>
                             <div>
-                              <h5 className="font-medium text-white mb-1">Memory and State Management</h5>
-                              <p className="text-gray-400 text-sm">Maintain context across multiple interactions</p>
+                              <h5 className="font-medium text-white mb-1">{t('product_detail.ai_agent.memory_management')}</h5>
+                              <p className="text-gray-400 text-sm">{t('product_detail.ai_agent.memory_description')}</p>
                               {product.name.toLowerCase().includes('autogen') ? (
                                 <p className="text-amber-300/80 text-xs mt-1">AutoGen uses message histories to maintain conversational state</p>
                               ) : product.name.toLowerCase().includes('crew') ? (
@@ -1514,7 +1516,7 @@ const ProductDetailTech = () => {
                               ) : product.name.toLowerCase().includes('langchain') ? (
                                 <p className="text-amber-300/80 text-xs mt-1">LangChain's memory systems provide flexible state management options</p>
                               ) : (
-                                <p className="text-amber-300/80 text-xs mt-1">Sophisticated memory systems for long-running agent processes</p>
+                                <p className="text-amber-300/80 text-xs mt-1">{t('product_detail.ai_agent.memory_detail')}</p>
                               )}
                             </div>
                           </div>
@@ -1528,8 +1530,8 @@ const ProductDetailTech = () => {
                               </div>
                             </div>
                             <div>
-                              <h5 className="font-medium text-white mb-1">Workflow Orchestration</h5>
-                              <p className="text-gray-400 text-sm">Structured processes for complex tasks</p>
+                              <h5 className="font-medium text-white mb-1">{t('product_detail.ai_agent.workflow_orchestration')}</h5>
+                              <p className="text-gray-400 text-sm">{t('product_detail.ai_agent.workflow_description')}</p>
                               {product.name.toLowerCase().includes('autogen') ? (
                                 <p className="text-amber-300/80 text-xs mt-1">AutoGen organizes multi-agent conversations with customizable flow</p>
                               ) : product.name.toLowerCase().includes('crew') ? (
@@ -1537,7 +1539,7 @@ const ProductDetailTech = () => {
                               ) : product.name.toLowerCase().includes('langchain') ? (
                                 <p className="text-amber-300/80 text-xs mt-1">LangChain's chains and sequences enable complex multi-step workflows</p>
                               ) : (
-                                <p className="text-amber-300/80 text-xs mt-1">Structured task execution paths for predictable agent behavior</p>
+                                <p className="text-amber-300/80 text-xs mt-1">{t('product_detail.ai_agent.workflow_detail')}</p>
                               )}
                             </div>
                           </div>
@@ -1549,7 +1551,7 @@ const ProductDetailTech = () => {
                           <svg className="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
-                          Why Use {product.name}?
+                          {t('product_detail.ai_agent.why_use_agent', { name: product.name })}
                         </h4>
                         {product.name.toLowerCase().includes('autogen') ? (
                           <p className="text-gray-300">AutoGen excels at building conversational and collaborative agents that effectively solve complex problems through structured agent-to-agent interactions. It's particularly strong for multi-agent teams where each agent has specialized roles and needs to coordinate through natural language communication.</p>
@@ -1558,7 +1560,7 @@ const ProductDetailTech = () => {
                         ) : product.name.toLowerCase().includes('langchain') ? (
                           <p className="text-gray-300">LangChain offers a comprehensive framework for building AI agents with sophisticated reasoning, memory systems, and tool integration. Its modular architecture makes it highly adaptable for diverse applications while providing strong abstractions over the underlying LLM interactions.</p>
                         ) : (
-                          <p className="text-gray-300">{product.name} provides a powerful framework for creating AI agents that can work independently or collaborate to solve complex tasks. Its flexible architecture allows for customization to specific use cases while maintaining high performance and reliability.</p>
+                          <p className="text-gray-300">{t('product_detail.ai_agent.why_use_description', { name: product.name })}</p>
                         )}
                       </div>
                     </div>
@@ -1566,48 +1568,48 @@ const ProductDetailTech = () => {
                   
                   {/* Use Cases */}
                   <div className="bg-gradient-to-br from-zinc-800/30 to-zinc-800/10 rounded-xl p-6 border border-zinc-700/40">
-                    <h3 className="text-xl font-medium text-white mb-4">Common Use Cases</h3>
+                    <h3 className="text-xl font-medium text-white mb-4">{t('product_detail.ai_agent.common_use_cases')}</h3>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700/30">
-                        <h4 className="font-medium text-white mb-2">Research & Analysis</h4>
-                        <p className="text-gray-400 text-sm">Conduct complex research tasks, analyze data, and generate comprehensive reports</p>
+                        <h4 className="font-medium text-white mb-2">{t('product_detail.ai_agent.research_analysis')}</h4>
+                        <p className="text-gray-400 text-sm">{t('product_detail.ai_agent.research_description')}</p>
                       </div>
                       
                       <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700/30">
-                        <h4 className="font-medium text-white mb-2">Content Creation</h4>
-                        <p className="text-gray-400 text-sm">Generate, edit, and optimize various types of content with specialized agents</p>
+                        <h4 className="font-medium text-white mb-2">{t('product_detail.ai_agent.content_creation')}</h4>
+                        <p className="text-gray-400 text-sm">{t('product_detail.ai_agent.content_description')}</p>
                       </div>
                       
                       <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700/30">
-                        <h4 className="font-medium text-white mb-2">Task Automation</h4>
-                        <p className="text-gray-400 text-sm">Automate complex workflows across multiple systems and data sources</p>
+                        <h4 className="font-medium text-white mb-2">{t('product_detail.ai_agent.task_automation')}</h4>
+                        <p className="text-gray-400 text-sm">{t('product_detail.ai_agent.task_automation_description')}</p>
                       </div>
                       
                       <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700/30">
-                        <h4 className="font-medium text-white mb-2">Software Development</h4>
-                        <p className="text-gray-400 text-sm">Assist with coding, debugging, testing, and documentation tasks</p>
+                        <h4 className="font-medium text-white mb-2">{t('product_detail.ai_agent.software_development')}</h4>
+                        <p className="text-gray-400 text-sm">{t('product_detail.ai_agent.software_description')}</p>
                       </div>
                       
                       <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700/30">
-                        <h4 className="font-medium text-white mb-2">Customer Support</h4>
-                        <p className="text-gray-400 text-sm">Handle complex customer inquiries with access to knowledge bases and tools</p>
+                        <h4 className="font-medium text-white mb-2">{t('product_detail.ai_agent.customer_support')}</h4>
+                        <p className="text-gray-400 text-sm">{t('product_detail.ai_agent.support_description')}</p>
                       </div>
                       
                       <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700/30">
-                        <h4 className="font-medium text-white mb-2">Data Processing</h4>
-                        <p className="text-gray-400 text-sm">Extract, transform, and analyze data from multiple sources</p>
+                        <h4 className="font-medium text-white mb-2">{t('product_detail.ai_agent.data_processing')}</h4>
+                        <p className="text-gray-400 text-sm">{t('product_detail.ai_agent.data_description')}</p>
                       </div>
                     </div>
                   </div>
                   
                   {/* Sample code */}
                   <div className="bg-gradient-to-br from-amber-900/10 to-orange-900/10 rounded-xl p-6 border border-amber-700/30">
-                    <h3 className="text-xl font-medium text-white mb-4">Getting Started</h3>
+                    <h3 className="text-xl font-medium text-white mb-4">{t('product_detail.ai_agent.getting_started')}</h3>
                     
                     <div className="space-y-4">
                       <div className="bg-zinc-900/70 rounded-lg p-5 border border-zinc-700/40">
-                        <h4 className="text-lg font-medium text-white mb-3">Installation</h4>
+                        <h4 className="text-lg font-medium text-white mb-3">{t('product_detail.ai_agent.installation')}</h4>
                         
                         {product.installation_command ? (
                           <div className="bg-zinc-900 rounded-lg p-4 font-mono text-sm text-gray-300 overflow-x-auto relative group">
@@ -1628,12 +1630,12 @@ const ProductDetailTech = () => {
                             </button>
                           </div>
                         ) : (
-                          <p className="text-gray-300">Visit the GitHub repository for detailed installation instructions.</p>
+                          <p className="text-gray-300">{t('product_detail.ai_agent.installation_description')}</p>
                         )}
                       </div>
                       
                       <div className="bg-zinc-900/70 rounded-lg p-5 border border-zinc-700/40">
-                        <h4 className="text-lg font-medium text-white mb-3">Sample Code</h4>
+                        <h4 className="text-lg font-medium text-white mb-3">{t('product_detail.ai_agent.sample_code')}</h4>
                         
                         <div className="bg-zinc-900 rounded-lg p-4 font-mono text-sm text-gray-300 overflow-x-auto mb-2 relative group">
                           {product.name.toLowerCase().includes('autogen') ? (
@@ -1737,24 +1739,32 @@ agent = initialize_agent(
 # Run the agent
 agent.run("Research the latest developments in autonomous agents")`
                           ) : (
-                          `# Basic AI agent setup
-from ${product.name.toLowerCase().replace(/\s+/g, '_')} import Agent, Tool
+                          `# Basic AI agent setup example
+# This is a conceptual example - adapt to your specific framework
 
-# Define tools
-search_tool = Tool(
-    name="search",
-    description="Search for information online",
-    func=lambda query: f"Results for: {query}"
+class AIAgent:
+    def __init__(self, tools, llm_model):
+        self.tools = tools
+        self.llm_model = llm_model
+    
+    def execute(self, task):
+        # Process task with available tools
+        return f"Processing: {task}"
+
+# Define available tools
+tools = [
+    {"name": "search", "description": "Search for information"},
+    {"name": "analyze", "description": "Analyze data"}
+]
+
+# Create agent instance
+agent = AIAgent(
+    tools=tools,
+    llm_model="claude-3-opus-20240229"
 )
 
-# Create agent
-agent = Agent(
-    tools=[search_tool],
-    llm="claude-3-opus-20240229"
-)
-
-# Run the agent
-response = agent.run("Find information about AI frameworks")`
+# Execute a task
+result = agent.execute("Research AI frameworks")`
                           )}
                           <button 
                             className="absolute top-2 right-2 p-1.5 bg-zinc-800 hover:bg-amber-700/30 rounded opacity-0 group-hover:opacity-100 transition-opacity"
@@ -1860,24 +1870,32 @@ agent = initialize_agent(
 
 # Run the agent
 agent.run("Research the latest developments in autonomous agents")`
-                                  : `# Basic AI agent setup
-from ${product.name.toLowerCase().replace(/\s+/g, '_')} import Agent, Tool
+                                  : `# Basic AI agent setup example
+# This is a conceptual example - adapt to your specific framework
 
-# Define tools
-search_tool = Tool(
-    name="search",
-    description="Search for information online",
-    func=lambda query: f"Results for: {query}"
+class AIAgent:
+    def __init__(self, tools, llm_model):
+        self.tools = tools
+        self.llm_model = llm_model
+    
+    def execute(self, task):
+        # Process task with available tools
+        return f"Processing: {task}"
+
+# Define available tools
+tools = [
+    {"name": "search", "description": "Search for information"},
+    {"name": "analyze", "description": "Analyze data"}
+]
+
+# Create agent instance
+agent = AIAgent(
+    tools=tools,
+    llm_model="claude-3-opus-20240229"
 )
 
-# Create agent
-agent = Agent(
-    tools=[search_tool],
-    llm="claude-3-opus-20240229"
-)
-
-# Run the agent
-response = agent.run("Find information about AI frameworks")`
+# Execute a task
+result = agent.execute("Research AI frameworks")`
                               );
                               toast({
                                 title: "Copied!",
@@ -1890,11 +1908,11 @@ response = agent.run("Find information about AI frameworks")`
                             </svg>
                           </button>
                         </div>
-                        <p className="text-gray-400 text-sm mt-2">Basic example of using {product.name} with Claude.</p>
+                        <p className="text-gray-400 text-sm mt-2">{t('product_detail.ai_agent.sample_code_description', { name: product.name })}</p>
                       </div>
                       
                       <div className="bg-zinc-900/70 rounded-lg p-5 border border-zinc-700/40">
-                        <h4 className="text-lg font-medium text-white mb-3">Resources</h4>
+                        <h4 className="text-lg font-medium text-white mb-3">{t('product_detail.ai_agent.resources')}</h4>
                         
                         <div className="space-y-3">
                           {product.githubUrl && (
@@ -1934,7 +1952,7 @@ response = agent.run("Find information about AI frameworks")`
                               <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                             </svg>
-                            <span>Learn AI Agents & MCP</span>
+                            <span>{t('product_detail.ai_agent.learn_ai_agents')}</span>
                             <ExternalLink className="h-4 w-4 ml-auto" />
                           </a>
                         </div>
@@ -2452,7 +2470,7 @@ response = agent.run("Find information about AI frameworks")`
         <div className="lg:w-1/3 space-y-6">
           {/* Get Started Card */}
           <div className="bg-gradient-to-br from-purple-900/30 to-indigo-900/20 backdrop-blur-md rounded-xl border border-purple-500/20 shadow-xl p-6">
-            <h3 className="text-xl font-bold text-white mb-4">Get Started</h3>
+            <h3 className="text-xl font-bold text-white mb-4">{t('product_detail.common.get_started')}</h3>
             
             {product.installation_command && (
               <div className="bg-zinc-900/80 rounded-lg border border-zinc-700/50 mb-4 relative group">
@@ -2543,12 +2561,12 @@ response = agent.run("Find information about AI frameworks")`
               ) : (
                 <Bookmark className="h-5 w-5 text-purple-400" />
               )}
-              <span>Product Details</span>
+              <span>{t('product_detail.common.product_details')}</span>
             </h3>
             
             <div className="grid grid-cols-1 gap-1 divide-y divide-zinc-700/40">
               <div className="py-3 flex justify-between">
-                <span className="text-gray-400">Type</span>
+                <span className="text-gray-400">{t('product_detail.common.type')}</span>
                 <span className="text-white font-medium">
                   {product.type === 'server' ? 'MCP Server' : 
                    product.type === 'client' ? 'MCP Client' : 
@@ -2559,21 +2577,21 @@ response = agent.run("Find information about AI frameworks")`
               
               {product.language && (
                 <div className="py-3 flex justify-between">
-                  <span className="text-gray-400">Language</span>
+                  <span className="text-gray-400">{t('product_detail.common.language')}</span>
                   <span className="text-white font-medium">{product.language}</span>
                 </div>
               )}
               
               {product.license && (
                 <div className="py-3 flex justify-between">
-                  <span className="text-gray-400">License</span>
+                  <span className="text-gray-400">{t('product_detail.common.license')}</span>
                   <span className="text-white font-medium">{product.license}</span>
                 </div>
               )}
               
               {product.version && (
                 <div className="py-3 flex justify-between">
-                  <span className="text-gray-400">Version</span>
+                  <span className="text-gray-400">{t('product_detail.common.version')}</span>
                   <span className="text-white font-medium">{product.version}</span>
                 </div>
               )}
@@ -2587,14 +2605,14 @@ response = agent.run("Find information about AI frameworks")`
               
               {product.createdBy && (
                 <div className="py-3 flex justify-between">
-                  <span className="text-gray-400">Creator</span>
+                  <span className="text-gray-400">{t('product_detail.common.creator')}</span>
                   <span className="text-white font-medium">{product.createdBy}</span>
                 </div>
               )}
               
               {product.creator && !product.createdBy && (
                 <div className="py-3 flex justify-between">
-                  <span className="text-gray-400">Creator</span>
+                  <span className="text-gray-400">{t('product_detail.common.creator')}</span>
                   <span className="text-white font-medium">{product.creator}</span>
                 </div>
               )}
@@ -2609,9 +2627,9 @@ response = agent.run("Find information about AI frameworks")`
               
               {product.is_active !== undefined && (
                 <div className="py-3 flex justify-between">
-                  <span className="text-gray-400">Status</span>
+                  <span className="text-gray-400">{t('product_detail.common.status')}</span>
                   <span className={product.is_active ? "text-green-400 font-medium" : "text-red-400 font-medium"}>
-                    {product.is_active ? "Active" : "Inactive"}
+                    {product.is_active ? t('product_detail.common.active') : t('product_detail.common.inactive')}
                   </span>
                 </div>
               )}
@@ -2620,7 +2638,7 @@ response = agent.run("Find information about AI frameworks")`
           
           {/* Categories and tags card */}
           <div className="bg-zinc-900/80 backdrop-blur-md rounded-xl border border-zinc-700/60 shadow-xl p-6">
-            <h3 className="text-xl font-bold text-white mb-4">Categories & Tags</h3>
+            <h3 className="text-xl font-bold text-white mb-4">{t('product_detail.common.categories_tags')}</h3>
             <div className="flex flex-wrap gap-2">
               {product.category && (
                 <Link 

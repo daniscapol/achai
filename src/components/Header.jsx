@@ -194,7 +194,8 @@ const Header = ({
                 // Temporarily hide Netflix UI option since it's not fully implemented
                 // { path: '/netflix-products', label: 'Netflix UI', href: '/netflix-products', badge: 'New', onClick: onNavigateNetflixProducts },
                 // Removed Product Admin from mobile menu - accessible via secure-admin route
-                { path: '/what-is-an-mcp-server', label: t('navigation.about_us'), href: '/what-is-an-mcp-server', onClick: onNavigateWhatIsMcp },
+                { path: '/what-is-an-mcp-server', label: t('navigation.what_is_mcp'), href: '/what-is-an-mcp-server', onClick: onNavigateWhatIsMcp },
+                { path: '/about-us', label: t('navigation.about_us'), href: '/about-us' },
                 { path: '/submit', label: t('navigation.submit_server'), href: '/submit', onClick: onNavigateSubmit }
               ].map((item, index) => (
                 <a 

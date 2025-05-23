@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../../contexts/LanguageContext';
 import AnimatedCounter from './AnimatedCounter';
 import MeshGradient from './MeshGradient';
 import { prefersReducedMotion } from '../animations';
@@ -15,12 +16,18 @@ const DynamicHeroSection = ({
   className = "" 
 }) => {
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const containerRef = useRef(null);
   const [animatedElements, setAnimatedElements] = useState([]);
   
-  // Words to cycle through - memoize to prevent re-creation
-  const cyclingWords = useMemo(() => ['AI', 'LLMs', 'Claude', 'Solutions', 'Agents'], []);
+  // Words to cycle through - language-aware and memoized
+  const cyclingWords = useMemo(() => {
+    if (currentLanguage === 'pt') {
+      return ['IA', 'LLMs', 'Claude', 'Soluções de IA', 'Agentes'];
+    }
+    return ['AI', 'LLMs', 'Claude', 'Solutions', 'Agents'];
+  }, [currentLanguage]);
   
   // Memoize translation values to prevent re-renders during scroll
   const translationValues = useMemo(() => ({
