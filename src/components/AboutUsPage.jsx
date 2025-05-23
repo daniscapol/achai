@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 /**
  * AboutUsPage - A comprehensive page about AchAI's mission, vision, and values
  * Follows modern tech company best practices for About Us pages
  */
 const AboutUsPage = ({ onNavigateToCategories }) => {
+  const { t } = useTranslation();
+  
   // Scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,35 +37,35 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
   // Core values data
   const coreValues = [
     {
-      title: "Free Content",
-      description: "Providing high-quality AI resources and tools accessible to everyone.",
+      title: t('about_us.values.free_content.title'),
+      description: t('about_us.values.free_content.description'),
       icon: "📚",
       gradient: "from-purple-600 to-indigo-600",
-      buttonText: "Explore Resources",
+      buttonText: t('about_us.values.free_content.button'),
       buttonLink: "#/search?type=server"
     },
     {
-      title: "Open Source",
-      description: "Distributing valuable open source projects that advance AI capabilities.",
+      title: t('about_us.values.open_source.title'),
+      description: t('about_us.values.open_source.description'),
       icon: "🔓",
       gradient: "from-blue-600 to-cyan-600",
-      buttonText: "View Projects",
+      buttonText: t('about_us.values.open_source.button'),
       buttonLink: "#/search?category=open-source"
     },
     {
-      title: "AI Democratization",
-      description: "Making AI technology accessible and usable for people of all skill levels.",
+      title: t('about_us.values.ai_democratization.title'),
+      description: t('about_us.values.ai_democratization.description'),
       icon: "🌍",
       gradient: "from-emerald-600 to-green-600",
-      buttonText: "Learn How",
+      buttonText: t('about_us.values.ai_democratization.button'),
       buttonLink: "#/search?category=ai-learning"
     },
     {
-      title: "Partnership Network",
-      description: "Collaborating with leading technology partners to support innovative AI projects.",
+      title: t('about_us.values.partnership.title'),
+      description: t('about_us.values.partnership.description'),
       icon: "🤝",
       gradient: "from-amber-500 to-orange-600",
-      buttonText: "Meet Partners",
+      buttonText: t('about_us.values.partnership.button'),
       buttonLink: "#/browse-categories"
     }
   ];
@@ -70,16 +73,16 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
   // Team members data
   const teamMembers = [
     {
-      name: "Dan",
-      title: "Co-Founder & CEO",
+      name: t('about_us.team.dan.name'),
+      title: t('about_us.team.dan.title'),
       image: "/assets/news-images/fallback.jpg",
-      bio: "Dan leads AchaAI with a vision to democratize artificial intelligence and make it accessible to everyone."
+      bio: t('about_us.team.dan.bio')
     },
     {
-      name: "Fab",
-      title: "Co-Founder & CTO",
+      name: t('about_us.team.fab.name'),
+      title: t('about_us.team.fab.title'),
       image: "/assets/news-images/fallback.jpg",
-      bio: "Fab brings deep technical expertise in AI systems and leads our technology initiatives."
+      bio: t('about_us.team.fab.bio')
     }
   ];
 
@@ -87,13 +90,13 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
   const timelineEvents = [
     {
       year: "2024",
-      title: "AI Hub Establishment",
-      description: "Became the world's largest AI hub with millions of users accessing our resources monthly 🚀"
+      title: t('about_us.timeline.events.2024.title'),
+      description: t('about_us.timeline.events.2024.description')
     },
     {
       year: "2025",
-      title: "AI Innovation Center",
-      description: "Launching the AchaAI Innovation Center, connecting developers with cutting-edge AI technologies 🔮"
+      title: t('about_us.timeline.events.2025.title'),
+      description: t('about_us.timeline.events.2025.description')
     }
   ];
 
@@ -134,15 +137,15 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
               <img src="/assets/logo.png" alt="AchAI Logo" className="h-24 w-auto mb-6" />
             </div>
             <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-purple-500/20 text-indigo-300 text-sm font-medium mb-4">
-              Our Story
+              {t('about_us.hero.badge')}
             </span>
             <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">
-                The Biggest AI Hub in the World
+                {t('about_us.hero.title')}
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-zinc-300 max-w-3xl">
-              AchAI is your go-to destination for AI tools, materials, and projects.
+              {t('about_us.hero.description')}
             </p>
           </motion.div>
         </div>
@@ -159,22 +162,18 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
             variants={fadeIn}
           >
             <span className="inline-block px-3 py-1 rounded-full bg-white/5 border border-purple-500/20 text-indigo-300 text-sm font-medium mb-3">
-              Our Mission
+              {t('about_us.mission.badge')}
             </span>
             <h2 className="text-4xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-300">
-              Democratizing AI for Everyone
+              {t('about_us.mission.title')}
             </h2>
             
             <div className="bg-gradient-to-b from-slate-800/50 to-slate-900/50 border border-white/10 backdrop-blur-sm rounded-2xl p-8">
               <p className="text-xl text-zinc-300 mb-6 leading-relaxed">
-                At AchAI, we're committed to democratizing AI technology and making it accessible to everyone. 
-                We believe in the transformative power of artificial intelligence and its potential to solve 
-                real-world problems.
+                {t('about_us.mission.description1')}
               </p>
               <p className="text-xl text-zinc-300 leading-relaxed">
-                Our platform connects you with the best AI solutions, tutorials, and resources to help you 
-                harness this power, regardless of your technical expertise. We're building a future where 
-                AI is a tool that empowers everyone, not just those with specialized knowledge.
+                {t('about_us.mission.description2')}
               </p>
             </div>
           </motion.div>
@@ -194,13 +193,11 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeIn}
           >
-            <h2 className="text-4xl font-bold mb-6">Our Vision</h2>
+            <h2 className="text-4xl font-bold mb-6">{t('about_us.vision.title')}</h2>
             <p className="text-2xl text-zinc-200 mb-4 leading-relaxed">
-              "We envision a world where artificial intelligence is accessible to everyone, 
-              empowering individuals and organizations to solve complex problems and unlock 
-              new possibilities."
+              "{t('about_us.vision.quote')}"
             </p>
-            <p className="text-zinc-400 italic">— AchAI Founding Team</p>
+            <p className="text-zinc-400 italic">{t('about_us.vision.attribution')}</p>
           </motion.div>
         </div>
       </section>
@@ -216,13 +213,13 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
             variants={fadeIn}
           >
             <span className="inline-block px-3 py-1 rounded-full bg-white/5 border border-purple-500/20 text-indigo-300 text-sm font-medium mb-3">
-              Our Values
+              {t('about_us.values.badge')}
             </span>
             <h2 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">
-              What Drives Us
+              {t('about_us.values.title')}
             </h2>
             <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
-              These core principles guide our decisions and shape our platform.
+              {t('about_us.values.description')}
             </p>
           </motion.div>
           
@@ -278,13 +275,13 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
             variants={fadeIn}
           >
             <span className="inline-block px-3 py-1 rounded-full bg-white/5 border border-purple-500/20 text-indigo-300 text-sm font-medium mb-3">
-              Our Journey
+              {t('about_us.timeline.badge')}
             </span>
             <h2 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">
-              The AchAI Story
+              {t('about_us.timeline.title')}
             </h2>
             <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
-              From inception to today, our mission to democratize AI has guided our growth.
+              {t('about_us.timeline.description')}
             </p>
           </motion.div>
           
@@ -337,13 +334,13 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
             variants={fadeIn}
           >
             <span className="inline-block px-3 py-1 rounded-full bg-white/5 border border-purple-500/20 text-indigo-300 text-sm font-medium mb-3">
-              Our Founders
+              {t('about_us.team.badge')}
             </span>
             <h2 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">
-              Meet Dan & Fab
+              {t('about_us.team.title')}
             </h2>
             <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
-              The visionaries behind AchAI, working to make AI accessible to everyone.
+              {t('about_us.team.description')}
             </p>
           </motion.div>
           
@@ -397,13 +394,13 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
             variants={fadeIn}
           >
             <span className="inline-block px-3 py-1 rounded-full bg-white/5 border border-purple-500/20 text-indigo-300 text-sm font-medium mb-3">
-              Join Us
+              {t('about_us.community.badge')}
             </span>
             <h2 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">
-              Be Part of the AchAI Community
+              {t('about_us.community.title')}
             </h2>
             <p className="text-xl text-zinc-400 max-w-3xl mx-auto mb-8">
-              Join thousands of AI enthusiasts, developers, and businesses already using AchAI solutions.
+              {t('about_us.community.description')}
             </p>
             
             <div className="inline-flex p-0.5 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600">
@@ -411,7 +408,7 @@ const AboutUsPage = ({ onNavigateToCategories }) => {
                 onClick={onNavigateToCategories} 
                 className="px-8 py-4 rounded-md bg-slate-950 text-white font-bold text-lg hover:bg-slate-900/80 transition-colors duration-300"
               >
-                Explore Our Solutions
+                {t('about_us.community.button')}
               </button>
             </div>
           </motion.div>

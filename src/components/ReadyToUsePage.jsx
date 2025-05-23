@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Animation keyframes for particle effects
 const animationKeyframes = `
@@ -150,7 +151,7 @@ const BackgroundParticles = ({ count = 30, productId }) => {
 };
 
 // Solution Selector Component
-const SolutionSelector = ({ products, activeProductId, onSelectProduct }) => {
+const SolutionSelector = ({ products, activeProductId, onSelectProduct, t }) => {
   // Get theme based on active product
   const theme = productThemes[activeProductId] || productThemes['relevance-ai'];
   
@@ -187,14 +188,14 @@ const SolutionSelector = ({ products, activeProductId, onSelectProduct }) => {
         })}
       </div>
       <p className={`${theme.accent} text-center text-sm mt-3 font-medium`}>
-        Select a solution to view its features and pricing
+        {t('ready_to_use.selector.instruction')}
       </p>
     </div>
   );
 };
 
 // Product Detail Component with image preloading
-const ProductDetail = ({ product, onGetStarted }) => {
+const ProductDetail = ({ product, onGetStarted, t }) => {
   const theme = productThemes[product.id] || productThemes['relevance-ai'];
   const [imageLoaded, setImageLoaded] = useState(false);
   
@@ -292,7 +293,7 @@ const ProductDetail = ({ product, onGetStarted }) => {
             >
               <span className="absolute top-0 left-0 w-full h-full bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700"></span>
               <span className="relative z-10 flex items-center justify-center">
-                Get Started Free
+                {t('ready_to_use.buttons.get_started_free')}
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
@@ -303,7 +304,7 @@ const ProductDetail = ({ product, onGetStarted }) => {
               onClick={() => window.open(product.demoUrl, '_blank')}
               className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold py-3 px-8 rounded-xl border border-white/20 transition duration-300"
             >
-              Watch Demo
+              {t('ready_to_use.buttons.watch_demo')}
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -382,7 +383,7 @@ const ProductDetail = ({ product, onGetStarted }) => {
 };
 
 // Features Section
-const FeaturesSection = ({ features, productId }) => {
+const FeaturesSection = ({ features, productId, t }) => {
   const theme = productThemes[productId] || productThemes['relevance-ai'];
   
   return (
@@ -393,11 +394,11 @@ const FeaturesSection = ({ features, productId }) => {
       </BgAnimation>
       
       <div className="text-center mb-10 relative z-10">
-        <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">Powerful Features</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">{t('ready_to_use.content.features.title')}</h3>
         <p className={`text-lg ${theme.accent} max-w-2xl mx-auto`}>
           {productId === 'relevance-ai' 
-            ? 'Everything you need to build, deploy, and manage your AI workforce'
-            : 'All the tools you need to create and deploy AI chatbots for your business'}
+            ? t('ready_to_use.content.features.relevance_description')
+            : t('ready_to_use.content.features.customgpt_description')}
         </p>
       </div>
       
@@ -455,7 +456,7 @@ const FeaturesSection = ({ features, productId }) => {
 };
 
 // Stats Section
-const StatsSection = ({ stats, productId }) => {
+const StatsSection = ({ stats, productId, t }) => {
   const theme = productThemes[productId] || productThemes['relevance-ai'];
   
   return (
@@ -469,13 +470,13 @@ const StatsSection = ({ stats, productId }) => {
         <div className="text-center mb-8 relative z-10">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
             {productId === 'relevance-ai' 
-              ? "Work is happening, even when you're not" 
-              : "Improve your business efficiency"}
+              ? t('ready_to_use.content.stats.work_happening')
+              : t('ready_to_use.content.stats.improve_efficiency')}
           </h2>
           <p className="text-gray-400">
             {productId === 'relevance-ai' 
-              ? 'Your AI workforce is ready to support your team around the clock' 
-              : 'Custom AI chatbots automate support and enhance user experience'}
+              ? t('ready_to_use.content.stats.ai_workforce_ready')
+              : t('ready_to_use.content.stats.automate_support')}
           </p>
         </div>
         
@@ -499,7 +500,7 @@ const StatsSection = ({ stats, productId }) => {
 };
 
 // Pricing Section
-const PricingSection = ({ pricing, onGetStarted, productId }) => {
+const PricingSection = ({ pricing, onGetStarted, productId, t }) => {
   const theme = productThemes[productId] || productThemes['relevance-ai'];
   
   return (
@@ -510,9 +511,9 @@ const PricingSection = ({ pricing, onGetStarted, productId }) => {
       </BgAnimation>
       
       <div className="text-center mb-10 relative z-10">
-        <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">Simple, Transparent Pricing</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">{t('ready_to_use.content.pricing.title')}</h3>
         <p className={`text-lg ${theme.accent} max-w-2xl mx-auto`}>
-          Choose a plan that works for you, with a generous free tier to get started
+          {t('ready_to_use.content.pricing.description')}
         </p>
       </div>
       
@@ -528,7 +529,7 @@ const PricingSection = ({ pricing, onGetStarted, productId }) => {
           >
             {i === 1 && (
               <div className={`absolute top-0 left-0 right-0 bg-gradient-to-r ${theme.primary} text-white text-xs font-semibold py-1.5 text-center`}>
-                MOST POPULAR
+                {t('ready_to_use.content.pricing.most_popular')}
               </div>
             )}
             
@@ -538,7 +539,7 @@ const PricingSection = ({ pricing, onGetStarted, productId }) => {
                 <span className={`text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r ${theme.primary}`}>
                   {plan.price}
                 </span>
-                <span className="text-gray-400 ml-1">/month</span>
+                <span className="text-gray-400 ml-1">{t('ready_to_use.content.pricing.per_month')}</span>
               </div>
               
               <ul className="space-y-4 mb-8">
@@ -562,7 +563,7 @@ const PricingSection = ({ pricing, onGetStarted, productId }) => {
                     : 'bg-zinc-700 text-gray-200 hover:bg-zinc-600'
                 }`}
               >
-                {plan.name.toLowerCase().includes('free') ? 'Start Free' : i === 1 ? 'Get Started' : 'Choose Plan'}
+                {plan.name.toLowerCase().includes('free') ? t('ready_to_use.buttons.start_free') : i === 1 ? t('ready_to_use.buttons.get_started') : t('ready_to_use.buttons.choose_plan')}
               </button>
             </div>
             
@@ -574,8 +575,8 @@ const PricingSection = ({ pricing, onGetStarted, productId }) => {
       
       <p className="text-center text-gray-400 mt-6">
         {productId === 'relevance-ai' 
-          ? 'All plans include a 14-day free trial. No credit card required.' 
-          : 'Free trial available for 7 days. Credit card required for trial.'}
+          ? t('ready_to_use.pricing.trial_no_card') 
+          : t('ready_to_use.pricing.trial_with_card')}
       </p>
     </div>
   );
@@ -583,18 +584,20 @@ const PricingSection = ({ pricing, onGetStarted, productId }) => {
 
 // Main ReadyToUsePage component 
 const ReadyToUsePage = () => {
+  const { t } = useTranslation();
+  
   // Affiliate products data
   const affiliateProducts = [
     {
       id: 'relevance-ai',
-      name: 'Relevance AI',
-      description: 'Build your AI Workforce: The home for AI teams that work for you',
-      shortDescription: 'AI workforce automation',
-      tagline: 'Build Your AI Workforce',
+      name: t('ready_to_use.products.relevance_ai.name'),
+      description: t('ready_to_use.products.relevance_ai.description'),
+      shortDescription: t('ready_to_use.products.relevance_ai.short_description'),
+      tagline: t('ready_to_use.products.relevance_ai.tagline'),
       logoUrl: '/assets/affiliate-images/relevance-ai.png',
       imageUrl: '/assets/affiliate-images/relevance-ai-workforce.jpg',
       dashboardUrl: '/assets/affiliate-images/relevance-ai-dashboard.png',
-      category: 'AI Workforce Platform',
+      category: t('ready_to_use.products.relevance_ai.category'),
       affiliateUrl: 'https://relevanceai.com?via=360bi',
       demoUrl: 'https://www.youtube.com/watch?v=LJcSOlUaRqA',
       typewriterSentences: [
@@ -603,19 +606,8 @@ const ReadyToUsePage = () => {
         "Automate repetitive tasks and workflows effortlessly",
         "Deploy custom AI agents in minutes with no code"
       ],
-      benefits: [
-        'Build and deploy your AI workforce in minutes, no code required',
-        'Create custom AI tools that integrate with your existing tech stack',
-        'Scale business operations without increasing headcount',
-        'SOC 2 Type 2 certified with enterprise-grade security'
-      ],
-      features: [
-        'AI Agents - Build and recruit AI agents to automate tasks and workflows',
-        'AI Tools - Create custom AI tools that integrate with your tech stack',
-        'Multi-Agent Systems - Develop collaborative AI teams to solve complex problems',
-        'Comprehensive API - Integrate seamlessly into your existing systems',
-        'No-Code Builder - Create and deploy AI agents with a user-friendly interface'
-      ],
+      benefits: t('ready_to_use.benefits.relevance_ai', { returnObjects: true }),
+      features: t('ready_to_use.products.relevance_ai.features', { returnObjects: true }),
       useCases: [
         'Sales Teams - Automate lead nurturing and booking meetings 24/7',
         'Marketing Departments - Generate unique content and automate repetitive tasks',
@@ -624,9 +616,9 @@ const ReadyToUsePage = () => {
         'HR Departments - Automate candidate screening and onboarding workflows'
       ],
       pricing: [
-        {name: 'Free', price: '$0', features: ['5,000 credits/month', 'Limited to 2 tools', 'Email support']},
-        {name: 'Pro', price: '$19', features: ['10,000 credits/month', '1 user seat', 'Chat support']},
-        {name: 'Team', price: '$199', features: ['100,000 credits/month', '10 user seats', 'Priority support']}
+        {name: 'Free', price: '$0', features: t('ready_to_use.pricing_features.relevance_ai.free', { returnObjects: true })},
+        {name: 'Pro', price: '$19', features: t('ready_to_use.pricing_features.relevance_ai.pro', { returnObjects: true })},
+        {name: 'Team', price: '$199', features: t('ready_to_use.pricing_features.relevance_ai.team', { returnObjects: true })}
       ],
       testimonials: [
         {
@@ -641,21 +633,21 @@ const ReadyToUsePage = () => {
         }
       ],
       stats: [
-        { value: 70, label: "Tasks Automated", suffix: "%" },
-        { value: 24, label: "Hours Active Daily", suffix: "/7" },
-        { value: 50, label: "AI Agents Available", prefix: "+" }
+        { value: 70, label: t('ready_to_use.content.stats.tasks_automated'), suffix: "%" },
+        { value: 24, label: t('ready_to_use.content.stats.hours_active_daily'), suffix: "/7" },
+        { value: 50, label: t('ready_to_use.content.stats.ai_agents_available'), prefix: "+" }
       ]
     },
     {
       id: 'customgpt',
-      name: 'CustomGPT.ai',
-      description: 'Build powerful AI chatbots that deliver exceptional customer experiences using your own business content',
-      shortDescription: 'AI-powered chatbots for your business',
-      tagline: 'Transform Your Content Into Intelligent Chatbots',
+      name: t('ready_to_use.products.customgpt.name'),
+      description: t('ready_to_use.products.customgpt.description'),
+      shortDescription: t('ready_to_use.products.customgpt.short_description'),
+      tagline: t('ready_to_use.products.customgpt.tagline'),
       logoUrl: '/assets/affiliate-images/customgpt/customgpt-logo-new.png',
       imageUrl: '/assets/affiliate-images/customgpt/customgpt-opengraph.png',
       dashboardUrl: '/assets/affiliate-images/customgpt/customgpt-chatbot.webp',
-      category: 'AI Chatbot Platform',
+      category: t('ready_to_use.products.customgpt.category'),
       affiliateUrl: 'https://customgpt.ai/?fpr=daniel58',
       demoUrl: 'https://customgpt.ai/?fpr=daniel58',
       typewriterSentences: [
@@ -665,21 +657,8 @@ const ReadyToUsePage = () => {
         "Ensure accurate responses with anti-hallucination technology",
         "Enhance customer satisfaction with personalized interactions"
       ],
-      benefits: [
-        'Create AI chatbots that instantly understand your business documentation',
-        'Reduce customer support costs by up to 80% with 24/7 automated service',
-        'Deploy in minutes with our intuitive no-code platform',
-        'Enterprise-grade security with SOC-2 Type 2 and GDPR compliance',
-        'Seamless integration with your existing tools and workflows'
-      ],
-      features: [
-        'Intuitive Builder - Create custom AI chatbots in minutes with no coding required',
-        'Versatile Integration - Connect with 100+ data sources including Google Drive, Notion, and Shopify',
-        'Advanced Content Processing - Support for 1,400+ document formats with text extraction from images',
-        'AI Accuracy Engine - Proprietary anti-hallucination technology ensures factual, reliable responses',
-        'Multilingual Capabilities - Support customers globally with 95+ language options',
-        'Conversation Analytics - Gain insights from user interactions to continuously improve performance'
-      ],
+      benefits: t('ready_to_use.benefits.customgpt', { returnObjects: true }),
+      features: t('ready_to_use.products.customgpt.features', { returnObjects: true }),
       useCases: [
         'Customer Support - Resolve inquiries 24/7 with automated responses, reducing ticket volume by 80%',
         'Employee Onboarding - Create interactive training experiences that scale with your organization',
@@ -689,9 +668,9 @@ const ReadyToUsePage = () => {
         'Financial Services - Offer secure, compliant customer assistance for banking and insurance'
       ],
       pricing: [
-        {name: 'Free Trial', price: '$0', features: ['14-day full access', '1 advanced chatbot', 'Email support', '1,000 queries/month']},
-        {name: 'Business', price: '$99', features: ['Unlimited chatbots', '10,000 items per chatbot', '5 team members', 'Priority support']},
-        {name: 'Enterprise', price: '$499', features: ['Custom solutions', 'Unlimited data capacity', 'Dedicated account manager', 'Custom integrations']}
+        {name: 'Free Trial', price: '$0', features: t('ready_to_use.pricing_features.customgpt.free', { returnObjects: true })},
+        {name: 'Business', price: '$99', features: t('ready_to_use.pricing_features.customgpt.business', { returnObjects: true })},
+        {name: 'Enterprise', price: '$499', features: t('ready_to_use.pricing_features.customgpt.enterprise', { returnObjects: true })}
       ],
       testimonials: [
         {
@@ -711,21 +690,21 @@ const ReadyToUsePage = () => {
         }
       ],
       stats: [
-        { value: 85, label: "Average Ticket Reduction", suffix: "%" },
-        { value: 150, label: "Available Integrations", suffix: "+" },
-        { value: 24, label: "Chatbot Availability", suffix: "/7" }
+        { value: 85, label: t('ready_to_use.content.stats.ticket_reduction'), suffix: "%" },
+        { value: 150, label: t('ready_to_use.content.stats.available_integrations'), suffix: "+" },
+        { value: 24, label: t('ready_to_use.content.stats.chatbot_availability'), suffix: "/7" }
       ]
     },
     {
       id: 'aistudios',
-      name: 'AI Studios',
-      description: 'Create lifelike AI avatars and videos for marketing, training, and customer engagement',
-      shortDescription: 'Lifelike AI avatars and videos',
-      tagline: 'Bring Your Content To Life With AI Videos',
+      name: t('ready_to_use.products.aistudios.name'),
+      description: t('ready_to_use.products.aistudios.description'),
+      shortDescription: t('ready_to_use.products.aistudios.short_description'),
+      tagline: t('ready_to_use.products.aistudios.tagline'),
       logoUrl: '/assets/affiliate-images/aistudios/aistudios-logo.png',
       imageUrl: '/assets/affiliate-images/aistudios/aistudios-deepbrain.png',
       dashboardUrl: '/assets/affiliate-images/aistudios/aistudios-humans.png',
-      category: 'AI Video Platform',
+      category: t('ready_to_use.products.aistudios.category'),
       affiliateUrl: 'https://www.aistudios.com/?via=360bi',
       demoUrl: 'https://www.aistudios.com/?via=360bi',
       typewriterSentences: [
@@ -735,21 +714,8 @@ const ReadyToUsePage = () => {
         "Reduce video production costs by up to 90%",
         "Scale your video content across channels and markets"
       ],
-      benefits: [
-        'Create professional AI videos without cameras, studios, or actors',
-        'Save thousands on video production while creating more content',
-        'Scale content creation across multiple languages and markets',
-        'Update videos instantly without re-shooting when information changes',
-        'Maintain consistent brand messaging across all video content'
-      ],
-      features: [
-        'Lifelike AI Avatars - Choose from 100+ realistic AI presenters for your videos',
-        'Multi-Language Support - Create videos in 140+ languages with native-sounding speech',
-        'Text-to-Video Conversion - Simply paste your script to generate professional videos',
-        'Custom Avatar Creation - Create your own AI avatar from photos or video clips',
-        'Background Customization - Use custom backgrounds or choose from premium templates',
-        'Advanced Editing Tools - Fine-tune expressions, gestures, and delivery for perfect results'
-      ],
+      benefits: t('ready_to_use.benefits.aistudios', { returnObjects: true }),
+      features: t('ready_to_use.products.aistudios.features', { returnObjects: true }),
       useCases: [
         'Marketing Videos - Create product demos, explainers, and promotional content at scale',
         'Learning & Development - Produce training and educational videos in multiple languages',
@@ -759,9 +725,9 @@ const ReadyToUsePage = () => {
         'Multilingual Expansion - Localize video content for international markets instantly'
       ],
       pricing: [
-        {name: 'Starter', price: '$39', features: ['50 minutes/month', '100+ AI avatars', 'HD quality video', 'Standard templates']},
-        {name: 'Business', price: '$199', features: ['300 minutes/month', 'Priority rendering', 'Premium templates', 'API access']},
-        {name: 'Enterprise', price: '$499', features: ['Custom solution', 'Dedicated account manager', 'Custom avatars', 'Advanced analytics']}
+        {name: 'Starter', price: '$39', features: t('ready_to_use.pricing_features.aistudios.starter', { returnObjects: true })},
+        {name: 'Business', price: '$199', features: t('ready_to_use.pricing_features.aistudios.business', { returnObjects: true })},
+        {name: 'Enterprise', price: '$499', features: t('ready_to_use.pricing_features.aistudios.enterprise', { returnObjects: true })}
       ],
       testimonials: [
         {
@@ -781,21 +747,21 @@ const ReadyToUsePage = () => {
         }
       ],
       stats: [
-        { value: 90, label: "Production Cost Reduction", suffix: "%" },
-        { value: 140, label: "Supported Languages", suffix: "+" },
-        { value: 10, label: "Minutes to Create Video", prefix: "<" }
+        { value: 90, label: t('ready_to_use.content.stats.production_cost_reduction'), suffix: "%" },
+        { value: 140, label: t('ready_to_use.content.stats.supported_languages'), suffix: "+" },
+        { value: 10, label: t('ready_to_use.content.stats.minutes_to_create'), prefix: "<" }
       ]
     },
     {
       id: 'rytr',
-      name: 'Rytr',
-      description: 'AI writing assistant that helps you create high-quality content in just seconds, at a fraction of the cost',
-      shortDescription: 'AI-powered writing assistant',
-      tagline: 'Write Better Content, Faster',
+      name: t('ready_to_use.products.rytr.name'),
+      description: t('ready_to_use.products.rytr.description'),
+      shortDescription: t('ready_to_use.products.rytr.short_description'),
+      tagline: t('ready_to_use.products.rytr.tagline'),
       logoUrl: '/assets/affiliate-images/rytr/rytr-logo.png',
       imageUrl: '/assets/affiliate-images/rytr/rytr-dashboard.png',
       dashboardUrl: '/assets/affiliate-images/rytr/rytr-interface.png',
-      category: 'AI Writing Platform',
+      category: t('ready_to_use.products.rytr.category'),
       affiliateUrl: 'https://rytr.me/?via=360bi',
       demoUrl: 'https://rytr.me/?via=360bi',
       typewriterSentences: [
@@ -805,21 +771,8 @@ const ReadyToUsePage = () => {
         "Save thousands on content creation and copywriting",
         "Supports 40+ use cases and 30+ languages"
       ],
-      benefits: [
-        'Create engaging content in seconds with AI-powered assistance',
-        'Save up to 90% on content creation and copywriting costs',
-        'Boost productivity and focus on strategy instead of writing',
-        'Eliminate writer\'s block with unlimited content generation',
-        'Scale content production across platforms and languages'
-      ],
-      features: [
-        'Smart Editor - Real-time suggestions, tone adjustments, and content variations',
-        'Template Library - 40+ templates for blogs, emails, ads, product descriptions, and more',
-        '30+ Languages - Generate and translate content to reach global audiences',
-        'Plagiarism-Free Content - Original, fresh content for every generation',
-        'SEO Optimization - Create content that ranks well on search engines',
-        'Team Collaboration - Share templates and content with your team'
-      ],
+      benefits: t('ready_to_use.benefits.rytr', { returnObjects: true }),
+      features: t('ready_to_use.products.rytr.features', { returnObjects: true }),
       useCases: [
         'Blog Content - Generate engaging blog posts, articles, and outlines',
         'Marketing Copy - Create compelling ads, emails, and social media content',
@@ -829,9 +782,9 @@ const ReadyToUsePage = () => {
         'Website Copy - Create landing pages, about us sections, and more'
       ],
       pricing: [
-        {name: 'Free', price: '$0', features: ['10,000 characters/month', '40+ use cases', '30+ languages', 'Access to AI tools']},
-        {name: 'Premium', price: '$29', features: ['Unlimited characters', 'Premium use cases', 'Priority support', 'Browser extension']},
-        {name: 'Unlimited', price: '$290', features: ['Everything in Premium', 'Yearly billing', 'Save 17%', 'Dedicated account manager']}
+        {name: 'Free', price: '$0', features: t('ready_to_use.pricing_features.rytr.free', { returnObjects: true })},
+        {name: 'Premium', price: '$29', features: t('ready_to_use.pricing_features.rytr.premium', { returnObjects: true })},
+        {name: 'Unlimited', price: '$290', features: t('ready_to_use.pricing_features.rytr.unlimited', { returnObjects: true })}
       ],
       testimonials: [
         {
@@ -851,9 +804,9 @@ const ReadyToUsePage = () => {
         }
       ],
       stats: [
-        { value: 90, label: "Time Saved on Content Creation", suffix: "%" },
-        { value: 40, label: "Use Cases Supported", suffix: "+" },
-        { value: 5, label: "Million+ Users Worldwide", prefix: "" }
+        { value: 90, label: t('ready_to_use.content.stats.time_saved'), suffix: "%" },
+        { value: 40, label: t('ready_to_use.content.stats.use_cases_supported'), suffix: "+" },
+        { value: 5, label: t('ready_to_use.content.stats.users_worldwide'), prefix: "" }
       ]
     }
   ];
@@ -916,14 +869,13 @@ const ReadyToUsePage = () => {
         {/* Header Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="text-white">Ready-to-Use</span> <br />
+            <span className="text-white">{t('ready_to_use.hero.subtitle')}</span> <br />
             <span className={`text-transparent bg-clip-text bg-gradient-to-r ${theme.primary}`}>
-              AI Solutions
+              {t('ready_to_use.hero.title')}
             </span>
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-            Curated, production-ready AI tools that will transform your workflow today. 
-            No setup hassle, just immediate value.
+            {t('ready_to_use.hero.description')}
           </p>
           {/* Quick product navigation dots */}
           <div className="flex justify-center gap-2 mb-4">
@@ -952,26 +904,30 @@ const ReadyToUsePage = () => {
           <SolutionSelector 
             products={affiliateProducts} 
             activeProductId={activeProductId} 
-            onSelectProduct={setActiveProductId} 
+            onSelectProduct={setActiveProductId}
+            t={t} 
           />
         )}
         
         {/* Product Detail */}
         <ProductDetail 
           product={featuredProduct} 
-          onGetStarted={handleGetStarted} 
+          onGetStarted={handleGetStarted}
+          t={t} 
         />
         
         {/* Stats Section */}
         <StatsSection 
           stats={featuredProduct.stats}
           productId={featuredProduct.id}
+          t={t}
         />
         
         {/* Features Section */}
         <FeaturesSection 
           features={featuredProduct.features}
           productId={featuredProduct.id}
+          t={t}
         />
         
         {/* Pricing Section */}
@@ -979,6 +935,7 @@ const ReadyToUsePage = () => {
           pricing={featuredProduct.pricing} 
           onGetStarted={handleGetStarted}
           productId={featuredProduct.id}
+          t={t}
         />
         
         {/* Call to Action */}
@@ -1030,10 +987,10 @@ const ReadyToUsePage = () => {
           
           <div className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-              Ready to Transform Your Workflow?
+              {t('ready_to_use.cta.title')}
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-              Join thousands of businesses using {featuredProduct.name} to automate tasks and increase productivity.
+              {t('ready_to_use.cta.description', { productName: featuredProduct.name })}
             </p>
             <button 
               onClick={() => handleGetStarted(featuredProduct.id)}
@@ -1041,7 +998,7 @@ const ReadyToUsePage = () => {
             >
               <span className="absolute top-0 left-0 w-full h-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></span>
               <span className="relative z-10 flex items-center justify-center text-lg">
-                Try {featuredProduct.name} For Free
+                {t('ready_to_use.buttons.try_free', { productName: featuredProduct.name })}
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
@@ -1049,12 +1006,12 @@ const ReadyToUsePage = () => {
             </button>
             <p className="text-gray-400 mt-4">
               {featuredProduct.id === 'relevance-ai' 
-                ? 'No credit card required. Start building your AI workforce today.' 
+                ? t('ready_to_use.final_cta.relevance') 
                 : featuredProduct.id === 'customgpt'
-                ? 'Free 14-day trial available. Start creating your custom chatbot now.'
+                ? t('ready_to_use.final_cta.customgpt')
                 : featuredProduct.id === 'aistudios'
-                ? 'Free trial available. Create your first AI video in minutes.'
-                : 'Free plan available. Start writing better content today.'}
+                ? t('ready_to_use.final_cta.aistudios')
+                : t('ready_to_use.final_cta.rytr')}
             </p>
           </div>
         </div>

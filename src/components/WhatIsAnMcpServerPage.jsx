@@ -1,15 +1,17 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const WhatIsAnMcpServerPage = () => {
+  const { t } = useTranslation();
   return (
     <div className="container mx-auto px-4 py-12 min-h-screen">
       {/* Hero Section */}
       <div className="mb-16 text-center">
         <h1 className="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-purple-600">
-          What is an MCP Server?
+          {t('what_is_mcp.hero.title')}
         </h1>
         <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-          Connecting AI to Your World
+          {t('what_is_mcp.hero.subtitle')}
         </p>
         <div className="mt-8 flex justify-center">
           <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full"></div>
@@ -25,7 +27,7 @@ const WhatIsAnMcpServerPage = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold mb-4 text-gray-100">The Universal Connector for AI</h2>
+          <h2 className="text-2xl font-bold mb-4 text-gray-100">{t('what_is_mcp.cards.universal_connector.title')}</h2>
           <p className="text-gray-300">
             An MCP Server (Model Context Protocol Server) acts as the critical link that connects Large Language Models (LLMs) like Claude to your data sources and tools. Think of it as a universal adapter that allows AI systems to access information from databases, company files, or online services without complex custom setups.
           </p>

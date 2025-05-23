@@ -24,19 +24,20 @@ const DataStatusAlert = () => {
           // Set window.usingFallbackData based on the status
           window.usingFallbackData = data.type === 'error';
         } else {
+          console.log('API server not responding - using static data');
           setDataStatus({
-            type: 'error',
-            message: 'Failed to connect to AWS database. All data requires AWS database connection.',
-            source: 'none'
+            type: 'warning',
+            message: 'Using static data - API server not responding (run "npm run dev:all" to enable database features)',
+            source: 'static'
           });
           window.usingFallbackData = true;
         }
       } catch (error) {
-        console.error('Error fetching data status:', error);
+        console.log('API server not running - using static data');
         setDataStatus({
-          type: 'error',
-          message: 'AWS Database connection required. Cannot proceed without database connection.',
-          source: 'none'
+          type: 'warning',
+          message: 'Using static data - API server not running (run "npm run dev:all" to enable database features)',
+          source: 'static'
         });
         window.usingFallbackData = true;
       }

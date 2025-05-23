@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import useProducts from '../hooks/useProducts';
 import Pagination from './Pagination';
 import {
@@ -21,6 +22,7 @@ import { Search, X, Star } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 
 const ProductsPageEnhanced = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -340,25 +342,25 @@ const ProductsPageEnhanced = () => {
       case 'server':
         return (
           <Badge className="absolute top-2 right-2" variant="secondary">
-            Server
+            {t('products.enhanced.type_badges.server')}
           </Badge>
         );
       case 'client':
         return (
           <Badge className="absolute top-2 right-2" variant="default">
-            Client
+            {t('products.enhanced.type_badges.client')}
           </Badge>
         );
       case 'custom-product':
         return (
           <Badge className="absolute top-2 right-2" variant="outline">
-            Product
+            {t('products.enhanced.type_badges.product')}
           </Badge>
         );
       case 'ai-agent':
         return (
           <Badge className="absolute top-2 right-2" variant="destructive">
-            AI Agent
+            {t('products.enhanced.type_badges.ai_agent')}
           </Badge>
         );
       default:
@@ -534,14 +536,20 @@ const ProductsPageEnhanced = () => {
           {/* Left side - Title and search stats */}
           <div className="w-full md:w-auto">
             <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-300 mb-2">
-              {searchQuery ? `Search Results for "${searchQuery}"` : 'All Products'}
+              {searchQuery ? t('products.enhanced.search_results_for', { query: searchQuery }) : t('products.enhanced.all_products')}
             </h1>
+            
+            {!searchQuery && (
+              <p className="text-gray-300 text-lg mb-2">
+                {t('products.enhanced.all_products_description')}
+              </p>
+            )}
             
             {searchResults.length > 0 && (
               <p className="text-gray-300 text-sm">
-                Showing <span className="font-medium text-purple-400">{searchResults.length}</span> results
+                {t('products.enhanced.showing_results', { count: searchResults.length })}
                 {categoryFilter && categoryFilter !== 'all' && (
-                  <> in <span className="font-medium text-purple-400">{categoryFilter}</span></>
+                  <> {t('products.enhanced.in_category', { category: categoryFilter })}</>
                 )}
               </p>
             )}
@@ -552,7 +560,7 @@ const ProductsPageEnhanced = () => {
             <form onSubmit={handleSearch} className="flex gap-2 relative">
               <Input
                 type="text"
-                placeholder="Search products..."
+                placeholder={t('products.enhanced.search_placeholder')}
                 value={searchQuery}
                 onChange={handleSearchQueryChange}
                 className="flex-1 pl-10"
@@ -572,7 +580,7 @@ const ProductsPageEnhanced = () => {
               )}
               
               <Button type="submit" disabled={isSearching} variant="secondary">
-                {isSearching ? 'Searching...' : 'Search'}
+                {isSearching ? t('products.enhanced.searching') : t('products.enhanced.search')}
               </Button>
             </form>
           </div>
@@ -594,7 +602,7 @@ const ProductsPageEnhanced = () => {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
             </svg>
-            <span>All</span>
+            <span>{t('products.enhanced.tabs.all')}</span>
           </TabsTrigger>
           <TabsTrigger 
             value="custom-product"
@@ -603,7 +611,7 @@ const ProductsPageEnhanced = () => {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
             </svg>
-            <span>Products</span>
+            <span>{t('products.enhanced.tabs.products')}</span>
           </TabsTrigger>
           <TabsTrigger 
             value="server"
@@ -612,7 +620,7 @@ const ProductsPageEnhanced = () => {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
             </svg>
-            <span>Servers</span>
+            <span>{t('products.enhanced.tabs.servers')}</span>
           </TabsTrigger>
           <TabsTrigger 
             value="client"
@@ -621,7 +629,7 @@ const ProductsPageEnhanced = () => {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
-            <span>Clients</span>
+            <span>{t('products.enhanced.tabs.clients')}</span>
           </TabsTrigger>
         </TabsList>
       </Tabs>
@@ -714,7 +722,7 @@ const ProductsPageEnhanced = () => {
                           {/* Featured badge if applicable */}
                           {product.is_featured && (
                             <Badge className="absolute top-2 left-2" variant="secondary">
-                              Featured
+                              {t('products.enhanced.featured')}
                             </Badge>
                           )}
                           
@@ -763,7 +771,7 @@ const ProductsPageEnhanced = () => {
                           <div className="flex-grow p-4">
                             {/* Price if available */}
                             {product.price > 0 && (
-                              <p className="text-lg font-bold text-white mb-1">${Number(product.price).toFixed(2)}</p>
+                              <p className="text-lg font-bold text-white mb-1">{t('common.currency_symbol')}{Number(product.price).toFixed(2)}</p>
                             )}
                             
                             {/* Description */}
@@ -797,7 +805,7 @@ const ProductsPageEnhanced = () => {
                                 </span>
                               </div>
                             ) : (
-                              <span className="text-sm text-gray-500">No rating</span>
+                              <span className="text-sm text-gray-500">{t('products.enhanced.no_rating')}</span>
                             )}
                             
                             {/* View button */}
@@ -806,14 +814,14 @@ const ProductsPageEnhanced = () => {
                               size="sm"
                               className="text-purple-400 hover:text-purple-300 hover:bg-purple-900/20 transition-colors duration-300"
                             >
-                              View details
+                              {t('products.enhanced.view_details')}
                             </Button>
                           </div>
                           
                           {/* Hover overlay - visible on hover */}
                           <div className="absolute inset-0 bg-gradient-to-b from-purple-600/0 to-zinc-900/80 opacity-0 group-hover:opacity-100 flex items-end justify-center transition-all duration-300 p-4">
                             <Button className="bg-purple-600 hover:bg-purple-700 text-white transition-all duration-300 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
-                              View Details
+                              {t('products.enhanced.view_details_hover')}
                             </Button>
                           </div>
                         </div>
@@ -829,18 +837,18 @@ const ProductsPageEnhanced = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-semibold text-white mb-2">No products found</h2>
+                <h2 className="text-2xl font-semibold text-white mb-2">{t('products.empty_state.title')}</h2>
                 <p className="text-gray-400 text-center mb-6 max-w-md">
                   {searchQuery ? 
-                    `We couldn't find any products matching "${searchQuery}"` :
-                    "No products match your current filters. Try adjusting your search criteria."
+                    t('products.enhanced.no_products_message', { query: searchQuery }) :
+                    t('products.enhanced.no_products_filters')
                   }
                 </p>
                 <Button 
                   onClick={handleClearFilters}
                   className="mt-2 bg-purple-600 hover:bg-purple-700 text-white"
                 >
-                  Clear filters
+                  {t('products.enhanced.clear_filters')}
                 </Button>
               </div>
             )}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import DataStatusAlert from './components/DataStatusAlert';
@@ -27,6 +27,7 @@ import ReadyToUsePage from './components/ReadyToUsePage';
 import AboutUsPage from './components/AboutUsPage';
 import { AnimatePresence, prefersReducedMotion } from './components/animations';
 import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 
 // Wrapper components for routes that need params
 import solutionsData from './achai_solutions.json';
@@ -38,7 +39,6 @@ window.lastResortAiAgentsData = aiAgentsData;
 
 // Log debug info
 console.log(`App.jsx: mcpServersData loaded with ${mcpServersData.length} items`);
-console.log("App.jsx: Sample MCP server data:", mcpServersData.slice(0, 2));
 import { loadUnifiedData } from './utils/searchUtils';
 // No longer needed with path-based routing
 // import { initNavigationFix } from './utils/navigationFix';
@@ -700,6 +700,9 @@ function App() {
   // Initialize mcpData with empty array first, then update when data is loaded
   const [mcpData, setMcpData] = useState([]);
   
+  // Memoize featured products to prevent unnecessary re-renders
+  const featuredProducts = useMemo(() => mcpData.slice(0, 10), [mcpData]);
+  
   // Add initialization timer to prevent flashes
   useEffect(() => {
     // Small delay before considering the app initialized
@@ -791,6 +794,8 @@ function App() {
     };
   }, []);
 
+  // DISABLED: Manual route handling conflicts with React Router
+  /*
   useEffect(() => {
     const handleRouteChange = () => {
       // Always scroll to top when path changes
@@ -1397,6 +1402,7 @@ function App() {
       window.removeEventListener('popstate', handleRouteChange);
     };
   }, []); // Don't add mcpData as a dependency to prevent cyclic updates
+  */
 
   const navigateToDetail = (productId) => {
     // Store a flag in sessionStorage indicating we're navigating programmatically
@@ -1532,29 +1538,49 @@ function App() {
   };
 
 
-  // Determine which component to render based on current view
+  // Debug: Track URL and state changes
+  useEffect(() => {
+    console.log('🟠 App state changed - currentView:', currentView, 'URL:', window.location.href);
+  }, [currentView]);
+
+  useEffect(() => {
+    const logNavigation = () => {
+      console.log('🔵 Navigation event - URL:', window.location.href);
+    };
+    
+    window.addEventListener('popstate', logNavigation);
+    window.addEventListener('pushstate', logNavigation);
+    
+    return () => {
+      window.removeEventListener('popstate', logNavigation);
+      window.removeEventListener('pushstate', logNavigation);
+    };
+  }, []);
+
+  // OLD VIEW SYSTEM DISABLED - Now using Router exclusively
+  /*
   let viewComponent;
   
   // Home view
-  if (currentView === 'home') {
-    viewComponent = <HomePage 
-      featuredProducts={mcpData.slice(0, 10)} // Get first 10 products for featured carousel
-      onNavigateToList={navigateToList} // This now supports (type, category) arguments
-      onNavigateToDetail={navigateToDetail}
-      onNavigateToCategories={navigateToCategories}
-      onNavigateToConnectToClaude={navigateToConnectToClaude}
-      onNavigateToWhatIsMcp={navigateToWhatIsMcp}
-    />;
-  }
+  // if (currentView === 'home') {
+  //   viewComponent = <HomePage 
+  //     featuredProducts={featuredProducts} // Use memoized featured products
+  //     onNavigateToList={navigateToList} // This now supports (type, category) arguments
+  //     onNavigateToDetail={navigateToDetail}
+  //     onNavigateToCategories={navigateToCategories}
+  //     onNavigateToConnectToClaude={navigateToConnectToClaude}
+  //     onNavigateToWhatIsMcp={navigateToWhatIsMcp}
+  //   />;
+  // }
   // Product list view
-  else if (currentView === 'list') {
-    viewComponent = <ProductListPage 
-      key="product-list-page" // Added stable key to maintain component instance
-      allProductsData={mcpData} 
-      onNavigateToDetail={navigateToDetail} 
-      currentCategoryFilter={currentCategory} 
-    />;
-  } 
+  // else if (currentView === 'list') {
+  //   viewComponent = <ProductListPage 
+  //     key="product-list-page" // Added stable key to maintain component instance
+  //     allProductsData={mcpData} 
+  //     onNavigateToDetail={navigateToDetail} 
+  //     currentCategoryFilter={currentCategory} 
+  //   />;
+  // } 
   // Product detail view
   else if (currentView === 'detail') {
     if (selectedProductId) {
@@ -1712,22 +1738,34 @@ function App() {
       </div>
     );
   }
+  */
 
   // Back to top button functionality
   const [showBackToTop, setShowBackToTop] = useState(false);
   
+  // TEMPORARILY DISABLED: Testing if scroll handler causes re-mounting
+  /*
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowBackToTop(true);
-      } else {
-        setShowBackToTop(false);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (window.scrollY > 300) {
+            setShowBackToTop(true);
+          } else {
+            setShowBackToTop(false);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  */
   
   // Only scroll once on button click, don't set up continuous scrolling
   const scrollToTop = () => {
@@ -1738,15 +1776,18 @@ function App() {
     });
   };
 
-  return (
-    <Router>
+  // Inner component that uses the language context
+  const AppContent = () => {
+    const { currentLanguage } = useLanguage();
+    
+    return (
       <div className="bg-zinc-900 min-h-screen flex flex-col text-gray-200 overflow-x-hidden">
         {appIsInitialized && (
           <>
             {currentView !== 'search' && (
               <>
-              <DataStatusAlert />
-              <Header 
+                <DataStatusAlert />
+                <Header 
                 onNavigateHome={() => {
                   console.log("Navigating to home");
                   // Fix for navigation: when on a direct URL path, we need to go to the base URL first
@@ -1773,12 +1814,13 @@ function App() {
                 onNavigateProductManagement={navigateToProductManagement}
                 searchComponent={<GlobalSearchBar />}
               />
-            </>
-          )}
+              </>
+            )}
           <main className="flex-grow relative overflow-hidden">
             <div className="page-container">
               <Routes>
-                {/* All routes now use path-based routing */}
+                {/* All routes now use path-based routing with language support */}
+                {/* Root routes */}
                 <Route path="/" element={
                   <AnimatePresence 
                     show={true} 
@@ -1786,7 +1828,7 @@ function App() {
                     duration={500}
                   >
                     <HomePage 
-                      featuredProducts={mcpData.slice(0, 10)}
+                      featuredProducts={featuredProducts}
                       onNavigateToList={navigateToList}
                       onNavigateToDetail={navigateToDetail}
                       onNavigateToCategories={navigateToCategories}
@@ -1795,6 +1837,46 @@ function App() {
                     />
                   </AnimatePresence>
                 } />
+                
+                {/* Language-specific routes */}
+                <Route path="/:lang/products/:id" element={<ProductDetailTech />} />
+                <Route path="/:lang/products" element={<PremiumProductsPage />} />
+                <Route path="/:lang/products-original" element={<OriginalProductsPage />} />
+                <Route path="/:lang/product-management" element={<TechHubProductManagementDemo />} />
+                <Route path="/:lang/browse-categories" element={<NewCategoriesPage onNavigateToCategorySearch={navigateToList} />} />
+                <Route path="/:lang/what-is-an-mcp-server" element={<WhatIsAnMcpServerPage />} />
+                <Route path="/:lang/connect-to-claude" element={<ConnectToClaudePage />} />
+                <Route path="/:lang/submit" element={<SubmitServerPage />} />
+                <Route path="/:lang/secure-admin" element={<SecureAdminPage />} />
+                <Route path="/:lang/compare" element={<ProductListPage products={mcpData} onNavigateToDetail={navigateToDetail} currentCategory={currentCategory} />} />
+                <Route path="/:lang/ready-to-use" element={<ReadyToUsePage />} />
+                <Route path="/:lang/about-us" element={<AboutUsPage onNavigateToCategories={navigateToCategories} />} />
+                <Route path="/:lang/login" element={<LoginPage />} />
+                <Route path="/:lang/register" element={<RegisterPage />} />
+                <Route path="/:lang/profile" element={<ProfilePage />} />
+                <Route path="/:lang/search" element={
+                  <SearchResultsLayout>
+                    <SearchResultsPage />
+                  </SearchResultsLayout>
+                } />
+                <Route path="/:lang" element={
+                  <AnimatePresence 
+                    show={true} 
+                    animation={getPageTransitionAnimation('home')}
+                    duration={500}
+                  >
+                    <HomePage 
+                      featuredProducts={featuredProducts}
+                      onNavigateToList={navigateToList}
+                      onNavigateToDetail={navigateToDetail}
+                      onNavigateToCategories={navigateToCategories}
+                      onNavigateToConnectToClaude={navigateToConnectToClaude}
+                      onNavigateToWhatIsMcp={navigateToWhatIsMcp}
+                    />
+                  </AnimatePresence>
+                } />
+                
+                {/* Legacy routes without language prefix (will redirect) */}
                 <Route path="/products/:id" element={<ProductDetailTech />} />
                 <Route path="/products" element={<PremiumProductsPage />} />
                 <Route path="/products-original" element={<OriginalProductsPage />} />
@@ -1865,7 +1947,15 @@ function App() {
         </svg>
       </div>
       )}
-    </div>
+        </div>
+    );
+  };
+
+  return (
+    <Router>
+      <LanguageProvider>
+        <AppContent />
+      </LanguageProvider>
     </Router>
   );
 }

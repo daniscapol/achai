@@ -1,0 +1,1115 @@
+{
+  "common": {
+    "loading": "Carregando...",
+    "saving": "Salvando...",
+    "submitting": "Enviando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "view": "Visualizar",
+    "search": "Pesquisar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "clear": "Limpar",
+    "close": "Fechar",
+    "open": "Abrir",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "home": "Início",
+    "about": "Sobre",
+    "contact": "Contato",
+    "help": "Ajuda",
+    "settings": "Configurações",
+    "profile": "Perfil",
+    "login": "Entrar",
+    "logout": "Sair",
+    "register": "Registrar",
+    "submit": "Enviar",
+    "explore": "Explorar",
+    "discover": "Descobrir",
+    "learn": "Aprender",
+    "get_started": "Começar",
+    "read_more": "Ler Mais",
+    "show_more": "Mostrar Mais",
+    "show_less": "Mostrar Menos",
+    "categories": "Categorias",
+    "products": "Produtos",
+    "tools": "Ferramentas",
+    "projects": "Projetos",
+    "solutions": "Soluções",
+    "resources": "Recursos",
+    "agents": "Agentes de IA",
+    "documentation": "Documentação",
+    "guides": "Guias",
+    "examples": "Exemplos",
+    "features": "Recursos",
+    "pricing": "Preços",
+    "download": "Baixar",
+    "install": "Instalar",
+    "configure": "Configurar",
+    "deploy": "Implantar",
+    "share": "Compartilhar",
+    "copy": "Copiar",
+    "duplicate": "Duplicar",
+    "favorite": "Favorito",
+    "bookmark": "Marcador",
+    "like": "Curtir",
+    "star": "Estrela",
+    "rate": "Avaliar",
+    "review": "Avaliar",
+    "comment": "Comentar",
+    "feedback": "Feedback",
+    "report": "Reportar",
+    "flag": "Sinalizar",
+    "block": "Bloquear",
+    "unblock": "Desbloquear",
+    "follow": "Seguir",
+    "unfollow": "Deixar de Seguir",
+    "subscribe": "Inscrever-se",
+    "unsubscribe": "Cancelar Inscrição",
+    "notify": "Notificar",
+    "notification": "Notificação",
+    "notifications": "Notificações",
+    "message": "Mensagem",
+    "messages": "Mensagens",
+    "chat": "Chat",
+    "support": "Suporte",
+    "community": "Comunidade",
+    "forum": "Fórum",
+    "blog": "Blog",
+    "news": "Notícias",
+    "updates": "Atualizações",
+    "changelog": "Log de Mudanças",
+    "release": "Lançamento",
+    "version": "Versão",
+    "beta": "Beta",
+    "alpha": "Alpha",
+    "stable": "Estável",
+    "experimental": "Experimental",
+    "deprecated": "Descontinuado",
+    "new": "Novo",
+    "currency_symbol": "$",
+    "popular": "Popular",
+    "trending": "Em Alta",
+    "featured": "Destaque",
+    "recommended": "Recomendado",
+    "official": "Oficial",
+    "verified": "Verificado",
+    "premium": "Premium",
+    "free": "Gratuito",
+    "paid": "Pago",
+    "trial": "Teste",
+    "demo": "Demo",
+    "preview": "Prévia",
+    "coming_soon": "Em Breve",
+    "maintenance": "Manutenção",
+    "offline": "Offline",
+    "online": "Online",
+    "active": "Ativo",
+    "inactive": "Inativo",
+    "enabled": "Habilitado",
+    "disabled": "Desabilitado",
+    "available": "Disponível",
+    "unavailable": "Indisponível",
+    "yes": "Sim",
+    "no": "Não",
+    "all": "Todos",
+    "none": "Nenhum",
+    "other": "Outro",
+    "more": "Mais",
+    "less": "Menos",
+    "most": "Mais",
+    "least": "Menos",
+    "best": "Melhor",
+    "worst": "Pior",
+    "first": "Primeiro",
+    "last": "Último",
+    "oldest": "Mais Antigo",
+    "newest": "Mais Novo",
+    "latest": "Mais Recente",
+    "recent": "Recente",
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "tomorrow": "Amanhã",
+    "week": "Semana",
+    "month": "Mês",
+    "year": "Ano",
+    "day": "Dia",
+    "hour": "Hora",
+    "minute": "Minuto",
+    "second": "Segundo",
+    "ago": "atrás",
+    "from_now": "a partir de agora",
+    "item": "item",
+    "items": "itens"
+  },
+  "navigation": {
+    "home": "Início",
+    "ready_to_use": "Pronto para Usar",
+    "categories": "Categorias",
+    "products": "Produtos",
+    "browse_categories": "Navegar Categorias",
+    "what_is_mcp": "O que é MCP?",
+    "connect_to_claude": "Conectar ao Claude",
+    "submit_server": "Enviar Servidor",
+    "about_us": "Sobre Nós",
+    "admin": "Admin",
+    "secure_admin": "Admin Seguro",
+    "search": "Pesquisar",
+    "menu": "Menu",
+    "close_menu": "Fechar Menu"
+  },
+  "header": {
+    "tagline": "O Maior Hub de IA do Mundo",
+    "search_placeholder": "Pesquisar ferramentas de IA, servidores e soluções...",
+    "toggle_menu": "Alternar menu"
+  },
+  "footer": {
+    "tagline": "Marketplace de Soluções de IA",
+    "description": "Explore soluções de IA, ferramentas, agentes e integrações para aprimorar seu fluxo de trabalho. Encontre as ferramentas perfeitas para maximizar sua produtividade.",
+    "quick_links": "Links Rápidos",
+    "categories": "Categorias",
+    "resources": "Recursos",
+    "guides": "Guias",
+    "community": "Comunidade",
+    "legal": "Jurídico",
+    "privacy_policy": "Política de Privacidade",
+    "terms_of_service": "Termos de Serviço",
+    "contact": "Entre em Contato",
+    "support": "Suporte",
+    "copyright": "© {{year}} AchAI. Todos os direitos reservados.",
+    "built_with": "Feito com ❤️ pela equipe AchAI",
+    "admin_access": "Acesso Admin",
+    "product_comparison": "Comparação de Produtos",
+    "affiliate_program": "Programa de Afiliados",
+    "developer_api": "API do Desenvolvedor"
+  },
+  "homepage": {
+    "hero": {
+      "badge": "O Hub de Recursos Definitivo",
+      "title_prefix": "Turbine suas",
+      "title_suffix": "com AchAI",
+      "title": "O Futuro da IA Está Aqui",
+      "subtitle": "Descubra, integre e implante soluções de IA de ponta",
+      "description": "Descubra, compare e conecte-se com soluções premium da AchAI para aprimorar seus fluxos de trabalho de IA e aumentar a produtividade.",
+      "cta_primary": "Navegar Soluções",
+      "cta_secondary": "Saiba Mais sobre AchAI",
+      "stats": {
+        "servers": "{{count}}+ Servidores MCP",
+        "users": "{{count}}+ Usuários Ativos",
+        "integrations": "{{count}}+ Integrações",
+        "countries": "{{count}}+ Países",
+        "ai_solutions": "Soluções de IA",
+        "categories": "Categorias",
+        "monthly_users": "Usuários Mensais"
+      },
+      "scroll_to_explore": "Role para explorar"
+    },
+    "featured": {
+      "title": "Explore Todos os Tipos de Soluções de IA",
+      "subtitle": "Ferramentas e servidores de IA selecionados para máximo impacto",
+      "description": "De ferramentas prontas para uso a servidores MCP, clientes e agentes de IA autônomos - encontre a solução perfeita para suas necessidades",
+      "view_all": "Ver Todas as Soluções",
+      "view_all_short": "Ver Tudo"
+    },
+    "categories": {
+      "title": "Explorar por Categoria",
+      "subtitle": "Encontre a solução de IA perfeita para suas necessidades",
+      "view_all": "Ver Todas as Categorias"
+    },
+    "testimonials": {
+      "title": "O Que Nossos Usuários Dizem",
+      "subtitle": "Descubra como as soluções AchAI transformaram fluxos de trabalho mundialmente"
+    },
+    "cta": {
+      "title": "Pronto para Transformar Seu Fluxo de Trabalho de IA?",
+      "description": "Junte-se a milhares de desenvolvedores e empresas que já usam soluções AchAI.",
+      "button": "Comece Hoje",
+      "homepage_title": "Pronto para turbinar seus fluxos de trabalho de IA?",
+      "homepage_description": "Descubra as soluções AchAI e desbloqueie todo o potencial da sua experiência com Claude."
+    }
+  },
+  "about_us": {
+    "hero": {
+      "badge": "Nossa História",
+      "title": "O Maior Hub de IA do Mundo",
+      "description": "AchAI é seu destino principal para ferramentas de IA, materiais e projetos."
+    },
+    "mission": {
+      "badge": "Nossa Missão",
+      "title": "Democratizando a IA para Todos",
+      "description1": "Na AchAI, estamos comprometidos em democratizar a tecnologia de IA e torná-la acessível a todos. Acreditamos no poder transformador da inteligência artificial e seu potencial para resolver problemas do mundo real.",
+      "description2": "Nossa plataforma conecta você com as melhores soluções e recursos de IA para ajudá-lo a aproveitar esse poder, independentemente de sua experiência técnica. Estamos construindo um futuro onde a IA é uma ferramenta que capacita todos, não apenas aqueles com conhecimento especializado."
+    },
+    "vision": {
+      "title": "Nossa Visão",
+      "quote": "Visualizamos um mundo onde a inteligência artificial seja acessível a todos, capacitando indivíduos e organizações a resolver problemas complexos e desbloquear novas possibilidades.",
+      "attribution": "— Equipe Fundadora AchAI"
+    },
+    "stats": {
+      "unlimited_access": "Acesso Ilimitado",
+      "global_community": "Comunidade Global", 
+      "innovation_first": "Inovação em Primeiro Lugar"
+    },
+    "values": {
+      "badge": "Nossos Valores",
+      "title": "O Que Nos Move",
+      "description": "Esses princípios fundamentais orientam nossas decisões e moldam nossa plataforma.",
+      "free_content": {
+        "title": "Conteúdo Gratuito",
+        "description": "Fornecendo recursos e ferramentas de IA de alta qualidade acessíveis a todos.",
+        "button": "Explorar Recursos"
+      },
+      "open_source": {
+        "title": "Código Aberto",
+        "description": "Distribuindo projetos valiosos de código aberto que avançam as capacidades de IA.",
+        "button": "Ver Projetos"
+      },
+      "ai_democratization": {
+        "title": "Democratização da IA",
+        "description": "Tornando a tecnologia de IA acessível e utilizável para pessoas de todos os níveis de habilidade.",
+        "button": "Saiba Como"
+      },
+      "partnership": {
+        "title": "Rede de Parcerias",
+        "description": "Colaborando com parceiros tecnológicos líderes para apoiar projetos inovadores de IA.",
+        "button": "Conheça os Parceiros"
+      }
+    },
+    "timeline": {
+      "badge": "Nossa Jornada",
+      "title": "A História da AchAI",
+      "description": "Desde o início até hoje, nossa missão de democratizar a IA tem guiado nosso crescimento.",
+      "events": {
+        "2024": {
+          "title": "Estabelecimento do Hub de IA",
+          "description": "Tornou-se o maior hub de IA do mundo com milhões de usuários acessando nossos recursos mensalmente 🚀"
+        },
+        "2025": {
+          "title": "Centro de Inovação em IA",
+          "description": "Lançando o Centro de Inovação AchaAI, conectando desenvolvedores com tecnologias de IA de ponta 🔮"
+        }
+      }
+    },
+    "team": {
+      "badge": "Nossos Fundadores",
+      "title": "Conheça Dan & Fab",
+      "description": "Os visionários por trás da AchAI, trabalhando para tornar a IA acessível a todos.",
+      "dan": {
+        "name": "Dan",
+        "title": "Co-Fundador & CEO",
+        "bio": "Dan lidera a AchaAI com uma visão de democratizar a inteligência artificial e torná-la acessível a todos."
+      },
+      "fab": {
+        "name": "Fab",
+        "title": "Co-Fundador & CTO",
+        "bio": "Fab traz profunda expertise técnica em sistemas de IA e lidera nossas iniciativas tecnológicas."
+      }
+    },
+    "community": {
+      "badge": "Junte-se a Nós",
+      "title": "Junte-se à Nossa Comunidade",
+      "description": "Torne-se parte da crescente comunidade AchAI e mantenha-se na vanguarda da inovação em IA. Juntos, estamos construindo o futuro da inteligência artificial.",
+      "button": "Saiba Mais sobre AchAI",
+      "full_title": "Faça Parte da Comunidade AchAI",
+      "full_description": "Junte-se a milhares de entusiastas de IA, desenvolvedores e empresas que já usam soluções AchAI.",
+      "full_button": "Explore Nossas Soluções"
+    }
+  },
+  "products": {
+    "title": "Soluções e Ferramentas de IA",
+    "subtitle": "Descubra ferramentas poderosas de IA e servidores MCP",
+    "search_placeholder": "Pesquisar produtos...",
+    "filter": {
+      "all": "Todos os Produtos",
+      "servers": "Servidores MCP",
+      "clients": "Clientes MCP",
+      "agents": "Agentes de IA",
+      "type": "Tipo",
+      "category": "Categoria",
+      "price": "Preço",
+      "rating": "Avaliação",
+      "sort_by": "Ordenar por",
+      "newest": "Mais Novo",
+      "oldest": "Mais Antigo",
+      "popular": "Mais Popular",
+      "name_asc": "Nome (A-Z)",
+      "name_desc": "Nome (Z-A)",
+      "price_low": "Preço (Menor para Maior)",
+      "price_high": "Preço (Maior para Menor)",
+      "rating_high": "Melhor Avaliado",
+      "clear_filters": "Limpar Filtros"
+    },
+    "product_card": {
+      "official": "Oficial",
+      "verified": "Verificado",
+      "free": "Gratuito",
+      "premium": "Premium",
+      "stars": "{{count}} estrelas",
+      "view_details": "Ver Detalhes",
+      "add_to_favorites": "Adicionar aos Favoritos",
+      "remove_from_favorites": "Remover dos Favoritos",
+      "share": "Compartilhar",
+      "report": "Reportar",
+      "created_by": "Criado por {{creator}}",
+      "category": "Categoria: {{category}}",
+      "tags": "Tags",
+      "last_updated": "Última atualização: {{date}}",
+      "version": "Versão {{version}}",
+      "license": "Licença: {{license}}",
+      "language": "Linguagem: {{language}}",
+      "github": "Ver no GitHub",
+      "npm": "Ver no NPM",
+      "docs": "Documentação",
+      "demo": "Demo ao Vivo",
+      "install": "Instalar",
+      "configure": "Configurar",
+      "deploy": "Implantar"
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Próximo",
+      "page": "Página {{current}} de {{total}}",
+      "per_page": "{{count}} por página",
+      "showing": "Mostrando {{start}} a {{end}} de {{total}} produtos"
+    },
+    "empty_state": {
+      "title": "Nenhum produto encontrado",
+      "description": "Tente ajustar seus critérios de pesquisa ou navegue por todas as categorias",
+      "browse_all": "Navegar Todos os Produtos",
+      "clear_search": "Limpar Pesquisa"
+    },
+    "enhanced": {
+      "search_results_for": "Resultados da pesquisa para \"{{query}}\"",
+      "all_products": "Explore Soluções de IA",
+      "all_products_description": "Descubra servidores MCP poderosos, clientes, agentes de IA e soluções prontas para usar para aprimorar suas capacidades de IA",
+      "showing_results": "Mostrando {{count}} resultados",
+      "in_category": "em {{category}}",
+      "search_placeholder": "Pesquisar produtos...",
+      "searching": "Pesquisando...",
+      "search": "Pesquisar",
+      "tabs": {
+        "all": "Todos",
+        "products": "Produtos", 
+        "servers": "Servidores",
+        "clients": "Clientes"
+      },
+      "type_badges": {
+        "server": "Servidor",
+        "client": "Cliente", 
+        "product": "Produto",
+        "ai_agent": "Agente de IA"
+      },
+      "featured": "Destaque",
+      "no_rating": "Sem avaliação",
+      "view_details": "Ver detalhes",
+      "view_details_hover": "Ver Detalhes",
+      "no_products_message": "Não conseguimos encontrar produtos que correspondam a \"{{query}}\"",
+      "no_products_filters": "Nenhum produto corresponde aos seus filtros atuais. Tente ajustar seus critérios de pesquisa.",
+      "clear_filters": "Limpar filtros"
+    }
+  },
+  "product_detail": {
+    "overview": "Visão Geral",
+    "features": "Recursos Principais",
+    "use_cases": "Casos de Uso",
+    "installation": "Instalação",
+    "documentation": "Documentação",
+    "reviews": "Avaliações",
+    "similar": "Ferramentas Similares",
+    "share": "Compartilhar esta ferramenta",
+    "report": "Reportar um problema",
+    "back_to_list": "Voltar a Todos os Produtos",
+    "install_command": "Comando de Instalação",
+    "copy_command": "Copiar Comando",
+    "command_copied": "Comando copiado para a área de transferência!",
+    "github_stats": {
+      "stars": "Estrelas",
+      "forks": "Forks",
+      "issues": "Issues",
+      "contributors": "Contribuidores",
+      "last_commit": "Último Commit"
+    },
+    "metadata": {
+      "created_by": "Criado por",
+      "category": "Categoria",
+      "license": "Licença",
+      "language": "Linguagem",
+      "version": "Versão",
+      "last_updated": "Última Atualização",
+      "downloads": "Downloads",
+      "size": "Tamanho"
+    },
+    "actions": {
+      "install": "Instalar",
+      "star": "Dar Estrela",
+      "fork": "Fork",
+      "watch": "Assistir",
+      "download": "Baixar",
+      "clone": "Clonar",
+      "contribute": "Contribuir",
+      "sponsor": "Patrocinar",
+      "follow": "Seguir Criador"
+    },
+    "tabs": {
+      "readme": "README",
+      "documentation": "Documentação",
+      "changelog": "Log de Mudanças",
+      "issues": "Issues",
+      "discussions": "Discussões",
+      "wiki": "Wiki"
+    },
+    "reviews": {
+      "write_review": "Escrever uma Avaliação",
+      "rating": "Avaliação",
+      "comment": "Comentário",
+      "submit_review": "Enviar Avaliação",
+      "helpful": "Útil",
+      "not_helpful": "Não Útil",
+      "report_review": "Reportar Avaliação",
+      "edit_review": "Editar Avaliação",
+      "delete_review": "Excluir Avaliação",
+      "verified_user": "Usuário Verificado",
+      "no_reviews": "Ainda não há avaliações",
+      "be_first": "Seja o primeiro a avaliar este produto"
+    }
+  },
+  "categories": {
+    "title": "Navegar Categorias",
+    "subtitle": "Explore soluções de IA por categoria",
+    "browse_by": "Navegar por",
+    "category": "Categoria",
+    "browse": "Navegar",
+    "view_all": "Ver todos",
+    "explore_description": "Explore nossa coleção abrangente de recursos MCP organizados por categoria.",
+    "find_perfect_tools": "Encontre as ferramentas perfeitas para aprimorar suas capacidades de IA.",
+    "view_category": "Ver Categoria",
+    "product_count": "{{count}} produtos",
+    "popular_categories": "Categorias Populares",
+    "all_categories": "Todas as Categorias"
+  },
+  "search": {
+    "title": "Resultados da Pesquisa",
+    "subtitle": "Encontre a solução de IA perfeita",
+    "placeholder": "Pesquisar ferramentas de IA, servidores e soluções...",
+    "results_for": "Resultados para \"{{query}}\"",
+    "no_results": "Nenhum resultado encontrado",
+    "no_results_description": "Tente palavras-chave diferentes ou navegue por nossas categorias",
+    "advanced_search": "Pesquisa Avançada",
+    "search_filters": "Filtros de Pesquisa",
+    "search_suggestions": "Sugestões de Pesquisa",
+    "popular_searches": "Pesquisas Populares",
+    "recent_searches": "Pesquisas Recentes",
+    "clear_history": "Limpar Histórico",
+    "save_search": "Salvar Pesquisa",
+    "saved_searches": "Pesquisas Salvas"
+  },
+  "auth": {
+    "login": {
+      "title": "Entrar na AchAI",
+      "subtitle": "Bem-vindo de volta! Faça login em sua conta",
+      "email": "Email",
+      "password": "Senha",
+      "remember_me": "Lembrar de mim",
+      "forgot_password": "Esqueceu a senha?",
+      "sign_in": "Entrar",
+      "logging_in": "Entrando...",
+      "success_message": "Login realizado com sucesso! Redirecionando...",
+      "error_message": "Falha no login",
+      "no_account": "Não tem uma conta?",
+      "sign_up": "Criar conta",
+      "or": "ou",
+      "google": "Entrar com Google",
+      "github": "Entrar com GitHub",
+      "microsoft": "Entrar com Microsoft"
+    },
+    "register": {
+      "title": "Criar Conta",
+      "subtitle": "Junte-se à AchAI e comece a construir com IA",
+      "name": "Nome Completo",
+      "email": "Email",
+      "password": "Senha",
+      "password_hint": "A senha deve ter pelo menos 6 caracteres",
+      "confirm_password": "Confirmar Senha",
+      "creating_account": "Criando conta...",
+      "success_message": "Conta criada com sucesso! Redirecionando...",
+      "error_message": "Falha ao criar conta",
+      "terms": "Concordo com os {{terms}} e {{privacy}}",
+      "terms_link": "Termos de Serviço",
+      "privacy_link": "Política de Privacidade",
+      "create_account": "Criar Conta",
+      "have_account": "Já tem uma conta?",
+      "sign_in": "Entrar"
+    },
+    "profile": {
+      "title": "Meu Perfil",
+      "subtitle": "Gerencie as configurações da sua conta",
+      "profile_settings": "Configurações do Perfil",
+      "my_favorites": "Meus Favoritos",
+      "success_message": "Perfil atualizado com sucesso",
+      "error_message": "Falha ao atualizar perfil",
+      "personal_info": "Informações Pessoais",
+      "account_settings": "Configurações da Conta",
+      "preferences": "Preferências",
+      "security": "Segurança",
+      "notifications": "Notificações",
+      "billing": "Faturamento",
+      "delete_account": "Excluir Conta",
+      "save_changes": "Salvar Alterações",
+      "cancel": "Cancelar",
+      "username": "Nome de Usuário",
+      "email": "Email",
+      "new_password": "Nova Senha (deixe em branco para manter a atual)",
+      "password_requirement": "A senha deve ter pelo menos 6 caracteres",
+      "confirm_password": "Confirmar Nova Senha"
+    },
+    "forgot_password": {
+      "title": "Redefinir Senha",
+      "subtitle": "Digite seu email para receber instruções de redefinição",
+      "email": "Email",
+      "send_instructions": "Enviar Instruções",
+      "back_to_login": "Voltar ao Login",
+      "check_email": "Verifique seu email para instruções de redefinição"
+    },
+    "reset_password": {
+      "title": "Redefinir Senha",
+      "subtitle": "Digite sua nova senha",
+      "password": "Nova Senha",
+      "confirm_password": "Confirmar Nova Senha",
+      "reset_password": "Redefinir Senha",
+      "password_updated": "Senha atualizada com sucesso"
+    }
+  },
+  "admin": {
+    "title": "Painel de Administração",
+    "subtitle": "Gerencie sua plataforma AchAI",
+    "secure_admin_area": "Área de Administração Segura",
+    "authenticate_message": "Por favor, autentique-se para acessar o painel de administração.",
+    "invalid_credentials": "Credenciais inválidas",
+    "enter_username": "Digite o nome de usuário",
+    "enter_password": "Digite a senha",
+    "product_management": "Gerenciamento de Produtos",
+    "overview": "Visão Geral",
+    "products": "Produtos",
+    "users": "Usuários",
+    "analytics": "Análises",
+    "settings": "Configurações",
+    "logout": "Sair",
+    "welcome": "Bem-vindo de volta, {{name}}",
+    "stats": {
+      "total_products": "Total de Produtos",
+      "active_users": "Usuários Ativos",
+      "total_downloads": "Total de Downloads",
+      "revenue": "Receita"
+    },
+    "recent_activity": "Atividade Recente",
+    "quick_actions": "Ações Rápidas",
+    "add_product": "Adicionar Produto",
+    "manage_users": "Gerenciar Usuários",
+    "view_analytics": "Ver Análises",
+    "system_health": "Saúde do Sistema",
+    "backup_data": "Backup de Dados",
+    "export_data": "Exportar Dados",
+    "import_data": "Importar Dados"
+  },
+  "forms": {
+    "required": "Este campo é obrigatório",
+    "invalid_email": "Por favor, digite um endereço de email válido",
+    "password_min": "A senha deve ter pelo menos {{min}} caracteres",
+    "password_mismatch": "As senhas não coincidem",
+    "file_too_large": "Arquivo muito grande (máx {{max}}MB)",
+    "invalid_file_type": "Tipo de arquivo inválido",
+    "upload_failed": "Falha no upload",
+    "save_success": "Salvo com sucesso",
+    "save_error": "Falha ao salvar",
+    "delete_confirm": "Tem certeza de que deseja excluir este item?",
+    "delete_success": "Excluído com sucesso",
+    "delete_error": "Falha ao excluir",
+    "changes_saved": "Alterações salvas",
+    "changes_discarded": "Alterações descartadas",
+    "unsaved_changes": "Você tem alterações não salvas"
+  },
+  "errors": {
+    "page_not_found": "Página não encontrada",
+    "access_denied": "Acesso negado",
+    "server_error": "Erro do servidor",
+    "network_error": "Erro de rede",
+    "timeout": "Tempo limite esgotado",
+    "unknown_error": "Erro desconhecido",
+    "try_again": "Tente novamente",
+    "go_home": "Ir para o Início",
+    "contact_support": "Entrar em Contato com o Suporte",
+    "error_details": "Detalhes do Erro",
+    "error_code": "Código do Erro",
+    "report_error": "Reportar Erro"
+  },
+  "loading": {
+    "default": "Carregando...",
+    "products": "Carregando produtos...",
+    "search": "Pesquisando...",
+    "saving": "Salvando...",
+    "uploading": "Fazendo upload...",
+    "downloading": "Baixando...",
+    "processing": "Processando...",
+    "authenticating": "Autenticando...",
+    "please_wait": "Por favor, aguarde..."
+  },
+  "language": {
+    "english": "English",
+    "portuguese": "Português",
+    "change_language": "Alterar Idioma",
+    "switch_to": "Mudar para {{lang}}",
+    "language_changed": "Idioma alterado para {{language}}"
+  },
+  "profile": {
+    "tabs": {
+      "submissions": "Minhas Submissões"
+    },
+    "admin_panel": "Painel de Administração",
+    "edit_profile": "Editar Perfil",
+    "favorites": {
+      "title": "Meus Servidores MCP Favoritos",
+      "empty_message": "Você ainda não adicionou nenhum favorito",
+      "browse_message": "Navegue pelos servidores MCP para adicionar alguns favoritos"
+    },
+    "submissions": {
+      "title": "Minhas Submissões de Servidores MCP",
+      "description": "Gerencie suas submissões de servidores MCP",
+      "submit_new": "Submeter Novo Servidor",
+      "empty_message": "Você ainda não submeteu nenhum servidor MCP",
+      "submit_first": "Submeta seu primeiro servidor MCP"
+    }
+  },
+  "connect_claude": {
+    "hero": {
+      "image_alt": "Conectar Claude com suas ferramentas",
+      "title": "Conecte Claude com Suas Ferramentas Favoritas",
+      "description": "Integre perfeitamente o Claude Desktop com plataformas como Shopify, Figma, QuickBooks e Jira. Transforme seu fluxo de trabalho com automações e integrações poderosas."
+    },
+    "features": {
+      "integrations": {
+        "title": "Integrações Poderosas",
+        "description": "Conecte-se com suas ferramentas de negócios essenciais sem esforço."
+      },
+      "automation": {
+        "title": "Automação Inteligente",
+        "description": "Deixe o Claude lidar com tarefas repetitivas em suas ferramentas."
+      }
+    },
+    "waitlist": {
+      "button": "Entrar na Lista de Espera →",
+      "alert": "Obrigado pelo seu interesse! A funcionalidade da lista de espera está chegando em breve."
+    },
+    "faq": {
+      "supported_tools": {
+        "question": "Quais ferramentas serão suportadas?",
+        "answer": "Estamos começando com as ferramentas de produtividade e desenvolvimento mais populares, e continuaremos adicionando mais com base no feedback dos usuários."
+      }
+    }
+  },
+  "submit": {
+    "title": "Submeter um Servidor MCP",
+    "description": "Compartilhe seu servidor MCP com a comunidade. Preencha o formulário abaixo para adicionar seu servidor ao nosso marketplace.",
+    "categories": {
+      "ai_development": "Desenvolvimento de IA",
+      "ai_applications": "Aplicações de IA",
+      "workflow_automation": "Automação de Fluxo de Trabalho",
+      "web_integration": "Integração Web",
+      "developer_tools": "Ferramentas de Desenvolvedor",
+      "document_processing": "Processamento de Documentos",
+      "web_scraping": "Web Scraping & Coleta de Dados",
+      "research_knowledge": "Pesquisa & Conhecimento",
+      "analytics_monitoring": "Análises & Monitoramento",
+      "vector_databases": "Bancos de Dados Vetoriais",
+      "devops": "DevOps",
+      "database_management": "Gerenciamento de Banco de Dados",
+      "other": "Outro"
+    },
+    "success": {
+      "title": "Submissão Recebida!",
+      "message": "Obrigado por submeter seu servidor MCP. Nossa equipe revisará sua submissão e a adicionará ao marketplace em breve.",
+      "submit_another": "Submeter Outro Servidor MCP"
+    },
+    "form": {
+      "server_name": "Nome do Servidor *",
+      "name_placeholder": "ex: Firecrawl, Ollama, etc.",
+      "description": "Descrição *",
+      "description_placeholder": "Descreva o que seu servidor MCP faz e suas principais funcionalidades",
+      "github_url": "URL do GitHub *",
+      "github_placeholder": "https://github.com/usuario/repositorio",
+      "npm_url": "URL do Pacote NPM (opcional)",
+      "npm_placeholder": "https://www.npmjs.com/package/nome-do-pacote",
+      "logo_image": "Logo/Imagem",
+      "upload_option": "Opção 1: Fazer Upload do Arquivo de Imagem",
+      "preview_alt": "Visualização",
+      "url_option": "Opção 2: URL da Imagem (use se não tiver o arquivo)",
+      "image_url_placeholder": "https://exemplo.com/caminho/para/imagem.png",
+      "url_disabled_message": "A entrada da URL está desabilitada porque você fez upload de um arquivo",
+      "creator": "Criador/Mantenedor",
+      "creator_placeholder": "Nome do indivíduo ou organização",
+      "category": "Categoria",
+      "select_category": "Selecione uma categoria",
+      "github_stars": "Estrelas do GitHub (se aplicável)",
+      "official_server": "Este é um servidor MCP oficial",
+      "submit_button": "Submeter Servidor MCP"
+    }
+  },
+  "what_is_mcp": {
+    "hero": {
+      "title": "O que é um Servidor MCP?",
+      "subtitle": "Conectando IA ao Seu Mundo"
+    },
+    "cards": {
+      "universal_connector": {
+        "title": "O Conector Universal para IA"
+      }
+    }
+  },
+  "seo": {
+    "homepage": {
+      "title": "AchAI - O Maior Hub de IA do Mundo",
+      "description": "Descubra, integre e implante soluções de IA de ponta. AchAI é sua plataforma abrangente para ferramentas de IA, servidores MCP e soluções inteligentes."
+    },
+    "products": {
+      "title": "Produtos e Ferramentas de IA - AchAI",
+      "description": "Navegue por nossa extensa coleção de ferramentas de IA, servidores MCP e soluções inteligentes. Encontre o produto de IA perfeito para suas necessidades."
+    },
+    "about": {
+      "title": "Sobre a AchAI - Democratizando a IA para Todos",
+      "description": "Saiba sobre a missão da AchAI de democratizar a inteligência artificial e torná-la acessível a todos. Conheça nossa equipe e descubra nossa visão."
+    },
+    "categories": {
+      "title": "Categorias de IA - Navegar por Tipo - AchAI",
+      "description": "Explore soluções de IA organizadas por categoria. Encontre ferramentas para aprendizado de máquina, processamento de linguagem natural, visão computacional e mais."
+    }
+  },
+  "categories": {
+    "page_title": "Navegar por Categoria",
+    "page_description": "Explore nossa coleção abrangente de recursos MCP organizados por categoria. Encontre as ferramentas perfeitas para aprimorar suas capacidades de IA.",
+    "ready_to_use": {
+      "title": "Pronto para Usar",
+      "description": "Descubra soluções de IA selecionadas e prontas para produção que transformarão seu fluxo de trabalho sem complicações de configuração.",
+      "section_title": "Soluções de IA Prontas para Usar",
+      "section_description": "Ferramentas de IA selecionadas e prontas para produção que transformarão seu fluxo de trabalho hoje. Sem complicações de configuração, apenas valor imediato.",
+      "view_all": "Ver todas as soluções"
+    },
+    "mcp_servers": {
+      "title": "Servidores MCP",
+      "description": "Conecte Claude a fontes de dados externas, APIs e serviços com essas poderosas ferramentas do lado do servidor.",
+      "section_description": "Acesse fontes de dados externas, APIs e serviços através dessas ferramentas MCP do lado do servidor"
+    },
+    "mcp_clients": {
+      "title": "Clientes MCP", 
+      "description": "Integre as capacidades do Claude em suas aplicações, sites e ferramentas com essas soluções do lado do cliente.",
+      "section_description": "Integre Claude em suas aplicações com essas ferramentas e bibliotecas do lado do cliente"
+    },
+    "ai_agents": {
+      "title": "Agentes de IA",
+      "description": "Agentes autônomos que ajudam você a realizar tarefas complexas usando capacidades avançadas de LLM e planejamento.",
+      "section_description": "Agentes autônomos que ajudam a realizar tarefas complexas com planejamento e raciocínio avançados"
+    },
+    "info": {
+      "title": "O que são Categorias MCP?",
+      "description1": "Os recursos do Protocolo de Contexto de Modelo (MCP) são organizados em categorias baseadas em sua função principal e no tipo de dados ou serviços aos quais se conectam. Esta organização ajuda você a encontrar os recursos MCP certos para seu caso de uso específico de IA.",
+      "description2": "Cada categoria contém ferramentas especializadas que estendem as capacidades do Claude de diferentes maneiras. Você pode navegar por categoria de alto nível (Servidores, Clientes, Agentes) ou explorar subcategorias específicas para encontrar exatamente o que precisa para seu projeto.",
+      "description3": "O MCP fornece acesso seguro a fontes de dados e ferramentas externas"
+    },
+    "product_benefits": {
+      "relevance_ai": "Construa e implante sua força de trabalho de IA em minutos, sem necessidade de código.",
+      "customgpt": "Crie chatbots de IA que entendem instantaneamente a documentação do seu negócio.",
+      "aistudios": "Crie vídeos profissionais de IA sem câmeras, estúdios ou atores.", 
+      "rytr": "Crie conteúdo envolvente em segundos com assistência de IA."
+    },
+    "subcategories": {
+      "mcp_servers": {
+        "databases_storage": {
+          "name": "Bancos de Dados e Armazenamento",
+          "description": "Servidores SQL, NoSQL, Vector Stores e armazenamento de arquivos"
+        },
+        "web_search": {
+          "name": "Web e Pesquisa", 
+          "description": "Mecanismos de busca, navegadores web e busca de conteúdo"
+        },
+        "cloud_services": {
+          "name": "Serviços de Nuvem",
+          "description": "AWS, Azure, GCP e outras plataformas de nuvem"
+        },
+        "version_control": {
+          "name": "Controle de Versão",
+          "description": "Repositórios Git, PRs, commits e gerenciamento de código"
+        },
+        "utilities_files": {
+          "name": "Utilitários e Arquivos",
+          "description": "Acesso ao sistema de arquivos, utilitários de tempo e ferramentas do sistema"
+        },
+        "communication": {
+          "name": "Comunicação",
+          "description": "Plataformas de mensagens, email e sistemas de notificação"
+        },
+        "analytics": {
+          "name": "Análise",
+          "description": "Métricas, dashboards e visualização de dados"
+        },
+        "security_auth": {
+          "name": "Segurança e Autenticação",
+          "description": "Ferramentas de autenticação, autorização e segurança"
+        }
+      },
+      "mcp_clients": {
+        "desktop_applications": {
+          "name": "Aplicações Desktop",
+          "description": "Clientes desktop e aplicações para interagir com modelos de IA"
+        },
+        "web_applications": {
+          "name": "Aplicações Web", 
+          "description": "Clientes baseados em navegador e interfaces web para serviços de IA"
+        },
+        "code_editors": {
+          "name": "Editores de Código",
+          "description": "Editores de código e IDEs com suporte integrado de IA e MCP"
+        },
+        "cli_tools": {
+          "name": "Ferramentas CLI",
+          "description": "Interfaces de linha de comando e ferramentas de terminal"
+        },
+        "libraries": {
+          "name": "Bibliotecas",
+          "description": "Bibliotecas de programação, SDKs e frameworks"
+        },
+        "ide_extensions": {
+          "name": "Extensões de IDE",
+          "description": "Extensões e plugins para IDEs e editores populares"
+        },
+        "browser_extensions": {
+          "name": "Extensões de Navegador",
+          "description": "Extensões de navegador que integram capacidades de IA"
+        },
+        "messaging_integrations": {
+          "name": "Integrações de Mensagens",
+          "description": "Integrações com plataformas de mensagens e serviços de chat"
+        },
+        "ai_workflow_tools": {
+          "name": "Ferramentas de Fluxo de Trabalho de IA",
+          "description": "Ferramentas para construir e orquestrar fluxos de trabalho de IA"
+        }
+      },
+      "ai_agents": {
+        "coding_assistants": {
+          "name": "Assistentes de Codificação",
+          "description": "Geração de código, debugging e ajuda em programação"
+        },
+        "autonomous_agents": {
+          "name": "Agentes Autônomos",
+          "description": "Agentes independentes que completam tarefas com supervisão mínima"
+        },
+        "multi_agent_systems": {
+          "name": "Sistemas Multi-Agente",
+          "description": "Sistemas de IA colaborativos com múltiplos agentes especializados"
+        },
+        "research_assistants": {
+          "name": "Assistentes de Pesquisa",
+          "description": "Coleta de informações, análise e gerenciamento de conhecimento"
+        },
+        "agent_building": {
+          "name": "Construção de Agentes",
+          "description": "Plataformas e frameworks para criar agentes de IA personalizados"
+        },
+        "creative_studio": {
+          "name": "Estúdio Criativo",
+          "description": "Criação de conteúdo, geração de arte e assistência criativa"
+        },
+        "data_processing": {
+          "name": "Processamento de Dados",
+          "description": "Agentes de rotulagem e processamento automatizado de dados"
+        },
+        "task_management": {
+          "name": "Gerenciamento de Tarefas",
+          "description": "Agentes de IA que gerenciam e executam filas de tarefas"
+        },
+        "cognitive_architecture": {
+          "name": "Arquitetura Cognitiva",
+          "description": "Sistemas avançados de memória e raciocínio para agentes de IA"
+        }
+      }
+    }
+  },
+  "ready_to_use": {
+    "hero": {
+      "subtitle": "Pronto para Usar",
+      "title": "Soluções de IA",
+      "description": "Ferramentas de IA selecionadas e prontas para produção que transformarão seu fluxo de trabalho hoje. Sem complicações de configuração, apenas valor imediato."
+    },
+    "buttons": {
+      "get_started_free": "Comece Grátis",
+      "watch_demo": "Assista a Demo",
+      "start_free": "Iniciar Grátis",
+      "get_started": "Começar",
+      "choose_plan": "Escolher Plano",
+      "try_free": "Experimente {{productName}} Grátis"
+    },
+    "selector": {
+      "instruction": "Selecione uma solução para ver seus recursos e preços"
+    },
+    "cta": {
+      "title": "Pronto para Transformar seu Fluxo de Trabalho?",
+      "description": "Junte-se a milhares de empresas usando {{productName}} para automatizar tarefas e aumentar a produtividade."
+    },
+    "pricing": {
+      "trial_no_card": "Todos os planos incluem teste gratuito de 14 dias. Cartão de crédito não obrigatório.",
+      "trial_with_card": "Teste gratuito disponível por 7 dias. Cartão de crédito necessário para o teste."
+    },
+    "final_cta": {
+      "relevance": "Cartão de crédito não obrigatório. Comece a construir sua força de trabalho de IA hoje.",
+      "customgpt": "Teste gratuito de 14 dias disponível. Comece a criar seu chatbot personalizado agora.",
+      "aistudios": "Teste gratuito disponível. Crie seu primeiro vídeo de IA em minutos.",
+      "rytr": "Plano gratuito disponível. Comece a escrever melhor conteúdo hoje."
+    },
+    "products": {
+      "relevance_ai": {
+        "name": "Relevance AI",
+        "short_description": "Automação de força de trabalho de IA",
+        "tagline": "Construa Sua Força de Trabalho de IA",
+        "description": "Construa sua Força de Trabalho de IA: o lar para equipes de IA que trabalham para você",
+        "category": "Plataforma de Força de Trabalho de IA",
+        "features": [
+          "Agentes de IA - Construa e recrute agentes de IA para automatizar tarefas e fluxos de trabalho",
+          "Ferramentas de IA - Crie ferramentas de IA personalizadas que se integram à sua stack tecnológica",
+          "Sistemas Multi-Agente - Desenvolva equipes de IA colaborativas para resolver problemas complexos",
+          "API Abrangente - Integre-se perfeitamente aos seus sistemas existentes",
+          "Construtor Sem Código - Crie e implante agentes de IA com uma interface amigável"
+        ]
+      },
+      "customgpt": {
+        "name": "CustomGPT.ai",
+        "short_description": "Chatbots de IA para seu negócio",
+        "tagline": "Transforme Seu Conteúdo em Chatbots Inteligentes",
+        "description": "Construa chatbots de IA poderosos que oferecem experiências excepcionais ao cliente usando seu próprio conteúdo de negócio",
+        "category": "Plataforma de Chatbot de IA",
+        "features": [
+          "Construtor Intuitivo - Crie chatbots de IA personalizados em minutos sem necessidade de codificação",
+          "Integração Versátil - Conecte-se com mais de 100 fontes de dados incluindo Google Drive, Notion e Shopify",
+          "Processamento Avançado de Conteúdo - Suporte para mais de 1.400 formatos de documento com extração de texto de imagens",
+          "Motor de Precisão de IA - Tecnologia proprietária anti-alucinação garante respostas factuais e confiáveis",
+          "Capacidades Multilíngues - Atenda clientes globalmente com mais de 95 opções de idiomas",
+          "Análise de Conversas - Obtenha insights das interações dos usuários para melhorar continuamente o desempenho"
+        ]
+      },
+      "aistudios": {
+        "name": "AI Studios",
+        "short_description": "Avatares e vídeos de IA realistas",
+        "tagline": "Dê Vida ao Seu Conteúdo com Vídeos de IA",
+        "description": "Crie avatares e vídeos de IA realistas para marketing, treinamento e engajamento do cliente",
+        "category": "Plataforma de Vídeo de IA",
+        "features": [
+          "Avatares de IA Realistas - Escolha entre mais de 100 apresentadores de IA realistas para seus vídeos",
+          "Suporte Multi-Idioma - Crie vídeos em mais de 140 idiomas com fala nativa",
+          "Conversão Texto-para-Vídeo - Simplesmente cole seu script para gerar vídeos profissionais",
+          "Criação de Avatar Personalizado - Crie seu próprio avatar de IA a partir de fotos ou clipes de vídeo",
+          "Personalização de Fundo - Use fundos personalizados ou escolha entre modelos premium",
+          "Ferramentas de Edição Avançadas - Ajuste expressões, gestos e entrega para resultados perfeitos"
+        ]
+      },
+      "rytr": {
+        "name": "Rytr",
+        "short_description": "Assistente de escrita de IA",
+        "tagline": "Escreva Melhor Conteúdo, Mais Rápido",
+        "description": "Assistente de escrita de IA que ajuda você a criar conteúdo de alta qualidade em segundos, por uma fração do custo",
+        "category": "Plataforma de Escrita de IA",
+        "features": [
+          "Editor Inteligente - Sugestões em tempo real, ajustes de tom e variações de conteúdo",
+          "Biblioteca de Modelos - Mais de 40 modelos para blogs, emails, anúncios, descrições de produtos e mais",
+          "Mais de 30 Idiomas - Gere e traduza conteúdo para alcançar audiências globais",
+          "Conteúdo Livre de Plágio - Conteúdo original e fresco para cada geração",
+          "Otimização SEO - Crie conteúdo que ranqueia bem nos mecanismos de busca",
+          "Colaboração em Equipe - Compartilhe modelos e conteúdo com sua equipe"
+        ]
+      }
+    },
+    "pricing_features": {
+      "relevance_ai": {
+        "free": ["5.000 créditos/mês", "Limitado a 2 ferramentas", "Suporte por email"],
+        "pro": ["10.000 créditos/mês", "1 assento de usuário", "Suporte via chat"],
+        "team": ["100.000 créditos/mês", "10 assentos de usuário", "Suporte prioritário"]
+      },
+      "customgpt": {
+        "free": ["Acesso completo por 14 dias", "1 chatbot avançado", "Suporte por email", "1.000 consultas/mês"],
+        "business": ["Chatbots ilimitados", "10.000 itens por chatbot", "5 membros da equipe", "Suporte prioritário"],
+        "enterprise": ["Soluções personalizadas", "Capacidade de dados ilimitada", "Gerente de conta dedicado", "Integrações personalizadas"]
+      },
+      "aistudios": {
+        "starter": ["50 minutos/mês", "Mais de 100 avatares de IA", "Vídeo em qualidade HD", "Modelos padrão"],
+        "business": ["300 minutos/mês", "Renderização prioritária", "Modelos premium", "Acesso à API"],
+        "enterprise": ["Solução personalizada", "Gerente de conta dedicado", "Avatares personalizados", "Análises avançadas"]
+      },
+      "rytr": {
+        "free": ["10.000 caracteres/mês", "Mais de 40 casos de uso", "Mais de 30 idiomas", "Acesso às ferramentas de IA"],
+        "premium": ["Caracteres ilimitados", "Casos de uso premium", "Suporte prioritário", "Extensão do navegador"],
+        "unlimited": ["Tudo do Premium", "Cobrança anual", "Economize 17%", "Gerente de conta dedicado"]
+      }
+    },
+    "benefits": {
+      "relevance_ai": [
+        "Construa e implante sua força de trabalho de IA em minutos, sem necessidade de código",
+        "Crie ferramentas de IA personalizadas que se integram à sua stack tecnológica existente",
+        "Dimensione operações de negócio sem aumentar o quadro de funcionários",
+        "Certificado SOC 2 Tipo 2 com segurança de nível empresarial"
+      ],
+      "customgpt": [
+        "Crie chatbots de IA que entendem instantaneamente a documentação do seu negócio",
+        "Reduza os custos de suporte ao cliente em até 80% com serviço automatizado 24/7",
+        "Implante em minutos com nossa plataforma intuitiva sem código",
+        "Segurança de nível empresarial com certificação SOC-2 Tipo 2 e conformidade GDPR",
+        "Integração perfeita com suas ferramentas e fluxos de trabalho existentes"
+      ],
+      "aistudios": [
+        "Crie vídeos profissionais de IA sem câmeras, estúdios ou atores",
+        "Economize milhares na produção de vídeo enquanto cria mais conteúdo",
+        "Dimensione a criação de conteúdo em múltiplos idiomas e mercados",
+        "Atualize vídeos instantaneamente sem refazer quando as informações mudarem",
+        "Mantenha mensagens de marca consistentes em todo o conteúdo de vídeo"
+      ],
+      "rytr": [
+        "Crie conteúdo envolvente em segundos com assistência de IA",
+        "Economize até 90% nos custos de criação de conteúdo e copywriting",
+        "Aumente a produtividade e foque na estratégia em vez de escrever",
+        "Elimine o bloqueio de escritor com geração ilimitada de conteúdo",
+        "Dimensione a produção de conteúdo entre plataformas e idiomas"
+      ]
+    },
+    "content": {
+      "stats": {
+        "work_happening": "O trabalho está acontecendo, mesmo quando você não está",
+        "ai_workforce_ready": "Sua força de trabalho de IA está pronta para apoiar sua equipe 24 horas por dia",
+        "improve_efficiency": "Melhore a eficiência do seu negócio",
+        "automate_support": "Chatbots de IA personalizados automatizam o suporte e melhoram a experiência do usuário",
+        "tasks_automated": "Tarefas Automatizadas",
+        "hours_active_daily": "Horas Ativas Diárias",
+        "ai_agents_available": "Agentes de IA Disponíveis",
+        "ticket_reduction": "Redução Média de Tickets",
+        "available_integrations": "Integrações Disponíveis",
+        "chatbot_availability": "Disponibilidade do Chatbot",
+        "production_cost_reduction": "Redução de Custos de Produção",
+        "supported_languages": "Idiomas Suportados",
+        "minutes_to_create": "Minutos para Criar Vídeo",
+        "time_saved": "Tempo Economizado na Criação de Conteúdo",
+        "use_cases_supported": "Casos de Uso Suportados",
+        "users_worldwide": "Milhões+ de Usuários Globalmente"
+      },
+      "features": {
+        "title": "Recursos Poderosos",
+        "relevance_description": "Tudo que você precisa para construir, implantar e gerenciar sua força de trabalho de IA",
+        "customgpt_description": "Todas as ferramentas necessárias para criar e implantar chatbots de IA para seu negócio"
+      },
+      "pricing": {
+        "title": "Preços Simples e Transparentes",
+        "description": "Escolha um plano que funcione para você, com um nível gratuito generoso para começar",
+        "most_popular": "MAIS POPULAR",
+        "per_month": "/mês"
+      }
+    }
+  }
+}

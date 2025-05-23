@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const SubmitServerPage = () => {
+  const { t } = useTranslation();
   // Form state
   const [formData, setFormData] = useState({
     name: '',
@@ -25,19 +27,19 @@ const SubmitServerPage = () => {
   
   // Category options
   const categoryOptions = [
-    "AI Development",
-    "AI Applications",
-    "Workflow Automation",
-    "Web Integration",
-    "Developer Tools",
-    "Document Processing",
-    "Web Scraping & Data Collection",
-    "Research & Knowledge",
-    "Analytics & Monitoring",
-    "Vector Databases",
-    "DevOps",
-    "Database Management",
-    "Other"
+    t('submit.categories.ai_development'),
+    t('submit.categories.ai_applications'),
+    t('submit.categories.workflow_automation'),
+    t('submit.categories.web_integration'),
+    t('submit.categories.developer_tools'),
+    t('submit.categories.document_processing'),
+    t('submit.categories.web_scraping'),
+    t('submit.categories.research_knowledge'),
+    t('submit.categories.analytics_monitoring'),
+    t('submit.categories.vector_databases'),
+    t('submit.categories.devops'),
+    t('submit.categories.database_management'),
+    t('submit.categories.other')
   ];
   
   // Handle form input changes
@@ -143,8 +145,8 @@ const SubmitServerPage = () => {
   return (
     <div className="container mx-auto p-4 min-h-screen">
       <div className="my-6">
-        <h1 className="text-3xl font-bold text-gray-200">Submit an MCP Server</h1>
-        <p className="text-lg text-gray-400 mt-2">Share your MCP server with the community. Fill out the form below to add your server to our marketplace.</p>
+        <h1 className="text-3xl font-bold text-gray-200">{t('submit.title')}</h1>
+        <p className="text-lg text-gray-400 mt-2">{t('submit.description')}</p>
       </div>
       
       {submitted ? (
@@ -155,13 +157,13 @@ const SubmitServerPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-100 mb-4">Submission Received!</h2>
-            <p className="text-gray-300 mb-6">Thank you for submitting your MCP server. Our team will review your submission and add it to the marketplace soon.</p>
+            <h2 className="text-2xl font-bold text-gray-100 mb-4">{t('submit.success.title')}</h2>
+            <p className="text-gray-300 mb-6">{t('submit.success.message')}</p>
             <button 
               onClick={handleSubmitAnother} 
               className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-md transition-colors"
             >
-              Submit Another MCP Server
+              {t('submit.success.submit_another')}
             </button>
           </div>
         </div>
@@ -174,7 +176,7 @@ const SubmitServerPage = () => {
           )}
           
           <div className="mb-6">
-            <label htmlFor="name" className="block text-gray-300 font-medium mb-2">Server Name *</label>
+            <label htmlFor="name" className="block text-gray-300 font-medium mb-2">{t('submit.form.server_name')}</label>
             <input
               type="text"
               id="name"
@@ -183,12 +185,12 @@ const SubmitServerPage = () => {
               onChange={handleChange}
               required
               className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              placeholder="e.g., Firecrawl, Ollama, etc."
+              placeholder={t('submit.form.name_placeholder')}
             />
           </div>
           
           <div className="mb-6">
-            <label htmlFor="description" className="block text-gray-300 font-medium mb-2">Description *</label>
+            <label htmlFor="description" className="block text-gray-300 font-medium mb-2">{t('submit.form.description')}</label>
             <textarea
               id="description"
               name="description"
@@ -197,12 +199,12 @@ const SubmitServerPage = () => {
               required
               rows="4"
               className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              placeholder="Describe what your MCP server does and its key features"
+              placeholder={t('submit.form.description_placeholder')}
             ></textarea>
           </div>
           
           <div className="mb-6">
-            <label htmlFor="githubUrl" className="block text-gray-300 font-medium mb-2">GitHub URL *</label>
+            <label htmlFor="githubUrl" className="block text-gray-300 font-medium mb-2">{t('submit.form.github_url')}</label>
             <input
               type="url"
               id="githubUrl"
@@ -211,12 +213,12 @@ const SubmitServerPage = () => {
               onChange={handleChange}
               required
               className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              placeholder="https://github.com/username/repository"
+              placeholder={t('submit.form.github_placeholder')}
             />
           </div>
           
           <div className="mb-6">
-            <label htmlFor="npmUrl" className="block text-gray-300 font-medium mb-2">NPM Package URL (optional)</label>
+            <label htmlFor="npmUrl" className="block text-gray-300 font-medium mb-2">{t('submit.form.npm_url')}</label>
             <input
               type="url"
               id="npmUrl"
@@ -224,17 +226,17 @@ const SubmitServerPage = () => {
               value={formData.npmUrl}
               onChange={handleChange}
               className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              placeholder="https://www.npmjs.com/package/package-name"
+              placeholder={t('submit.form.npm_placeholder')}
             />
           </div>
           
           <div className="mb-6">
-            <label className="block text-gray-300 font-medium mb-2">Logo/Image</label>
+            <label className="block text-gray-300 font-medium mb-2">{t('submit.form.logo_image')}</label>
             
             <div className="flex flex-col space-y-4">
               {/* File upload option */}
               <div>
-                <label className="block text-gray-400 text-sm mb-2">Option 1: Upload Image File</label>
+                <label className="block text-gray-400 text-sm mb-2">{t('submit.form.upload_option')}</label>
                 <div className="flex space-x-4 items-start">
                   <input
                     type="file"
@@ -244,7 +246,7 @@ const SubmitServerPage = () => {
                   />
                   {imagePreview && (
                     <div className="bg-zinc-900 border border-zinc-700 rounded-md p-2">
-                      <img src={imagePreview} alt="Preview" className="h-12 w-12 object-contain" />
+                      <img src={imagePreview} alt={t('submit.form.preview_alt')} className="h-12 w-12 object-contain" />
                     </div>
                   )}
                 </div>
@@ -253,7 +255,7 @@ const SubmitServerPage = () => {
               {/* URL option */}
               <div>
                 <label htmlFor="image_url" className="block text-gray-400 text-sm mb-2">
-                  Option 2: Image URL (use if you don't have the file)
+                  {t('submit.form.url_option')}
                 </label>
                 <input
                   type="url"
@@ -265,11 +267,11 @@ const SubmitServerPage = () => {
                   className={`w-full p-3 bg-zinc-900 border border-zinc-700 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
                     imagePreview ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
-                  placeholder="https://example.com/path/to/image.png"
+                  placeholder={t('submit.form.image_url_placeholder')}
                 />
                 {imagePreview && (
                   <p className="text-yellow-400 text-xs mt-1">
-                    URL input is disabled because you've uploaded a file
+                    {t('submit.form.url_disabled_message')}
                   </p>
                 )}
               </div>
@@ -277,7 +279,7 @@ const SubmitServerPage = () => {
           </div>
           
           <div className="mb-6">
-            <label htmlFor="createdBy" className="block text-gray-300 font-medium mb-2">Creator/Maintainer</label>
+            <label htmlFor="createdBy" className="block text-gray-300 font-medium mb-2">{t('submit.form.creator')}</label>
             <input
               type="text"
               id="createdBy"
@@ -285,12 +287,12 @@ const SubmitServerPage = () => {
               value={formData.createdBy}
               onChange={handleChange}
               className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              placeholder="Individual or organization name"
+              placeholder={t('submit.form.creator_placeholder')}
             />
           </div>
           
           <div className="mb-6">
-            <label htmlFor="category" className="block text-gray-300 font-medium mb-2">Category</label>
+            <label htmlFor="category" className="block text-gray-300 font-medium mb-2">{t('submit.form.category')}</label>
             <select
               id="category"
               name="category"
@@ -298,7 +300,7 @@ const SubmitServerPage = () => {
               onChange={handleChange}
               className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
-              <option value="">Select a category</option>
+              <option value="">{t('submit.form.select_category')}</option>
               {categoryOptions.map(category => (
                 <option key={category} value={category}>{category}</option>
               ))}
@@ -306,7 +308,7 @@ const SubmitServerPage = () => {
           </div>
           
           <div className="mb-6">
-            <label htmlFor="stars_numeric" className="block text-gray-300 font-medium mb-2">GitHub Stars (if applicable)</label>
+            <label htmlFor="stars_numeric" className="block text-gray-300 font-medium mb-2">{t('submit.form.github_stars')}</label>
             <input
               type="number"
               id="stars_numeric"
@@ -327,7 +329,7 @@ const SubmitServerPage = () => {
                 onChange={handleChange}
                 className="w-5 h-5 rounded bg-zinc-900 border-zinc-700 text-purple-600 focus:ring-purple-500"
               />
-              <span className="ml-2 text-gray-300">This is an official MCP server</span>
+              <span className="ml-2 text-gray-300">{t('submit.form.official_server')}</span>
             </label>
           </div>
           
@@ -341,7 +343,7 @@ const SubmitServerPage = () => {
                   : 'bg-purple-600 hover:bg-purple-700'
               } text-white transition-colors`}
             >
-              {submitting ? 'Submitting...' : 'Submit MCP Server'}
+              {submitting ? t('common.submitting') : t('submit.form.submit_button')}
             </button>
           </div>
         </form>

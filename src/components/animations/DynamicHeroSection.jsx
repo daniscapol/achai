@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import AnimatedCounter from './AnimatedCounter';
 import MeshGradient from './MeshGradient';
 import { prefersReducedMotion } from '../animations';
@@ -13,12 +14,29 @@ const DynamicHeroSection = ({
   onLearnMore,
   className = "" 
 }) => {
+  const { t } = useTranslation();
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const containerRef = useRef(null);
   const [animatedElements, setAnimatedElements] = useState([]);
   
-  // Words to cycle through
-  const cyclingWords = ['AI', 'LLMs', 'Claude', 'Solutions', 'Agents'];
+  // Words to cycle through - memoize to prevent re-creation
+  const cyclingWords = useMemo(() => ['AI', 'LLMs', 'Claude', 'Solutions', 'Agents'], []);
+  
+  // Memoize translation values to prevent re-renders during scroll
+  const translationValues = useMemo(() => ({
+    badge: t('homepage.hero.badge'),
+    titlePrefix: t('homepage.hero.title_prefix'),
+    titleSuffix: t('homepage.hero.title_suffix'),
+    description: t('homepage.hero.description'),
+    ctaPrimary: t('homepage.hero.cta_primary'),
+    ctaSecondary: t('homepage.hero.cta_secondary'),
+    scrollToExplore: t('homepage.hero.scroll_to_explore'),
+    stats: {
+      aiSolutions: t('homepage.hero.stats.ai_solutions'),
+      categories: t('homepage.hero.stats.categories'),
+      monthlyUsers: t('homepage.hero.stats.monthly_users')
+    }
+  }), [t]);
   
   // Generate random floating elements for background
   useEffect(() => {
@@ -100,35 +118,10 @@ const DynamicHeroSection = ({
       <MeshGradient 
         color="purple" 
         intensity="light" 
-        animate={!prefersReducedMotion} 
+        animate={false}
       />
       
-      <div className="absolute inset-0 z-10">
-        {/* Animated floating elements */}
-        {animatedElements.map(el => (
-          <motion.div
-            key={el.id}
-            className="absolute"
-            style={{
-              left: `${el.x}%`,
-              top: `${el.y}%`,
-            }}
-            animate={{
-              x: el.clockwise ? [0, 20, 0, -20, 0] : [0, -20, 0, 20, 0],
-              y: el.clockwise ? [0, -20, 0, 20, 0] : [0, 20, 0, -20, 0],
-              rotate: el.clockwise ? [0, 360] : [0, -360],
-            }}
-            transition={{
-              duration: el.duration,
-              repeat: Infinity,
-              ease: "linear",
-              delay: el.delay,
-            }}
-          >
-            {renderShape(el.shape, el.size, el.color)}
-          </motion.div>
-        ))}
-      </div>
+      {/* Floating animations disabled for performance */}
       
       {/* Content */}
       <div className="container relative z-10 mx-auto px-4 pt-28 pb-20 flex flex-col items-center justify-center min-h-[90vh]">
@@ -147,7 +140,7 @@ const DynamicHeroSection = ({
             className="mb-6 inline-block"
           >
             <span className="bg-gradient-to-r from-purple-500/20 to-indigo-500/20 backdrop-blur-sm px-6 py-2 rounded-full text-purple-200 text-sm font-medium border border-purple-500/20">
-              The Ultimate Resource Hub
+              {translationValues.badge}
             </span>
           </motion.div>
           
@@ -158,7 +151,7 @@ const DynamicHeroSection = ({
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            Supercharge your
+            {translationValues.titlePrefix}
             <div className="relative h-[1.2em] w-full my-2">
               <AnimatePresence mode="wait">
                 <motion.span
@@ -173,7 +166,7 @@ const DynamicHeroSection = ({
                 </motion.span>
               </AnimatePresence>
             </div>
-            with AchAI
+            {translationValues.titleSuffix}
           </motion.h1>
           
           {/* Subtitle */}
@@ -183,7 +176,7 @@ const DynamicHeroSection = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            Discover, compare, and connect with premium AchAI solutions to enhance your AI workflows and boost productivity.
+            {translationValues.description}
           </motion.p>
           
           {/* Call to action buttons */}
@@ -212,7 +205,7 @@ const DynamicHeroSection = ({
                   ease: "easeInOut" 
                 }}
               />
-              <span className="relative z-10">Browse Solutions</span>
+              <span className="relative z-10">{translationValues.ctaPrimary}</span>
             </motion.button>
             
             {/* Secondary CTA */}
@@ -226,7 +219,7 @@ const DynamicHeroSection = ({
               }}
               whileTap={{ scale: 0.98 }}
             >
-              Learn About AchAI
+              {translationValues.ctaSecondary}
             </motion.a>
           </motion.div>
           
@@ -242,7 +235,7 @@ const DynamicHeroSection = ({
               suffix="+"
               duration={2.5}
               delay={0.2}
-              labelText="AI Solutions"
+              labelText={translationValues.stats.aiSolutions}
               className="bg-gradient-to-br from-purple-900/30 to-indigo-900/20 border border-purple-500/20"
             />
             
@@ -250,7 +243,7 @@ const DynamicHeroSection = ({
               value={25}
               duration={2.5}
               delay={0.5}
-              labelText="Categories"
+              labelText={translationValues.stats.categories}
               gradientColors="from-indigo-400 to-blue-300"
               className="bg-gradient-to-br from-indigo-900/30 to-blue-900/20 border border-indigo-500/20"
             />
@@ -260,48 +253,25 @@ const DynamicHeroSection = ({
               suffix="+"
               duration={2.5}
               delay={0.8}
-              labelText="Monthly Users"
+              labelText={translationValues.stats.monthlyUsers}
               gradientColors="from-violet-400 to-fuchsia-300"
               className="bg-gradient-to-br from-violet-900/30 to-fuchsia-900/20 border border-violet-500/20"
             />
           </motion.div>
         </motion.div>
         
-        {/* Enhanced Scroll indicator */}
-        <motion.div
-          className="absolute bottom-12 left-[45%] transform -translate-x-1/2 flex flex-col items-center z-20"
-          animate={{ 
-            y: [0, 10, 0],
-            opacity: [0.6, 1, 0.6]
-          }}
-          transition={{ 
-            repeat: Infinity,
-            duration: 2.5,
-            ease: "easeInOut"
-          }}
-        >
+        {/* Scroll indicator - simplified for performance */}
+        <div className="absolute bottom-12 left-[45%] transform -translate-x-1/2 flex flex-col items-center z-20 opacity-60">
           <div className="bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-purple-500/30 flex flex-col items-center">
-            <span className="text-sm font-medium text-purple-100 mb-2">Scroll to explore</span>
-            <motion.div
-              animate={{
-                y: [0, 4, 0]
-              }}
-              transition={{
-                repeat: Infinity,
-                duration: 1.5,
-                ease: "easeInOut",
-                repeatType: "reverse"
-              }}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-purple-400">
-                <path d="M12 20V4M12 20L6 14M12 20L18 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </motion.div>
+            <span className="text-sm font-medium text-purple-100 mb-2">{translationValues.scrollToExplore}</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-purple-400">
+              <path d="M12 20V4M12 20L6 14M12 20L18 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default DynamicHeroSection;
+export default React.memo(DynamicHeroSection);

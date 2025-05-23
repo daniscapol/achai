@@ -21,96 +21,33 @@ const AnimatedCounter = ({
   const [hasAnimated, setHasAnimated] = useState(false);
   
   useEffect(() => {
-    if (!counterRef.current || hasAnimated) return;
+    if (hasAnimated) return;
     
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setTimeout(() => {
-            animateCounter();
-            setHasAnimated(true);
-          }, delay * 1000);
-          
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
+    const timer = setTimeout(() => {
+      animateCounter();
+      setHasAnimated(true);
+    }, delay * 1000);
     
-    observer.observe(counterRef.current);
-    
-    return () => {
-      observer.disconnect();
-    };
-  }, [value, delay, hasAnimated]);
+    return () => clearTimeout(timer);
+  }, [value, delay]); // Simplified without IntersectionObserver
   
   const animateCounter = () => {
-    const startTime = performance.now();
-    const endValue = value;
-    
-    // Easing function for more natural animation
-    const easeOutExpo = (t) => {
-      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-    };
-    
-    const updateCounter = (timestamp) => {
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / (duration * 1000), 1);
-      
-      // Apply easing for smoother counting
-      const easedProgress = easeOutExpo(progress);
-      
-      // Optimize by using fewer state updates for large numbers
-      const newValue = Math.round(easedProgress * endValue);
-      if (newValue !== displayValue) {
-        setDisplayValue(newValue);
-      }
-      
-      if (progress < 1) {
-        // For large numbers, use fewer animation frames
-        if (endValue > 1000 && progress > 0.5) {
-          setTimeout(() => requestAnimationFrame(updateCounter), 30);
-        } else {
-          requestAnimationFrame(updateCounter);
-        }
-      }
-    };
-    
-    requestAnimationFrame(updateCounter);
+    // Simplified animation - just set the final value after a delay
+    setTimeout(() => {
+      setDisplayValue(value);
+    }, 100);
   };
   
   return (
-    <motion.div
+    <div
       ref={counterRef}
       className={`relative overflow-hidden backdrop-blur-md rounded-xl p-5 text-center ${className}`}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: delay }}
     >
       {/* Background glow effect */}
       <div className="absolute inset-0 bg-white/5 rounded-xl"></div>
       
-      {/* Simplified shine effect - only shows on hover for better performance */}
-      <motion.div 
-        className="absolute inset-0 w-full h-full bg-white/5 -skew-x-12 -translate-x-full"
-        initial={{ x: '-150%' }}
-        whileHover={{ x: '150%' }}
-        transition={{ 
-          duration: 1.5,
-          ease: "easeInOut"
-        }}
-      />
-      
-      {/* Border that pulses on hover */}
-      <motion.div 
-        className="absolute inset-0 border border-transparent rounded-xl"
-        whileHover={{ 
-          borderColor: 'rgba(168, 85, 247, 0.3)',
-          boxShadow: '0 0 15px 0 rgba(168, 85, 247, 0.1)'
-        }}
-        transition={{ duration: 0.3 }}
-      />
+      {/* Simplified effects without motion */}
+      <div className="absolute inset-0 border border-transparent rounded-xl hover:border-purple-500/30 transition-colors duration-300"></div>
       
       {/* Counter value with gradient text */}
       <div className="relative z-10">
@@ -122,8 +59,8 @@ const AnimatedCounter = ({
           <div className={labelClassName}>{labelText}</div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-export default AnimatedCounter;
+export default React.memo(AnimatedCounter);

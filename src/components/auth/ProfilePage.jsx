@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 // Temporarily commenting out auth context while it's being implemented
 // import { useAuth } from '../../contexts/AuthContext';
 
 const ProfilePage = () => {
+  const { t } = useTranslation();
   // Temporary placeholder for auth context
   const currentUser = null;
   const updateProfile = async () => Promise.reject({ message: "Profile update is under construction" });
@@ -56,12 +58,12 @@ const ProfilePage = () => {
     // Validate password if changing
     if (newPassword) {
       if (newPassword.length < 6) {
-        setError('Password must be at least 6 characters');
+        setError(t('forms.password_min', { min: 6 }));
         return;
       }
       
       if (newPassword !== confirmPassword) {
-        setError('Passwords do not match');
+        setError(t('forms.password_mismatch'));
         return;
       }
     }
@@ -80,13 +82,13 @@ const ProfilePage = () => {
       }
       
       await updateProfile(updates);
-      setSuccess('Profile updated successfully');
+      setSuccess(t('auth.profile.success_message'));
       
       // Clear password fields after update
       setNewPassword('');
       setConfirmPassword('');
     } catch (err) {
-      setError(err.message || 'Failed to update profile');
+      setError(err.message || t('auth.profile.error_message'));
     } finally {
       setLoading(false);
     }
@@ -117,7 +119,7 @@ const ProfilePage = () => {
   return (
     <div className="container mx-auto p-4 min-h-screen">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-100 mb-6">My Profile</h1>
+        <h1 className="text-3xl font-bold text-gray-100 mb-6">{t('auth.profile.title')}</h1>
         
         {/* Tabs */}
         <div className="flex border-b border-zinc-700 mb-6">
@@ -129,7 +131,7 @@ const ProfilePage = () => {
             }`}
             onClick={() => setActiveTab('profile')}
           >
-            Profile Settings
+            {t('auth.profile.profile_settings')}
           </button>
           <button
             className={`py-2 px-4 font-medium ${
@@ -139,7 +141,7 @@ const ProfilePage = () => {
             }`}
             onClick={() => setActiveTab('favorites')}
           >
-            My Favorites
+            {t('auth.profile.my_favorites')}
           </button>
           <button
             className={`py-2 px-4 font-medium ${
@@ -149,14 +151,14 @@ const ProfilePage = () => {
             }`}
             onClick={() => setActiveTab('submissions')}
           >
-            My Submissions
+            {t('profile.tabs.submissions')}
           </button>
           {isAdmin() && (
             <button
               className="ml-auto py-2 px-4 font-medium text-green-400 hover:text-green-300"
               onClick={navigateToAdmin}
             >
-              Admin Panel
+              {t('profile.admin_panel')}
             </button>
           )}
         </div>
@@ -164,7 +166,7 @@ const ProfilePage = () => {
         {/* Profile Settings Tab */}
         {activeTab === 'profile' && (
           <div className="bg-zinc-800/60 rounded-xl p-6 border border-zinc-700">
-            <h2 className="text-xl font-semibold text-gray-100 mb-4">Edit Profile</h2>
+            <h2 className="text-xl font-semibold text-gray-100 mb-4">{t('profile.edit_profile')}</h2>
             
             {error && (
               <div className="bg-red-500/20 border border-red-500 text-red-200 px-4 py-3 rounded mb-4" role="alert">
@@ -181,7 +183,7 @@ const ProfilePage = () => {
             <form onSubmit={handleProfileUpdate}>
               <div className="mb-4">
                 <label className="block text-gray-300 mb-2" htmlFor="username">
-                  Username
+                  {t('auth.profile.username')}
                 </label>
                 <input
                   type="text"
@@ -195,7 +197,7 @@ const ProfilePage = () => {
               
               <div className="mb-4">
                 <label className="block text-gray-300 mb-2" htmlFor="email">
-                  Email
+                  {t('auth.profile.email')}
                 </label>
                 <input
                   type="email"
@@ -209,7 +211,7 @@ const ProfilePage = () => {
               
               <div className="mb-4">
                 <label className="block text-gray-300 mb-2" htmlFor="new-password">
-                  New Password (leave blank to keep current)
+                  {t('auth.profile.new_password')}
                 </label>
                 <input
                   type="password"
@@ -219,14 +221,14 @@ const ProfilePage = () => {
                   className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-md text-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                 />
                 {newPassword && (
-                  <p className="text-xs text-gray-400 mt-1">Password must be at least 6 characters long</p>
+                  <p className="text-xs text-gray-400 mt-1">{t('auth.profile.password_requirement')}</p>
                 )}
               </div>
               
               {newPassword && (
                 <div className="mb-6">
                   <label className="block text-gray-300 mb-2" htmlFor="confirm-password">
-                    Confirm New Password
+                    {t('auth.profile.confirm_password')}
                   </label>
                   <input
                     type="password"
@@ -244,7 +246,7 @@ const ProfilePage = () => {
                   disabled={loading}
                   className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Saving...' : 'Save Changes'}
+                  {loading ? t('common.saving') : t('auth.profile.save_changes')}
                 </button>
                 
                 <button
@@ -252,7 +254,7 @@ const ProfilePage = () => {
                   onClick={handleLogout}
                   className="bg-zinc-700 hover:bg-zinc-600 text-gray-200 font-bold py-2 px-6 rounded-md transition-colors duration-300"
                 >
-                  Logout
+                  {t('auth.logout')}
                 </button>
               </div>
             </form>
@@ -262,16 +264,16 @@ const ProfilePage = () => {
         {/* Favorites Tab */}
         {activeTab === 'favorites' && (
           <div className="bg-zinc-800/60 rounded-xl p-6 border border-zinc-700">
-            <h2 className="text-xl font-semibold text-gray-100 mb-4">My Favorite MCP Servers</h2>
+            <h2 className="text-xl font-semibold text-gray-100 mb-4">{t('profile.favorites.title')}</h2>
             
             {favorites.length === 0 ? (
               <div className="text-center py-10">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
-                <p className="text-gray-400 text-lg mb-3">You haven't added any favorites yet</p>
+                <p className="text-gray-400 text-lg mb-3">{t('profile.favorites.empty_message')}</p>
                 <a href="#/" className="text-purple-400 hover:text-purple-300">
-                  Browse MCP servers to add some favorites
+                  {t('profile.favorites.browse_message')}
                 </a>
               </div>
             ) : (
@@ -310,15 +312,15 @@ const ProfilePage = () => {
         {/* Submissions Tab */}
         {activeTab === 'submissions' && (
           <div className="bg-zinc-800/60 rounded-xl p-6 border border-zinc-700">
-            <h2 className="text-xl font-semibold text-gray-100 mb-4">My MCP Server Submissions</h2>
+            <h2 className="text-xl font-semibold text-gray-100 mb-4">{t('profile.submissions.title')}</h2>
             
             <div className="flex justify-between mb-4">
-              <p className="text-gray-400">Manage your MCP server submissions</p>
+              <p className="text-gray-400">{t('profile.submissions.description')}</p>
               <a
                 href="#/submit"
                 className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm transition-colors duration-300"
               >
-                Submit New Server
+                {t('profile.submissions.submit_new')}
               </a>
             </div>
             
@@ -326,9 +328,9 @@ const ProfilePage = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <p className="text-gray-400 text-lg mb-3">You haven't submitted any MCP servers yet</p>
+              <p className="text-gray-400 text-lg mb-3">{t('profile.submissions.empty_message')}</p>
               <a href="#/submit" className="text-purple-400 hover:text-purple-300">
-                Submit your first MCP server
+                {t('profile.submissions.submit_first')}
               </a>
             </div>
           </div>

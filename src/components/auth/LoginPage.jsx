@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 // Temporarily commenting out auth context while it's being implemented
 // import { useAuth } from '../../contexts/AuthContext';
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -24,13 +26,13 @@ const LoginPage = () => {
     
     try {
       await login(email, password);
-      setSuccess('Login successful! Redirecting...');
+      setSuccess(t('auth.login.success_message'));
       // Redirect to home page
       setTimeout(() => {
         window.location.hash = '#/';
       }, 1500);
     } catch (err) {
-      setError(err.message || 'Failed to login');
+      setError(err.message || t('auth.login.error_message'));
     } finally {
       setLoading(false);
     }
@@ -41,7 +43,7 @@ const LoginPage = () => {
       <div className="max-w-md mx-auto bg-zinc-800/60 rounded-xl p-8 border border-zinc-700 shadow-lg mt-10">
         <div className="flex flex-col items-center mb-6">
           <img src="/assets/logo.png" alt="AchAI Logo" className="h-20 w-auto mb-4" />
-          <h1 className="text-3xl font-bold text-gray-100 text-center">Login</h1>
+          <h1 className="text-3xl font-bold text-gray-100 text-center">{t('auth.login.title')}</h1>
         </div>
         
         {error && (
@@ -59,7 +61,7 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-300 mb-2" htmlFor="email">
-              Email
+              {t('auth.login.email')}
             </label>
             <input
               type="email"
@@ -73,7 +75,7 @@ const LoginPage = () => {
           
           <div className="mb-6">
             <label className="block text-gray-300 mb-2" htmlFor="password">
-              Password
+              {t('auth.login.password')}
             </label>
             <input
               type="password"
@@ -90,15 +92,15 @@ const LoginPage = () => {
             disabled={loading}
             className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? t('auth.login.logging_in') : t('auth.login.sign_in')}
           </button>
         </form>
         
         <div className="text-center mt-6">
           <p className="text-gray-400">
-            Don't have an account?{' '}
+            {t('auth.login.no_account')}{' '}
             <a href="#/register" className="text-purple-400 hover:text-purple-300">
-              Register here
+              {t('auth.login.sign_up')}
             </a>
           </p>
         </div>

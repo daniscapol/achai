@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import useProducts from '../hooks/useProducts';
 import DataStatusAlert from './DataStatusAlert';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -260,6 +261,7 @@ const ProductCard = ({ product, onClick }) => {
 
 // Main ProductsPage Component
 const PremiumProductsPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -593,10 +595,10 @@ const PremiumProductsPage = () => {
       {/* Page header with gradient text */}
       <div className="max-w-7xl mx-auto mb-8">
         <h1 className="text-3xl md:text-5xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-300 via-indigo-300 to-purple-300">
-          Explore AI Solutions
+          {t('products.enhanced.all_products')}
         </h1>
         <p className="text-center text-gray-400 max-w-3xl mx-auto">
-          Discover powerful MCP servers, clients, AI agents, and ready-to-use solutions to enhance your AI capabilities
+          {t('products.enhanced.all_products_description')}
         </p>
       </div>
       

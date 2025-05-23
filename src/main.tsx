@@ -1,8 +1,8 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { ToastProvider } from './components/animations/Toast'
+import './i18n'
 
 // Navigation fix is loaded directly from index.html via permanent-fix.js
 // No need to load additional scripts dynamically
@@ -18,10 +18,11 @@ window.addEventListener('storage', (event) => {
 const rootElement = document.getElementById('root');
 if (rootElement) {
   createRoot(rootElement).render(
-    <StrictMode>
+    // StrictMode temporarily disabled to prevent double mounting in development
+    // <StrictMode>
       <ToastProvider>
         <App />
       </ToastProvider>
-    </StrictMode>
+    // </StrictMode>
   );
 }

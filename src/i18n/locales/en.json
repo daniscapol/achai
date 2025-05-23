@@ -1,0 +1,1207 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "submitting": "Submitting...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "clear": "Clear",
+    "close": "Close",
+    "open": "Open",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "help": "Help",
+    "settings": "Settings",
+    "profile": "Profile",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "submit": "Submit",
+    "explore": "Explore",
+    "discover": "Discover",
+    "learn": "Learn",
+    "get_started": "Get Started",
+    "read_more": "Read More",
+    "show_more": "Show More",
+    "show_less": "Show Less",
+    "categories": "Categories",
+    "products": "Products",
+    "tools": "Tools",
+    "projects": "Projects",
+    "solutions": "Solutions",
+    "resources": "Resources",
+    "agents": "AI Agents",
+    "documentation": "Documentation",
+    "guides": "Guides",
+    "examples": "Examples",
+    "features": "Features",
+    "pricing": "Pricing",
+    "download": "Download",
+    "install": "Install",
+    "configure": "Configure",
+    "deploy": "Deploy",
+    "share": "Share",
+    "copy": "Copy",
+    "duplicate": "Duplicate",
+    "favorite": "Favorite",
+    "bookmark": "Bookmark",
+    "like": "Like",
+    "star": "Star",
+    "rate": "Rate",
+    "review": "Review",
+    "comment": "Comment",
+    "feedback": "Feedback",
+    "report": "Report",
+    "flag": "Flag",
+    "block": "Block",
+    "unblock": "Unblock",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "subscribe": "Subscribe",
+    "unsubscribe": "Unsubscribe",
+    "notify": "Notify",
+    "notification": "Notification",
+    "notifications": "Notifications",
+    "message": "Message",
+    "messages": "Messages",
+    "chat": "Chat",
+    "support": "Support",
+    "community": "Community",
+    "forum": "Forum",
+    "blog": "Blog",
+    "news": "News",
+    "updates": "Updates",
+    "changelog": "Changelog",
+    "release": "Release",
+    "version": "Version",
+    "beta": "Beta",
+    "alpha": "Alpha",
+    "stable": "Stable",
+    "experimental": "Experimental",
+    "deprecated": "Deprecated",
+    "new": "New",
+    "currency_symbol": "$",
+    "popular": "Popular",
+    "trending": "Trending",
+    "featured": "Featured",
+    "recommended": "Recommended",
+    "official": "Official",
+    "verified": "Verified",
+    "premium": "Premium",
+    "free": "Free",
+    "paid": "Paid",
+    "trial": "Trial",
+    "demo": "Demo",
+    "preview": "Preview",
+    "coming_soon": "Coming Soon",
+    "maintenance": "Maintenance",
+    "offline": "Offline",
+    "online": "Online",
+    "active": "Active",
+    "inactive": "Inactive",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "yes": "Yes",
+    "no": "No",
+    "all": "All",
+    "none": "None",
+    "other": "Other",
+    "more": "More",
+    "less": "Less",
+    "most": "Most",
+    "least": "Least",
+    "best": "Best",
+    "worst": "Worst",
+    "first": "First",
+    "last": "Last",
+    "oldest": "Oldest",
+    "newest": "Newest",
+    "latest": "Latest",
+    "recent": "Recent",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
+    "day": "Day",
+    "hour": "Hour",
+    "minute": "Minute",
+    "second": "Second",
+    "ago": "ago",
+    "from_now": "from now",
+    "and": "and",
+    "or": "or",
+    "but": "but",
+    "with": "with",
+    "without": "without",
+    "by": "by",
+    "for": "for",
+    "in": "in",
+    "on": "on",
+    "at": "at",
+    "to": "to",
+    "from": "from",
+    "of": "of",
+    "the": "the",
+    "a": "a",
+    "an": "an",
+    "is": "is",
+    "are": "are",
+    "was": "was",
+    "were": "were",
+    "be": "be",
+    "been": "been",
+    "being": "being",
+    "have": "have",
+    "has": "has",
+    "had": "had",
+    "will": "will",
+    "would": "would",
+    "should": "should",
+    "could": "could",
+    "can": "can",
+    "cannot": "cannot",
+    "may": "may",
+    "might": "might",
+    "must": "must",
+    "shall": "shall",
+    "do": "do",
+    "does": "does",
+    "did": "did",
+    "done": "done",
+    "go": "go",
+    "goes": "goes",
+    "went": "went",
+    "gone": "gone",
+    "come": "come",
+    "comes": "comes",
+    "came": "came",
+    "get": "get",
+    "gets": "gets",
+    "got": "got",
+    "give": "give",
+    "gives": "gives",
+    "gave": "gave",
+    "given": "given",
+    "take": "take",
+    "takes": "takes",
+    "took": "took",
+    "taken": "taken",
+    "make": "make",
+    "makes": "makes",
+    "made": "made",
+    "see": "see",
+    "sees": "sees",
+    "saw": "saw",
+    "seen": "seen",
+    "know": "know",
+    "knows": "knows",
+    "knew": "knew",
+    "known": "known",
+    "think": "think",
+    "thinks": "thinks",
+    "thought": "thought",
+    "say": "say",
+    "says": "says",
+    "said": "said",
+    "tell": "tell",
+    "tells": "tells",
+    "told": "told",
+    "ask": "ask",
+    "asks": "asks",
+    "asked": "asked",
+    "answer": "answer",
+    "answers": "answers",
+    "answered": "answered",
+    "help": "help",
+    "helps": "helps",
+    "helped": "helped",
+    "use": "use",
+    "uses": "uses",
+    "used": "used",
+    "work": "work",
+    "works": "works",
+    "worked": "worked",
+    "try": "try",
+    "tries": "tries",
+    "tried": "tried",
+    "find": "find",
+    "finds": "finds",
+    "found": "found",
+    "look": "look",
+    "looks": "looks",
+    "looked": "looked",
+    "need": "need",
+    "needs": "needs",
+    "needed": "needed",
+    "want": "want",
+    "wants": "wants",
+    "wanted": "wanted",
+    "like": "like",
+    "likes": "likes",
+    "liked": "liked",
+    "item": "item",
+    "items": "items"
+  },
+  "navigation": {
+    "home": "Home",
+    "ready_to_use": "Ready to Use",
+    "categories": "Categories",
+    "products": "Products",
+    "browse_categories": "Browse Categories",
+    "what_is_mcp": "What is MCP?",
+    "connect_to_claude": "Connect to Claude",
+    "submit_server": "Submit Server",
+    "about_us": "About Us",
+    "admin": "Admin",
+    "secure_admin": "Secure Admin",
+    "search": "Search",
+    "menu": "Menu",
+    "close_menu": "Close Menu"
+  },
+  "header": {
+    "tagline": "The Biggest AI Hub in the World",
+    "search_placeholder": "Search AI tools, servers, and solutions...",
+    "toggle_menu": "Toggle menu"
+  },
+  "footer": {
+    "tagline": "AI Solutions Marketplace",
+    "description": "Explore AI solutions, tools, agents, and integrations to enhance your workflow. Find the perfect tools to maximize your productivity.",
+    "quick_links": "Quick Links",
+    "categories": "Categories",
+    "resources": "Resources",
+    "guides": "Guides",
+    "community": "Community",
+    "legal": "Legal",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service",
+    "contact": "Contact Us",
+    "support": "Support",
+    "copyright": "© {{year}} AchAI. All rights reserved.",
+    "built_with": "Built with ❤️ by the AchAI team",
+    "admin_access": "Admin Access",
+    "product_comparison": "Product Comparison",
+    "affiliate_program": "Affiliate Program",
+    "developer_api": "Developer API"
+  },
+  "homepage": {
+    "hero": {
+      "badge": "The Ultimate Resource Hub",
+      "title_prefix": "Supercharge your",
+      "title_suffix": "with AchAI",
+      "title": "The Future of AI is Here",
+      "subtitle": "Discover, integrate, and deploy cutting-edge AI solutions",
+      "description": "Discover, compare, and connect with premium AchAI solutions to enhance your AI workflows and boost productivity.",
+      "cta_primary": "Browse Solutions",
+      "cta_secondary": "Learn About AchAI",
+      "stats": {
+        "servers": "{{count}}+ MCP Servers",
+        "users": "{{count}}+ Active Users",
+        "integrations": "{{count}}+ Integrations",
+        "countries": "{{count}}+ Countries",
+        "ai_solutions": "AI Solutions",
+        "categories": "Categories",
+        "monthly_users": "Monthly Users"
+      },
+      "scroll_to_explore": "Scroll to explore"
+    },
+    "featured": {
+      "title": "Explore All AI Solution Types",
+      "subtitle": "Handpicked AI tools and servers for maximum impact",
+      "description": "From ready-to-use tools to MCP servers, clients, and autonomous AI agents - find the perfect solution for your needs",
+      "view_all": "View All Solutions",
+      "view_all_short": "View All"
+    },
+    "categories": {
+      "title": "Explore by Category",
+      "subtitle": "Find the perfect AI solution for your needs",
+      "view_all": "View All Categories"
+    },
+    "testimonials": {
+      "title": "What Our Users Say",
+      "subtitle": "Discover how AchAI solutions have transformed workflows worldwide"
+    },
+    "cta": {
+      "title": "Ready to Transform Your AI Workflow?",
+      "description": "Join thousands of developers and businesses already using AchAI solutions.",
+      "button": "Get Started Today",
+      "homepage_title": "Ready to supercharge your AI workflows?",
+      "homepage_description": "Discover AchAI solutions and unlock the full potential of your Claude experience."
+    }
+  },
+  "about_us": {
+    "hero": {
+      "badge": "Our Story",
+      "title": "The Biggest AI Hub in the World",
+      "description": "AchAI is your go-to destination for AI tools, materials, and projects."
+    },
+    "mission": {
+      "badge": "Our Mission",
+      "title": "Democratizing AI for Everyone",
+      "description1": "At AchAI, we're committed to democratizing AI technology and making it accessible to everyone. We believe in the transformative power of artificial intelligence and its potential to solve real-world problems.",
+      "description2": "Our platform connects you with the best AI solutions and resources to help you harness this power, regardless of your technical expertise. We're building a future where AI is a tool that empowers everyone, not just those with specialized knowledge."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "quote": "We envision a world where artificial intelligence is accessible to everyone, empowering individuals and organizations to solve complex problems and unlock new possibilities.",
+      "attribution": "— AchAI Founding Team"
+    },
+    "stats": {
+      "unlimited_access": "Unlimited Access",
+      "global_community": "Global Community", 
+      "innovation_first": "Innovation First"
+    },
+    "values": {
+      "badge": "Our Values",
+      "title": "What Drives Us",
+      "description": "These core principles guide our decisions and shape our platform.",
+      "free_content": {
+        "title": "Free Content",
+        "description": "Providing high-quality AI resources and tools accessible to everyone.",
+        "button": "Explore Resources"
+      },
+      "open_source": {
+        "title": "Open Source",
+        "description": "Distributing valuable open source projects that advance AI capabilities.",
+        "button": "View Projects"
+      },
+      "ai_democratization": {
+        "title": "AI Democratization",
+        "description": "Making AI technology accessible and usable for people of all skill levels.",
+        "button": "Learn How"
+      },
+      "partnership": {
+        "title": "Partnership Network",
+        "description": "Collaborating with leading technology partners to support innovative AI projects.",
+        "button": "Meet Partners"
+      }
+    },
+    "timeline": {
+      "badge": "Our Journey",
+      "title": "The AchAI Story",
+      "description": "From inception to today, our mission to democratize AI has guided our growth.",
+      "events": {
+        "2024": {
+          "title": "AI Hub Establishment",
+          "description": "Became the world's largest AI hub with millions of users accessing our resources monthly 🚀"
+        },
+        "2025": {
+          "title": "AI Innovation Center",
+          "description": "Launching the AchaAI Innovation Center, connecting developers with cutting-edge AI technologies 🔮"
+        }
+      }
+    },
+    "team": {
+      "badge": "Our Founders",
+      "title": "Meet Dan & Fab",
+      "description": "The visionaries behind AchAI, working to make AI accessible to everyone.",
+      "dan": {
+        "name": "Dan",
+        "title": "Co-Founder & CEO",
+        "bio": "Dan leads AchaAI with a vision to democratize artificial intelligence and make it accessible to everyone."
+      },
+      "fab": {
+        "name": "Fab",
+        "title": "Co-Founder & CTO",
+        "bio": "Fab brings deep technical expertise in AI systems and leads our technology initiatives."
+      }
+    },
+    "community": {
+      "badge": "Join Us",
+      "title": "Join Our Community",
+      "description": "Become part of the growing AchAI community and stay at the forefront of AI innovation. Together, we're building the future of artificial intelligence.",
+      "button": "Learn About AchAI",
+      "full_title": "Be Part of the AchAI Community",
+      "full_description": "Join thousands of AI enthusiasts, developers, and businesses already using AchAI solutions.",
+      "full_button": "Explore Our Solutions"
+    }
+  },
+  "products": {
+    "title": "AI Solutions & Tools",
+    "subtitle": "Discover powerful AI tools and MCP servers",
+    "search_placeholder": "Search products...",
+    "filter": {
+      "all": "All Products",
+      "servers": "MCP Servers",
+      "clients": "MCP Clients",
+      "agents": "AI Agents",
+      "type": "Type",
+      "category": "Category",
+      "price": "Price",
+      "rating": "Rating",
+      "sort_by": "Sort by",
+      "newest": "Newest",
+      "oldest": "Oldest",
+      "popular": "Most Popular",
+      "name_asc": "Name (A-Z)",
+      "name_desc": "Name (Z-A)",
+      "price_low": "Price (Low to High)",
+      "price_high": "Price (High to Low)",
+      "rating_high": "Highest Rated",
+      "clear_filters": "Clear Filters"
+    },
+    "product_card": {
+      "official": "Official",
+      "verified": "Verified",
+      "free": "Free",
+      "premium": "Premium",
+      "stars": "{{count}} stars",
+      "view_details": "View Details",
+      "add_to_favorites": "Add to Favorites",
+      "remove_from_favorites": "Remove from Favorites",
+      "share": "Share",
+      "report": "Report",
+      "created_by": "Created by {{creator}}",
+      "category": "Category: {{category}}",
+      "tags": "Tags",
+      "last_updated": "Last updated: {{date}}",
+      "version": "Version {{version}}",
+      "license": "License: {{license}}",
+      "language": "Language: {{language}}",
+      "github": "View on GitHub",
+      "npm": "View on NPM",
+      "docs": "Documentation",
+      "demo": "Live Demo",
+      "install": "Install",
+      "configure": "Configure",
+      "deploy": "Deploy"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {{current}} of {{total}}",
+      "per_page": "{{count}} per page",
+      "showing": "Showing {{start}} to {{end}} of {{total}} products"
+    },
+    "empty_state": {
+      "title": "No products found",
+      "description": "Try adjusting your search criteria or browse all categories",
+      "browse_all": "Browse All Products",
+      "clear_search": "Clear Search"
+    },
+    "enhanced": {
+      "search_results_for": "Search Results for \"{{query}}\"",
+      "all_products": "Explore AI Solutions",
+      "all_products_description": "Discover powerful MCP servers, clients, AI agents, and ready-to-use solutions to enhance your AI capabilities",
+      "showing_results": "Showing {{count}} results",
+      "in_category": "in {{category}}",
+      "search_placeholder": "Search products...",
+      "searching": "Searching...",
+      "search": "Search",
+      "tabs": {
+        "all": "All",
+        "products": "Products", 
+        "servers": "Servers",
+        "clients": "Clients"
+      },
+      "type_badges": {
+        "server": "Server",
+        "client": "Client", 
+        "product": "Product",
+        "ai_agent": "AI Agent"
+      },
+      "featured": "Featured",
+      "no_rating": "No rating",
+      "view_details": "View details",
+      "view_details_hover": "View Details",
+      "no_products_message": "We couldn't find any products matching \"{{query}}\"",
+      "no_products_filters": "No products match your current filters. Try adjusting your search criteria.",
+      "clear_filters": "Clear filters"
+    }
+  },
+  "product_detail": {
+    "overview": "Overview",
+    "features": "Key Features",
+    "use_cases": "Use Cases",
+    "installation": "Installation",
+    "documentation": "Documentation",
+    "reviews": "Reviews",
+    "similar": "Similar Tools",
+    "share": "Share this tool",
+    "report": "Report an issue",
+    "back_to_list": "Back to All Products",
+    "install_command": "Installation Command",
+    "copy_command": "Copy Command",
+    "command_copied": "Command copied to clipboard!",
+    "github_stats": {
+      "stars": "Stars",
+      "forks": "Forks",
+      "issues": "Issues",
+      "contributors": "Contributors",
+      "last_commit": "Last Commit"
+    },
+    "metadata": {
+      "created_by": "Created by",
+      "category": "Category",
+      "license": "License",
+      "language": "Language",
+      "version": "Version",
+      "last_updated": "Last Updated",
+      "downloads": "Downloads",
+      "size": "Size"
+    },
+    "actions": {
+      "install": "Install",
+      "star": "Star",
+      "fork": "Fork",
+      "watch": "Watch",
+      "download": "Download",
+      "clone": "Clone",
+      "contribute": "Contribute",
+      "sponsor": "Sponsor",
+      "follow": "Follow Creator"
+    },
+    "tabs": {
+      "readme": "README",
+      "documentation": "Documentation",
+      "changelog": "Changelog",
+      "issues": "Issues",
+      "discussions": "Discussions",
+      "wiki": "Wiki"
+    },
+    "reviews": {
+      "write_review": "Write a Review",
+      "rating": "Rating",
+      "comment": "Comment",
+      "submit_review": "Submit Review",
+      "helpful": "Helpful",
+      "not_helpful": "Not Helpful",
+      "report_review": "Report Review",
+      "edit_review": "Edit Review",
+      "delete_review": "Delete Review",
+      "verified_user": "Verified User",
+      "no_reviews": "No reviews yet",
+      "be_first": "Be the first to review this product"
+    }
+  },
+  "categories": {
+    "title": "Browse Categories",
+    "subtitle": "Explore AI solutions by category",
+    "browse_by": "Browse by",
+    "category": "Category",
+    "browse": "Browse",
+    "view_all": "View all",
+    "explore_description": "Explore our comprehensive collection of MCP resources organized by category.",
+    "find_perfect_tools": "Find the perfect tools to enhance your AI capabilities.",
+    "view_category": "View Category",
+    "product_count": "{{count}} products",
+    "popular_categories": "Popular Categories",
+    "all_categories": "All Categories"
+  },
+  "search": {
+    "title": "Search Results",
+    "subtitle": "Find the perfect AI solution",
+    "placeholder": "Search AI tools, servers, and solutions...",
+    "results_for": "Results for \"{{query}}\"",
+    "no_results": "No results found",
+    "no_results_description": "Try different keywords or browse our categories",
+    "advanced_search": "Advanced Search",
+    "search_filters": "Search Filters",
+    "search_suggestions": "Search Suggestions",
+    "popular_searches": "Popular Searches",
+    "recent_searches": "Recent Searches",
+    "clear_history": "Clear History",
+    "save_search": "Save Search",
+    "saved_searches": "Saved Searches"
+  },
+  "auth": {
+    "login": {
+      "title": "Login to AchAI",
+      "subtitle": "Welcome back! Please sign in to your account",
+      "email": "Email",
+      "password": "Password",
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?",
+      "sign_in": "Sign In",
+      "logging_in": "Logging in...",
+      "success_message": "Login successful! Redirecting...",
+      "error_message": "Failed to login",
+      "no_account": "Don't have an account?",
+      "sign_up": "Sign up",
+      "or": "or",
+      "google": "Sign in with Google",
+      "github": "Sign in with GitHub",
+      "microsoft": "Sign in with Microsoft"
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join AchAI and start building with AI",
+      "name": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "password_hint": "Password must be at least 6 characters long",
+      "confirm_password": "Confirm Password",
+      "creating_account": "Creating account...",
+      "success_message": "Account created successfully! Redirecting...",
+      "error_message": "Failed to create account",
+      "terms": "I agree to the {{terms}} and {{privacy}}",
+      "terms_link": "Terms of Service",
+      "privacy_link": "Privacy Policy",
+      "create_account": "Create Account",
+      "have_account": "Already have an account?",
+      "sign_in": "Sign in"
+    },
+    "profile": {
+      "title": "My Profile",
+      "subtitle": "Manage your account settings",
+      "profile_settings": "Profile Settings",
+      "my_favorites": "My Favorites",
+      "success_message": "Profile updated successfully",
+      "error_message": "Failed to update profile",
+      "personal_info": "Personal Information",
+      "account_settings": "Account Settings",
+      "preferences": "Preferences",
+      "security": "Security",
+      "notifications": "Notifications",
+      "billing": "Billing",
+      "delete_account": "Delete Account",
+      "save_changes": "Save Changes",
+      "cancel": "Cancel",
+      "username": "Username",
+      "email": "Email",
+      "new_password": "New Password (leave blank to keep current)",
+      "password_requirement": "Password must be at least 6 characters long",
+      "confirm_password": "Confirm New Password"
+    },
+    "forgot_password": {
+      "title": "Reset Password",
+      "subtitle": "Enter your email to receive reset instructions",
+      "email": "Email",
+      "send_instructions": "Send Instructions",
+      "back_to_login": "Back to Login",
+      "check_email": "Check your email for reset instructions"
+    },
+    "reset_password": {
+      "title": "Reset Password",
+      "subtitle": "Enter your new password",
+      "password": "New Password",
+      "confirm_password": "Confirm New Password",
+      "reset_password": "Reset Password",
+      "password_updated": "Password updated successfully"
+    }
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "subtitle": "Manage your AchAI platform",
+    "secure_admin_area": "Secure Admin Area",
+    "authenticate_message": "Please authenticate to access the admin panel.",
+    "invalid_credentials": "Invalid credentials",
+    "enter_username": "Enter username",
+    "enter_password": "Enter password",
+    "product_management": "Product Management",
+    "overview": "Overview",
+    "products": "Products",
+    "users": "Users",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "logout": "Logout",
+    "welcome": "Welcome back, {{name}}",
+    "stats": {
+      "total_products": "Total Products",
+      "active_users": "Active Users",
+      "total_downloads": "Total Downloads",
+      "revenue": "Revenue"
+    },
+    "recent_activity": "Recent Activity",
+    "quick_actions": "Quick Actions",
+    "add_product": "Add Product",
+    "manage_users": "Manage Users",
+    "view_analytics": "View Analytics",
+    "system_health": "System Health",
+    "backup_data": "Backup Data",
+    "export_data": "Export Data",
+    "import_data": "Import Data"
+  },
+  "forms": {
+    "required": "This field is required",
+    "invalid_email": "Please enter a valid email address",
+    "password_min": "Password must be at least {{min}} characters",
+    "password_mismatch": "Passwords do not match",
+    "file_too_large": "File is too large (max {{max}}MB)",
+    "invalid_file_type": "Invalid file type",
+    "upload_failed": "Upload failed",
+    "save_success": "Saved successfully",
+    "save_error": "Failed to save",
+    "delete_confirm": "Are you sure you want to delete this item?",
+    "delete_success": "Deleted successfully",
+    "delete_error": "Failed to delete",
+    "changes_saved": "Changes saved",
+    "changes_discarded": "Changes discarded",
+    "unsaved_changes": "You have unsaved changes"
+  },
+  "errors": {
+    "page_not_found": "Page not found",
+    "access_denied": "Access denied",
+    "server_error": "Server error",
+    "network_error": "Network error",
+    "timeout": "Request timeout",
+    "unknown_error": "Unknown error",
+    "try_again": "Try again",
+    "go_home": "Go to Home",
+    "contact_support": "Contact Support",
+    "error_details": "Error Details",
+    "error_code": "Error Code",
+    "report_error": "Report Error"
+  },
+  "loading": {
+    "default": "Loading...",
+    "products": "Loading products...",
+    "search": "Searching...",
+    "saving": "Saving...",
+    "uploading": "Uploading...",
+    "downloading": "Downloading...",
+    "processing": "Processing...",
+    "authenticating": "Authenticating...",
+    "please_wait": "Please wait..."
+  },
+  "language": {
+    "english": "English",
+    "portuguese": "Português",
+    "change_language": "Change Language",
+    "switch_to": "Switch to {{lang}}",
+    "language_changed": "Language changed to {{language}}"
+  },
+  "connect_claude": {
+    "hero": {
+      "image_alt": "Connect Claude with your tools",
+      "title": "Connect Claude with Your Favorite Tools",
+      "description": "Seamlessly integrate Claude Desktop with platforms like Shopify, Figma, QuickBooks, and Jira. Transform your workflow with powerful automations and integrations."
+    },
+    "features": {
+      "integrations": {
+        "title": "Powerful Integrations",
+        "description": "Connect with your essential business tools effortlessly."
+      },
+      "automation": {
+        "title": "Smart Automation",
+        "description": "Let Claude handle repetitive tasks across your tools."
+      }
+    },
+    "waitlist": {
+      "button": "Join Waitlist →",
+      "alert": "Thank you for your interest! Waitlist functionality is coming soon."
+    },
+    "faq": {
+      "supported_tools": {
+        "question": "What tools will be supported?",
+        "answer": "We're starting with the most popular productivity and development tools, and we'll continuously add more based on user feedback."
+      }
+    }
+  },
+  "submit": {
+    "title": "Submit an MCP Server",
+    "description": "Share your MCP server with the community. Fill out the form below to add your server to our marketplace.",
+    "categories": {
+      "ai_development": "AI Development",
+      "ai_applications": "AI Applications", 
+      "workflow_automation": "Workflow Automation",
+      "web_integration": "Web Integration",
+      "developer_tools": "Developer Tools",
+      "document_processing": "Document Processing",
+      "web_scraping": "Web Scraping & Data Collection",
+      "research_knowledge": "Research & Knowledge",
+      "analytics_monitoring": "Analytics & Monitoring",
+      "vector_databases": "Vector Databases",
+      "devops": "DevOps",
+      "database_management": "Database Management",
+      "other": "Other"
+    },
+    "success": {
+      "title": "Submission Received!",
+      "message": "Thank you for submitting your MCP server. Our team will review your submission and add it to the marketplace soon.",
+      "submit_another": "Submit Another MCP Server"
+    },
+    "form": {
+      "server_name": "Server Name *",
+      "name_placeholder": "e.g., Firecrawl, Ollama, etc.",
+      "description": "Description *",
+      "description_placeholder": "Describe what your MCP server does and its key features",
+      "github_url": "GitHub URL *",
+      "github_placeholder": "https://github.com/username/repository",
+      "npm_url": "NPM Package URL (optional)",
+      "npm_placeholder": "https://www.npmjs.com/package/package-name",
+      "logo_image": "Logo/Image",
+      "upload_option": "Option 1: Upload Image File",
+      "preview_alt": "Preview",
+      "url_option": "Option 2: Image URL (use if you don't have the file)",
+      "image_url_placeholder": "https://example.com/path/to/image.png",
+      "url_disabled_message": "URL input is disabled because you've uploaded a file",
+      "creator": "Creator/Maintainer",
+      "creator_placeholder": "Individual or organization name",
+      "category": "Category",
+      "select_category": "Select a category",
+      "github_stars": "GitHub Stars (if applicable)",
+      "official_server": "This is an official MCP server",
+      "submit_button": "Submit MCP Server"
+    }
+  },
+  "what_is_mcp": {
+    "hero": {
+      "title": "What is an MCP Server?",
+      "subtitle": "Connecting AI to Your World"
+    },
+    "cards": {
+      "universal_connector": {
+        "title": "The Universal Connector for AI"
+      }
+    }
+  },
+  "seo": {
+    "homepage": {
+      "title": "AchAI - The Biggest AI Hub in the World",
+      "description": "Discover, integrate, and deploy cutting-edge AI solutions. AchAI is your comprehensive platform for AI tools, MCP servers, and intelligent solutions."
+    },
+    "products": {
+      "title": "AI Products & Tools - AchAI",
+      "description": "Browse our extensive collection of AI tools, MCP servers, and intelligent solutions. Find the perfect AI product for your needs."
+    },
+    "about": {
+      "title": "About AchAI - Democratizing AI for Everyone",
+      "description": "Learn about AchAI's mission to democratize artificial intelligence and make it accessible to everyone. Meet our team and discover our vision."
+    },
+    "categories": {
+      "title": "AI Categories - Browse by Type - AchAI",
+      "description": "Explore AI solutions organized by category. Find tools for machine learning, natural language processing, computer vision, and more."
+    }
+  },
+  "categories": {
+    "page_title": "Browse by Category",
+    "page_description": "Explore our comprehensive collection of MCP resources organized by category. Find the perfect tools to enhance your AI capabilities.",
+    "ready_to_use": {
+      "title": "Ready to Use",
+      "description": "Discover curated, production-ready AI solutions that will transform your workflow with no setup hassle.",
+      "section_title": "Ready to Use AI Solutions",
+      "section_description": "Curated, production-ready AI tools that will transform your workflow today. No setup hassle, just immediate value.",
+      "view_all": "View all solutions"
+    },
+    "mcp_servers": {
+      "title": "MCP Servers",
+      "description": "Connect Claude to external data sources, APIs, and services with these powerful server-side tools.",
+      "section_description": "Access external data sources, APIs, and services through these server-side MCP tools"
+    },
+    "mcp_clients": {
+      "title": "MCP Clients", 
+      "description": "Integrate Claude capabilities into your applications, websites, and tools with these client-side solutions.",
+      "section_description": "Integrate Claude into your applications with these client-side tools and libraries"
+    },
+    "ai_agents": {
+      "title": "AI Agents",
+      "description": "Autonomous agents that help you accomplish complex tasks using advanced LLM capabilities and planning.",
+      "section_description": "Autonomous agents that help accomplish complex tasks with advanced planning and reasoning"
+    },
+    "info": {
+      "title": "What are MCP Categories?",
+      "description1": "Model Context Protocol (MCP) resources are organized into categories based on their primary function and the type of data or services they connect to. This organization helps you find the right MCP resources for your specific AI use case.",
+      "description2": "Each category contains specialized tools that extend Claude's capabilities in different ways. You can browse by high-level category (Servers, Clients, Agents) or explore specific subcategories to find exactly what you need for your project.",
+      "description3": "MCP provides secure access to external data sources and tools"
+    },
+    "product_benefits": {
+      "relevance_ai": "Build and deploy your AI workforce in minutes, no code required.",
+      "customgpt": "Create AI chatbots that instantly understand your business documentation.",
+      "aistudios": "Create professional AI videos without cameras, studios, or actors.", 
+      "rytr": "Create engaging content in seconds with AI-powered assistance."
+    },
+    "subcategories": {
+      "mcp_servers": {
+        "databases_storage": {
+          "name": "Databases & Storage",
+          "description": "SQL, NoSQL, Vector Stores, and file storage servers"
+        },
+        "web_search": {
+          "name": "Web & Search", 
+          "description": "Search engines, web browsers, and content fetching"
+        },
+        "cloud_services": {
+          "name": "Cloud Services",
+          "description": "AWS, Azure, GCP and other cloud platforms"
+        },
+        "version_control": {
+          "name": "Version Control",
+          "description": "Git repositories, PRs, commits, and code management"
+        },
+        "utilities_files": {
+          "name": "Utilities & Files",
+          "description": "Filesystem access, time utilities, and system tools"
+        },
+        "communication": {
+          "name": "Communication",
+          "description": "Messaging platforms, email, and notification systems"
+        },
+        "analytics": {
+          "name": "Analytics",
+          "description": "Metrics, dashboards, and data visualization"
+        },
+        "security_auth": {
+          "name": "Security & Auth",
+          "description": "Authentication, authorization, and security tools"
+        }
+      },
+      "mcp_clients": {
+        "desktop_applications": {
+          "name": "Desktop Applications",
+          "description": "Desktop clients and applications for interacting with AI models"
+        },
+        "web_applications": {
+          "name": "Web Applications", 
+          "description": "Browser-based clients and web interfaces for AI services"
+        },
+        "code_editors": {
+          "name": "Code Editors",
+          "description": "Code editors and IDEs with integrated AI and MCP support"
+        },
+        "cli_tools": {
+          "name": "CLI Tools",
+          "description": "Command-line interfaces and terminal tools"
+        },
+        "libraries": {
+          "name": "Libraries",
+          "description": "Programming libraries, SDKs and frameworks"
+        },
+        "ide_extensions": {
+          "name": "IDE Extensions",
+          "description": "Extensions and plugins for popular IDEs and editors"
+        },
+        "browser_extensions": {
+          "name": "Browser Extensions",
+          "description": "Browser extensions that integrate AI capabilities"
+        },
+        "messaging_integrations": {
+          "name": "Messaging Integrations",
+          "description": "Integrations with messaging platforms and chat services"
+        },
+        "ai_workflow_tools": {
+          "name": "AI Workflow Tools",
+          "description": "Tools for building and orchestrating AI workflows"
+        }
+      },
+      "ai_agents": {
+        "coding_assistants": {
+          "name": "Coding Assistants",
+          "description": "Code generation, debugging, and programming help"
+        },
+        "autonomous_agents": {
+          "name": "Autonomous Agents",
+          "description": "Independent task-completing agents with minimal supervision"
+        },
+        "multi_agent_systems": {
+          "name": "Multi-agent Systems",
+          "description": "Collaborative AI systems with multiple specialized agents"
+        },
+        "research_assistants": {
+          "name": "Research Assistants",
+          "description": "Information gathering, analysis, and knowledge management"
+        },
+        "agent_building": {
+          "name": "Agent Building",
+          "description": "Platforms and frameworks for creating custom AI agents"
+        },
+        "creative_studio": {
+          "name": "Creative Studio",
+          "description": "Content creation, art generation, and creative assistance"
+        },
+        "data_processing": {
+          "name": "Data Processing",
+          "description": "Automated data labeling and processing agents"
+        },
+        "task_management": {
+          "name": "Task Management",
+          "description": "AI agents that manage and execute task queues"
+        },
+        "cognitive_architecture": {
+          "name": "Cognitive Architecture",
+          "description": "Advanced memory and reasoning systems for AI agents"
+        }
+      }
+    }
+  },
+  "ready_to_use": {
+    "hero": {
+      "subtitle": "Ready-to-Use",
+      "title": "AI Solutions",
+      "description": "Curated, production-ready AI tools that will transform your workflow today. No setup hassle, just immediate value."
+    },
+    "buttons": {
+      "get_started_free": "Get Started Free",
+      "watch_demo": "Watch Demo",
+      "start_free": "Start Free",
+      "get_started": "Get Started",
+      "choose_plan": "Choose Plan",
+      "try_free": "Try {{productName}} For Free"
+    },
+    "selector": {
+      "instruction": "Select a solution to view its features and pricing"
+    },
+    "cta": {
+      "title": "Ready to Transform Your Workflow?",
+      "description": "Join thousands of businesses using {{productName}} to automate tasks and increase productivity."
+    },
+    "pricing": {
+      "trial_no_card": "All plans include a 14-day free trial. No credit card required.",
+      "trial_with_card": "Free trial available for 7 days. Credit card required for trial."
+    },
+    "final_cta": {
+      "relevance": "No credit card required. Start building your AI workforce today.",
+      "customgpt": "Free 14-day trial available. Start creating your custom chatbot now.",
+      "aistudios": "Free trial available. Create your first AI video in minutes.",
+      "rytr": "Free plan available. Start writing better content today."
+    },
+    "products": {
+      "relevance_ai": {
+        "name": "Relevance AI",
+        "short_description": "AI workforce automation",
+        "tagline": "Build Your AI Workforce",
+        "description": "Build your AI Workforce: The home for AI teams that work for you",
+        "category": "AI Workforce Platform",
+        "features": [
+          "AI Agents - Build and recruit AI agents to automate tasks and workflows",
+          "AI Tools - Create custom AI tools that integrate with your tech stack",
+          "Multi-Agent Systems - Develop collaborative AI teams to solve complex problems",
+          "Comprehensive API - Integrate seamlessly into your existing systems",
+          "No-Code Builder - Create and deploy AI agents with a user-friendly interface"
+        ]
+      },
+      "customgpt": {
+        "name": "CustomGPT.ai",
+        "short_description": "AI-powered chatbots for your business",
+        "tagline": "Transform Your Content Into Intelligent Chatbots",
+        "description": "Build powerful AI chatbots that deliver exceptional customer experiences using your own business content",
+        "category": "AI Chatbot Platform",
+        "features": [
+          "Intuitive Builder - Create custom AI chatbots in minutes with no coding required",
+          "Versatile Integration - Connect with 100+ data sources including Google Drive, Notion, and Shopify",
+          "Advanced Content Processing - Support for 1,400+ document formats with text extraction from images",
+          "AI Accuracy Engine - Proprietary anti-hallucination technology ensures factual, reliable responses",
+          "Multilingual Capabilities - Support customers globally with 95+ language options",
+          "Conversation Analytics - Gain insights from user interactions to continuously improve performance"
+        ]
+      },
+      "aistudios": {
+        "name": "AI Studios",
+        "short_description": "Lifelike AI avatars and videos",
+        "tagline": "Bring Your Content To Life With AI Videos",
+        "description": "Create lifelike AI avatars and videos for marketing, training, and customer engagement",
+        "category": "AI Video Platform",
+        "features": [
+          "Lifelike AI Avatars - Choose from 100+ realistic AI presenters for your videos",
+          "Multi-Language Support - Create videos in 140+ languages with native-sounding speech",
+          "Text-to-Video Conversion - Simply paste your script to generate professional videos",
+          "Custom Avatar Creation - Create your own AI avatar from photos or video clips",
+          "Background Customization - Use custom backgrounds or choose from premium templates",
+          "Advanced Editing Tools - Fine-tune expressions, gestures, and delivery for perfect results"
+        ]
+      },
+      "rytr": {
+        "name": "Rytr",
+        "short_description": "AI-powered writing assistant",
+        "tagline": "Write Better Content, Faster",
+        "description": "AI writing assistant that helps you create high-quality content in just seconds, at a fraction of the cost",
+        "category": "AI Writing Platform",
+        "features": [
+          "Smart Editor - Real-time suggestions, tone adjustments, and content variations",
+          "Template Library - 40+ templates for blogs, emails, ads, product descriptions, and more",
+          "30+ Languages - Generate and translate content to reach global audiences",
+          "Plagiarism-Free Content - Original, fresh content for every generation",
+          "SEO Optimization - Create content that ranks well on search engines",
+          "Team Collaboration - Share templates and content with your team"
+        ]
+      }
+    },
+    "pricing_features": {
+      "relevance_ai": {
+        "free": ["5,000 credits/month", "Limited to 2 tools", "Email support"],
+        "pro": ["10,000 credits/month", "1 user seat", "Chat support"],
+        "team": ["100,000 credits/month", "10 user seats", "Priority support"]
+      },
+      "customgpt": {
+        "free": ["14-day full access", "1 advanced chatbot", "Email support", "1,000 queries/month"],
+        "business": ["Unlimited chatbots", "10,000 items per chatbot", "5 team members", "Priority support"],
+        "enterprise": ["Custom solutions", "Unlimited data capacity", "Dedicated account manager", "Custom integrations"]
+      },
+      "aistudios": {
+        "starter": ["50 minutes/month", "100+ AI avatars", "HD quality video", "Standard templates"],
+        "business": ["300 minutes/month", "Priority rendering", "Premium templates", "API access"],
+        "enterprise": ["Custom solution", "Dedicated account manager", "Custom avatars", "Advanced analytics"]
+      },
+      "rytr": {
+        "free": ["10,000 characters/month", "40+ use cases", "30+ languages", "Access to AI tools"],
+        "premium": ["Unlimited characters", "Premium use cases", "Priority support", "Browser extension"],
+        "unlimited": ["Everything in Premium", "Yearly billing", "Save 17%", "Dedicated account manager"]
+      }
+    },
+    "benefits": {
+      "relevance_ai": [
+        "Build and deploy your AI workforce in minutes, no code required",
+        "Create custom AI tools that integrate with your existing tech stack",
+        "Scale business operations without increasing headcount",
+        "SOC 2 Type 2 certified with enterprise-grade security"
+      ],
+      "customgpt": [
+        "Create AI chatbots that instantly understand your business documentation",
+        "Reduce customer support costs by up to 80% with 24/7 automated service",
+        "Deploy in minutes with our intuitive no-code platform",
+        "Enterprise-grade security with SOC-2 Type 2 and GDPR compliance",
+        "Seamless integration with your existing tools and workflows"
+      ],
+      "aistudios": [
+        "Create professional AI videos without cameras, studios, or actors",
+        "Save thousands on video production while creating more content",
+        "Scale content creation across multiple languages and markets",
+        "Update videos instantly without re-shooting when information changes",
+        "Maintain consistent brand messaging across all video content"
+      ],
+      "rytr": [
+        "Create engaging content in seconds with AI-powered assistance",
+        "Save up to 90% on content creation and copywriting costs",
+        "Boost productivity and focus on strategy instead of writing",
+        "Eliminate writer's block with unlimited content generation",
+        "Scale content production across platforms and languages"
+      ]
+    },
+    "content": {
+      "stats": {
+        "work_happening": "Work is happening, even when you're not",
+        "ai_workforce_ready": "Your AI workforce is ready to support your team around the clock",
+        "improve_efficiency": "Improve your business efficiency",
+        "automate_support": "Custom AI chatbots automate support and enhance user experience",
+        "tasks_automated": "Tasks Automated",
+        "hours_active_daily": "Hours Active Daily",
+        "ai_agents_available": "AI Agents Available",
+        "ticket_reduction": "Average Ticket Reduction",
+        "available_integrations": "Available Integrations", 
+        "chatbot_availability": "Chatbot Availability",
+        "production_cost_reduction": "Production Cost Reduction",
+        "supported_languages": "Supported Languages",
+        "minutes_to_create": "Minutes to Create Video",
+        "time_saved": "Time Saved on Content Creation",
+        "use_cases_supported": "Use Cases Supported",
+        "users_worldwide": "Million+ Users Worldwide"
+      },
+      "features": {
+        "title": "Powerful Features",
+        "relevance_description": "Everything you need to build, deploy, and manage your AI workforce",
+        "customgpt_description": "All the tools you need to create and deploy AI chatbots for your business"
+      },
+      "pricing": {
+        "title": "Simple, Transparent Pricing",
+        "description": "Choose a plan that works for you, with a generous free tier to get started",
+        "most_popular": "MOST POPULAR",
+        "per_month": "/month"
+      }
+    }
+  }
+}

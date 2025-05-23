@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './LanguageSwitcher';
+import EnhancedLanguageToggle from './EnhancedLanguageToggle';
+import SimpleLanguageToggle from './SimpleLanguageToggle';
 
 // Updated to accept search component prop and new categories navigation
 const Header = ({ 
@@ -16,6 +20,8 @@ const Header = ({
   searchComponent
 }) => {
   // Fallback for Netflix UI since it's not implemented yet
+  const { t, i18n } = useTranslation();
+  const [forceUpdate, setForceUpdate] = useState(0);
   const onNavigateNetflixProducts = () => {
     window.location.href = '/products'; // Redirect to regular products page for now
   };
@@ -69,7 +75,7 @@ const Header = ({
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('popstate', updateActiveLink);
     };
-  }, []);
+  }, [i18n]);
   
   // Function to determine if a link is active
   const isActive = (path) => {
@@ -106,10 +112,10 @@ const Header = ({
         {/* Desktop Navigation - centered with larger spacing */}
         <nav className="hidden md:flex items-center justify-center flex-1 space-x-6">
           {[
-            { path: '/', label: 'Home', href: '/', onClick: onNavigateHome },
-            { path: '/ready-to-use', label: 'Ready to Use', href: '/ready-to-use', badge: 'New', onClick: onNavigateReadyToUse },
-            { path: '/browse-categories', label: 'Categories', href: '/browse-categories', onClick: onNavigateNewCategories },
-            { path: '/products', label: 'Products', href: '/products', onClick: onNavigateProducts },
+            { path: '/', label: t('navigation.home'), href: '/', onClick: onNavigateHome },
+            { path: '/ready-to-use', label: t('navigation.ready_to_use'), href: '/ready-to-use', badge: t('common.new'), onClick: onNavigateReadyToUse },
+            { path: '/browse-categories', label: t('navigation.categories'), href: '/browse-categories', onClick: onNavigateNewCategories },
+            { path: '/products', label: t('navigation.products'), href: '/products', onClick: onNavigateProducts },
             // Temporarily hide Netflix UI option since it's not fully implemented
             // { path: '/netflix-products', label: 'Netflix UI', href: '/netflix-products', badge: 'New', onClick: onNavigateNetflixProducts },
             // Removed Product Admin from top navbar - accessible via secure-admin route
@@ -137,9 +143,9 @@ const Header = ({
           ))}
         </nav>
         
-        {/* Empty div for balance */}
-        <div className="flex items-center w-[120px]">
-          {/* Placeholder to balance the layout */}
+        {/* Enhanced Language Toggle */}
+        <div className="flex items-center">
+          <SimpleLanguageToggle />
         </div>
         
         {/* Mobile Navigation Button */}
@@ -174,19 +180,22 @@ const Header = ({
         {/* Mobile Navigation Menu */}
         {mobileMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-gradient-to-b from-zinc-900/95 to-zinc-900/90 backdrop-blur-md border-b border-purple-500/20 py-4 px-6 md:hidden z-50 animate-fadeIn shadow-lg shadow-purple-900/10">
-            {/* Global Search Component removed */}
+            {/* Enhanced Language Toggle for mobile */}
+            <div className="mb-4 flex justify-center">
+              <SimpleLanguageToggle />
+            </div>
             
             <nav className="flex flex-col space-y-1">
               {[
-                { path: '/', label: 'Home', href: '/', onClick: onNavigateHome },
-                { path: '/ready-to-use', label: 'Ready to Use', href: '/ready-to-use', badge: 'New', onClick: onNavigateReadyToUse },
-                { path: '/browse-categories', label: 'Categories', href: '/browse-categories', onClick: onNavigateNewCategories },
-                { path: '/products', label: 'Products', href: '/products', onClick: onNavigateProducts },
+                { path: '/', label: t('navigation.home'), href: '/', onClick: onNavigateHome },
+                { path: '/ready-to-use', label: t('navigation.ready_to_use'), href: '/ready-to-use', badge: t('common.new'), onClick: onNavigateReadyToUse },
+                { path: '/browse-categories', label: t('navigation.categories'), href: '/browse-categories', onClick: onNavigateNewCategories },
+                { path: '/products', label: t('navigation.products'), href: '/products', onClick: onNavigateProducts },
                 // Temporarily hide Netflix UI option since it's not fully implemented
                 // { path: '/netflix-products', label: 'Netflix UI', href: '/netflix-products', badge: 'New', onClick: onNavigateNetflixProducts },
                 // Removed Product Admin from mobile menu - accessible via secure-admin route
-                { path: '/what-is-an-mcp-server', label: 'About AchAI', href: '/what-is-an-mcp-server', onClick: onNavigateWhatIsMcp },
-                { path: '/submit', label: 'Submit', href: '/submit', onClick: onNavigateSubmit }
+                { path: '/what-is-an-mcp-server', label: t('navigation.about_us'), href: '/what-is-an-mcp-server', onClick: onNavigateWhatIsMcp },
+                { path: '/submit', label: t('navigation.submit_server'), href: '/submit', onClick: onNavigateSubmit }
               ].map((item, index) => (
                 <a 
                   key={item.path}

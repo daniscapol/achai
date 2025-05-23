@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   DynamicHeroSection,
   FeaturedSection
@@ -19,7 +20,21 @@ const ModernHomePage = ({
   onNavigateToConnectToClaude,
   onNavigateToWhatIsMcp
 }) => {
+  const { t, i18n } = useTranslation();
   const [isAppInitialized, setIsAppInitialized] = useState(false);
+  
+  // Debug: Component lifecycle logging
+  useEffect(() => {
+    console.log('🟢 ModernHomePage MOUNTED');
+    return () => {
+      console.log('🔴 ModernHomePage UNMOUNTED');
+    };
+  }, []);
+
+  // Language monitoring disabled to reduce console noise
+  // useEffect(() => {
+  //   console.log('ModernHomePage: Language loaded:', i18n.language, 'Title:', t('homepage.featured.title'));
+  // }, [i18n.language, t]);
   
   // Initialization effect
   useEffect(() => {
@@ -263,8 +278,8 @@ const ModernHomePage = ({
       {/* Featured Products Section - Only render when app is initialized */}
       {isAppInitialized && (
         <FeaturedSection
-          title="Explore All AI Solution Types"
-          description="From ready-to-use tools to MCP servers, clients, and autonomous AI agents - find the perfect solution for your needs"
+          title={t('homepage.featured.title')}
+          description={t('homepage.featured.description')}
           featuredProducts={getExactProductMix()}
           onViewAll={onNavigateToList}
           onProductSelect={(product) => onNavigateToDetail(product.id)}
@@ -277,9 +292,9 @@ const ModernHomePage = ({
           {/* Base gradient */}
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/90 to-purple-900/20"></div>
           
-          {/* Animated background elements */}
-          <div className="absolute top-0 right-0 w-[40vw] h-[40vw] rounded-full bg-gradient-radial from-purple-600/10 to-transparent blur-3xl animate-pulse-slow"></div>
-          <div className="absolute bottom-0 left-0 w-[30vw] h-[30vw] rounded-full bg-gradient-radial from-indigo-600/10 to-transparent blur-3xl animate-pulse-slow" style={{animationDelay: '2s'}}></div>
+          {/* Background elements - animations disabled for performance */}
+          <div className="absolute top-0 right-0 w-[40vw] h-[40vw] rounded-full bg-gradient-radial from-purple-600/10 to-transparent blur-3xl opacity-50"></div>
+          <div className="absolute bottom-0 left-0 w-[30vw] h-[30vw] rounded-full bg-gradient-radial from-indigo-600/10 to-transparent blur-3xl opacity-30"></div>
           
           {/* Grid pattern overlay */}
           <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
@@ -288,29 +303,29 @@ const ModernHomePage = ({
         <div className="container mx-auto px-6 relative z-10 text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-300">
-              Ready to supercharge your AI workflows?
+              {t('homepage.cta.homepage_title')}
             </span>
           </h2>
           
           <p className="text-xl text-purple-100/80 max-w-3xl mx-auto mb-10">
-            Discover AchAI solutions and unlock the full potential of your Claude experience.
+            {t('homepage.cta.homepage_description')}
           </p>
           
           <div className="flex flex-wrap gap-6 justify-center">
             <button
               onClick={onNavigateToCategories}
-              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg text-white font-bold text-lg relative overflow-hidden group animate-bounce-button"
+              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg text-white font-bold text-lg relative overflow-hidden group"
             >
               {/* Animated shine effect */}
               <div className="absolute inset-0 w-1/4 h-full bg-white/20 skew-x-[45deg] -translate-x-full group-hover:translate-x-[400%] transition-transform duration-1000"></div>
-              <span className="relative z-10">Get Started Today</span>
+              <span className="relative z-10">{t('homepage.cta.button')}</span>
             </button>
             
             <a
               href="#/about"
               className="px-8 py-4 bg-white/5 border border-purple-500/30 backdrop-blur-md rounded-lg text-white font-bold text-lg hover:bg-white/10 transition-colors duration-300 inline-flex items-center"
             >
-              <span className="mr-2">About AchAI</span>
+              <span className="mr-2">{t('navigation.about_us')}</span>
               <span className="text-lg">🌟</span>
             </a>
           </div>
@@ -320,4 +335,4 @@ const ModernHomePage = ({
   );
 };
 
-export default ModernHomePage;
+export default React.memo(ModernHomePage);

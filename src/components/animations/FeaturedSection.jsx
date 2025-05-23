@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 /**
  * FeaturedSection - A premium featured products section that maintains the same visual style
@@ -13,6 +14,7 @@ const FeaturedSection = ({
   onProductSelect,
   className = ""
 }) => {
+  const { t } = useTranslation();
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isReady, setIsReady] = useState(false);
   
@@ -141,9 +143,8 @@ const FeaturedSection = ({
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7 }}
+            animate={{ opacity: isReady ? 1 : 0, y: isReady ? 0 : 20 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
           >
             <span className="inline-block px-3 py-1 rounded-full bg-white/5 border border-purple-500/20 text-indigo-300 text-sm font-medium mb-3">
               All Categories
@@ -182,13 +183,12 @@ const FeaturedSection = ({
             onClick={onViewAll}
             className="mt-4 md:mt-0 px-6 py-2.5 bg-white/5 border border-white/10 hover:border-purple-500/30 backdrop-blur-sm rounded-lg group transition-all duration-300"
             initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            animate={{ opacity: isReady ? 1 : 0, x: isReady ? 0 : 20 }}
+            transition={{ duration: 0.7, delay: 0.7 }}
             whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.07)' }}
           >
             <span className="flex items-center">
-              View All
+{t('homepage.featured.view_all_short')}
               <svg 
                 className="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform duration-300"
                 fill="none"
@@ -214,9 +214,8 @@ const FeaturedSection = ({
               <motion.div
                 className="mb-8"
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: 0.1 * categoryIndex }}
+                animate={{ opacity: isReady ? 1 : 0, y: isReady ? 0 : 20 }}
+                transition={{ duration: 0.5, delay: 1 + (0.1 * categoryIndex) }}
               >
                 {/* Category header with icon and distinct styling */}
                 <div className={`px-5 py-4 rounded-xl ${config.bgClass} border ${config.borderClass} backdrop-blur-sm`}>
@@ -241,12 +240,11 @@ const FeaturedSection = ({
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product, index) => (
                   <motion.div
-                    key={product.id}
+                    key={`featured-${categoryType}-${index}-${product.id || 'no-id'}-${(product.name || 'unknown').replace(/[^a-zA-Z0-9]/g, '-')}`}
                     className="relative"
                     initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.4, delay: 0.05 * Math.min(index, 5) }}
+                    animate={{ opacity: isReady ? 1 : 0, y: isReady ? 0 : 20 }}
+                    transition={{ duration: 0.4, delay: 1.5 + (0.05 * Math.min(index, 5)) + (0.2 * categoryIndex) }}
                     onHoverStart={() => setHoveredIndex(`${categoryType}-${index}`)}
                     onHoverEnd={() => setHoveredIndex(null)}
                   >
@@ -345,4 +343,4 @@ const FeaturedSection = ({
   );
 };
 
-export default FeaturedSection;
+export default React.memo(FeaturedSection);
