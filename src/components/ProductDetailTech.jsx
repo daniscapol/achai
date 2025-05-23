@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../contexts/LanguageContext';
 import SkeletonLoader from './animations/SkeletonLoader';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -18,6 +19,7 @@ const ProductDetailTech = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { t, i18n } = useTranslation();
+  const { currentLanguage } = useLanguage();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,6 +28,58 @@ const ProductDetailTech = () => {
   const [activeImage, setActiveImage] = useState(0);
   const [reviews, setReviews] = useState([]);
   const [refreshAttempted, setRefreshAttempted] = useState(false);
+
+  // Translation function for MCP data
+  const translateProductData = (productData) => {
+    if (!productData || currentLanguage !== 'pt') return productData;
+    
+    const translations = {
+      // Names
+      'Visual Studio Code': 'Visual Studio Code',
+      'Cursor': 'Cursor',
+      'FileStash': 'FileStash',
+      'Sourcegraph Cody': 'Sourcegraph Cody',
+      'Claude Code': 'Claude Code',
+      'Claude CLI': 'Claude CLI',
+      'GitHub': 'GitHub',
+      'PostgreSQL MCP Server': 'Servidor MCP PostgreSQL',
+      'MCP CLI Client': 'Cliente MCP CLI',
+      'Claude Desktop': 'Claude Desktop',
+      'VSCode MCP Extension': 'Extensão MCP VSCode',
+      
+      // Descriptions
+      'Popular code editor with MCP integration for AI-powered development assistance.': 'Editor de código popular com integração MCP para assistência de desenvolvimento com IA.',
+      'AI-powered code editor with MCP integration for advanced code completion and editing.': 'Editor de código alimentado por IA com integração MCP para autocompletar e edição avançada.',
+      'Remote Storage Access service that supports SFTP, S3, FTP, SMB, NFS, WebDAV, GIT, FTPS, gcloud, azure blob, sharepoint, and more through a unified MCP interface.': 'Serviço de acesso a armazenamento remoto que suporta SFTP, S3, FTP, SMB, NFS, WebDAV, GIT, FTPS, gcloud, azure blob, sharepoint e mais através de uma interface MCP unificada.',
+      'AI coding assistant with MCP integration for advanced code analysis, generation, and documentation.': 'Assistente de codificação IA com integração MCP para análise, geração e documentação avançada de código.',
+      'Official CLI tool for writing and refactoring code with Claude. Integrates seamlessly with your development workflow.': 'Ferramenta CLI oficial para escrever e refatorar código com Claude. Integra-se perfeitamente ao seu fluxo de trabalho de desenvolvimento.',
+      'Command-line interface for Anthropic Claude with MCP support. Access Claude and all your MCP servers through a simple command line tool.': 'Interface de linha de comando para Anthropic Claude com suporte MCP. Acesse Claude e todos os seus servidores MCP através de uma ferramenta simples de linha de comando.',
+      'GitHub API integration for repository management, PRs, issues, and more. Enables AI to interact with and manage GitHub repositories and workflows.': 'Integração da API GitHub para gerenciamento de repositórios, PRs, issues e mais. Permite à IA interagir e gerenciar repositórios e fluxos de trabalho do GitHub.',
+      
+      // Categories
+      'Code Editor': 'Editor de Código',
+      'Development Tool': 'Ferramenta de Desenvolvimento',
+      'File Systems': 'Sistemas de Arquivos',
+      'Remote Storage': 'Armazenamento Remoto',
+      'Coding Assistant': 'Assistente de Codificação',
+      'CLI Tool': 'Ferramenta CLI',
+      'Terminal': 'Terminal',
+      'Version Control': 'Controle de Versão',
+      'CLI': 'CLI',
+      'Desktop Applications': 'Aplicações Desktop',
+      'IDE Extensions': 'Extensões IDE'
+    };
+    
+    return {
+      ...productData,
+      name: translations[productData.name] || productData.name,
+      description: translations[productData.description] || productData.description,
+      shortDescription: translations[productData.shortDescription] || translations[productData.description] || productData.shortDescription,
+      longDescription: translations[productData.longDescription] || translations[productData.description] || productData.longDescription,
+      category: translations[productData.category] || productData.category,
+      categories: productData.categories?.map(cat => translations[cat] || cat) || productData.categories
+    };
+  };
 
   // No need for navigation fix with path-based routing
 
@@ -49,7 +103,7 @@ const ProductDetailTech = () => {
           const parsedProduct = JSON.parse(localProduct);
           // Mark any localStorage loaded data so we know it wasn't freshly fetched
           parsedProduct.fromLocalStorage = true;
-          setProduct(parsedProduct);
+          setProduct(translateProductData(parsedProduct));
           setLoading(false);
           return;
         }
@@ -62,7 +116,7 @@ const ProductDetailTech = () => {
             console.log('GitHub URL in global MCP data:', mcpProduct.github_url || mcpProduct.githubUrl || 'No GitHub URL found');
             console.log('Docs URL in global MCP data:', mcpProduct.docs_url || mcpProduct.docsUrl || 'No Docs URL found');
             mcpProduct.fromLocalStorage = true;
-            setProduct(mcpProduct);
+            setProduct(translateProductData(mcpProduct));
             setLoading(false);
             
             // Save to localStorage for future use
@@ -80,7 +134,7 @@ const ProductDetailTech = () => {
           if (cachedProduct) {
             console.log(`Found product in sessionStorage cache on initial render`);
             cachedProduct.fromLocalStorage = true;
-            setProduct(cachedProduct);
+            setProduct(translateProductData(cachedProduct));
             setLoading(false);
             
             // Also save to localStorage
@@ -118,7 +172,7 @@ const ProductDetailTech = () => {
             if (localProduct) {
               console.log('Found product in localStorage on refresh');
               const parsedProduct = JSON.parse(localProduct);
-              setProduct(parsedProduct);
+              setProduct(translateProductData(parsedProduct));
               setError(null);
               setLoading(false);
               fetchRelatedProducts(parsedProduct.category);
@@ -135,7 +189,7 @@ const ProductDetailTech = () => {
           const mcpProduct = window.mcpServersDirectData.find(p => String(p.id) === String(id));
           if (mcpProduct) {
             console.log('Found product in global MCP data:', mcpProduct);
-            setProduct(mcpProduct);
+            setProduct(translateProductData(mcpProduct));
             // Still fetch related products if needed
             fetchRelatedProducts(mcpProduct.category);
             clearTimeout(timeoutId);
@@ -153,7 +207,7 @@ const ProductDetailTech = () => {
             
             if (cachedProduct) {
               console.log(`Found product in sessionStorage cache: ${cachedProduct.name}`);
-              setProduct(cachedProduct);
+              setProduct(translateProductData(cachedProduct));
               fetchRelatedProducts(cachedProduct.category);
               clearTimeout(timeoutId);
               setLoading(false);
@@ -167,7 +221,8 @@ const ProductDetailTech = () => {
         // Final attempt: fetch from API with timeout protection
         console.log(`Fetching product ${id} from API`);
         try {
-          const response = await fetch(`http://localhost:3001/api/products/${id}`, {
+          const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
+          const response = await fetch(`http://localhost:3001/api/products/${id}?language=${langParam}`, {
             signal: controller.signal,
             headers: { 'Cache-Control': 'no-cache' }
           });
@@ -182,7 +237,7 @@ const ProductDetailTech = () => {
           console.log('API product data:', data);
           console.log('GitHub URL in data:', data.github_url || data.githubUrl || 'No GitHub URL found');
           console.log('Docs URL in data:', data.docs_url || data.docsUrl || 'No Docs URL found');
-          setProduct(data);
+          setProduct(translateProductData(data));
           
           // Store in sessionStorage for resilience on refresh
           try {
@@ -235,7 +290,7 @@ const ProductDetailTech = () => {
             if (localProduct) {
               console.log('Found product in localStorage');
               const parsedProduct = JSON.parse(localProduct);
-              setProduct(parsedProduct);
+              setProduct(translateProductData(parsedProduct));
               setError(null);
               fetchRelatedProducts(parsedProduct.category);
               return;
@@ -255,7 +310,7 @@ const ProductDetailTech = () => {
     };
 
     fetchProductDetails();
-  }, [id]);
+  }, [id, currentLanguage]);
 
   const fetchRelatedProducts = async (category) => {
     if (!category) return;
@@ -297,7 +352,8 @@ const ProductDetailTech = () => {
             
           if (relatedFromCache.length > 0) {
             console.log(`Found ${relatedFromCache.length} related products in cache for category ${category}`);
-            setRelatedProducts(relatedFromCache);
+            const translatedRelated = relatedFromCache.map(translateProductData);
+            setRelatedProducts(translatedRelated);
             clearTimeout(timeoutId);
             return;
           }
@@ -308,7 +364,8 @@ const ProductDetailTech = () => {
       
       // If not found or we're in the regular interface, fetch from API with timeout protection
       try {
-        const response = await fetch(`http://localhost:3001/api/products/category/${category}?limit=4`, {
+        const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
+        const response = await fetch(`http://localhost:3001/api/products/category/${category}?limit=4&language=${langParam}`, {
           signal: controller.signal,
           headers: { 'Cache-Control': 'no-cache' }
         });
@@ -322,9 +379,10 @@ const ProductDetailTech = () => {
         const data = await response.json();
         console.log(`Fetched ${data.products?.length || 0} related products from API`);
         
-        // Filter out the current product
+        // Filter out the current product and apply translations
         const filtered = data.products?.filter(p => String(p.id) !== String(id)) || [];
-        setRelatedProducts(filtered.slice(0, 4)); // Show at most 4 related products
+        const translatedRelated = filtered.map(translateProductData);
+        setRelatedProducts(translatedRelated.slice(0, 4)); // Show at most 4 related products
       } catch (apiError) {
         clearTimeout(timeoutId);
         
