@@ -204,10 +204,18 @@ const ProductDetailTech = () => {
         }
         
         // First priority: fetch from API to get latest database translations
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+        
+        // Skip API call if no API URL is configured (production static mode)
+        if (!API_BASE_URL || API_BASE_URL.trim() === '') {
+          console.log('No API configured - using static data only');
+          throw new Error('No API server configured - using static data only');
+        }
+        
         console.log(`Fetching product ${id} from API`);
         try {
           const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
-          const response = await fetch(`http://localhost:3001/api/products/id/${id}?language=${langParam}`, {
+          const response = await fetch(`${API_BASE_URL}/products/id/${id}?language=${langParam}`, {
             signal: controller.signal,
             headers: { 'Cache-Control': 'no-cache' }
           });
@@ -253,12 +261,13 @@ const ProductDetailTech = () => {
           // Check if it was an abort error
           if (apiError.name === 'AbortError') {
             console.warn('API request timed out');
-            setError('Request timed out. Please try again later.');
           } else {
             console.error('API error:', apiError);
-            setError('Failed to load product details. Please try again later.');
           }
           clearTimeout(timeoutId);
+          
+          // Set a flag to bypass API on future loads to prevent repeated failures
+          localStorage.setItem('bypassProductApi', 'true');
           
           // Fall back to cached data if API fails
           console.log('API failed, trying cached data sources');
@@ -291,6 +300,7 @@ const ProductDetailTech = () => {
             setProduct(translateProductData(mcpProduct));
             fetchRelatedProducts(mcpProduct.category);
             setLoading(false);
+            setError(null); // Clear any previous error since we found the product
             return;
           }
         }
@@ -380,9 +390,17 @@ const ProductDetailTech = () => {
       }
       
       // If not found or we're in the regular interface, fetch from API with timeout protection
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+      
+      // Skip API call if no API URL is configured (production static mode)
+      if (!API_BASE_URL || API_BASE_URL.trim() === '') {
+        console.log('No API configured for related products - using static data only');
+        return;
+      }
+      
       try {
         const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
-        const response = await fetch(`http://localhost:3001/api/products/category/${category}?limit=4&language=${langParam}`, {
+        const response = await fetch(`${API_BASE_URL}/products/category/${category}?limit=4&language=${langParam}`, {
           signal: controller.signal,
           headers: { 'Cache-Control': 'no-cache' }
         });

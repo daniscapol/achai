@@ -3,13 +3,18 @@
  * Handles product data fetching
  */
 
-// API base URL - defaults to localhost in development
+// API base URL - defaults to localhost in development, can be empty in production
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 
 /**
  * Generic fetch helper with error handling
  */
 async function fetchApi(endpoint, options = {}) {
+  // If no API base URL is configured, throw an error immediately
+  if (!API_BASE_URL || API_BASE_URL.trim() === '') {
+    throw new Error('No API server configured - using static data only');
+  }
+
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
