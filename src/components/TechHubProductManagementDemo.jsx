@@ -356,7 +356,7 @@ const TechHubProductManagementDemo = () => {
       console.log('Updating product:', processedData);
       
       // Update in database via API
-      const response = await fetch(`${API_BASE_URL}/product?id=${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/products/${currentProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -542,6 +542,13 @@ const TechHubProductManagementDemo = () => {
 
   // Open edit dialog and populate form
   const openEditDialog = (product) => {
+    console.log('Opening edit dialog for product:', product);
+    console.log('Multilingual fields in product data:');
+    console.log('- name_en:', product.name_en);
+    console.log('- name_pt:', product.name_pt);
+    console.log('- description_en:', product.description_en);
+    console.log('- description_pt:', product.description_pt);
+    
     setCurrentProduct(product);
     
     // Convert arrays to comma-separated strings for form
@@ -589,6 +596,8 @@ const TechHubProductManagementDemo = () => {
     if (!product.license) {
       defaultValues.license = product.product_type === 'ready_to_use' ? 'Proprietary' : 'MIT';
     }
+    
+    console.log('Setting edit form defaultValues:', defaultValues);
     
     editForm.reset(defaultValues);
     setIsEditDialogOpen(true);

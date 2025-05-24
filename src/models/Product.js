@@ -140,7 +140,7 @@ class Product {
         creator, version, installation_command, tags, inventory_count, 
         is_featured, is_active, slug, stars_numeric, created_at, updated_at) 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, 
-        $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, NOW(), NOW()) 
+        $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, NOW(), NOW()) 
         RETURNING *`,
         [finalName, finalDescription, name_en, name_pt, description_en, description_pt, 
         price, image_url, icon_url, category, categoriesArray, sku, 
@@ -167,6 +167,13 @@ class Product {
   
   // Update an existing product
   static async update(id, productData) {
+    console.log('Updating product with data:', JSON.stringify(productData, null, 2));
+    console.log('Multilingual fields for update:');
+    console.log('- name_en:', productData.name_en);
+    console.log('- name_pt:', productData.name_pt);
+    console.log('- description_en:', productData.description_en);
+    console.log('- description_pt:', productData.description_pt);
+    
     // Extract all possible fields from productData
     const {
       // Multilingual fields

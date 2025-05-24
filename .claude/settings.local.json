@@ -63,7 +63,17 @@
       "Bash(export DB_PORT=\"5432\")",
       "Bash(export DB_USER=\"achai\")",
       "Bash(export DB_PASSWORD=\"TrinityPW1\")",
-      "Bash(export DB_NAME=\"achai\")"
+      "Bash(export DB_NAME=\"achai\")",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"getAll\" /home/pumba/websiteloco/good/src/models/Product.js -A 10 -B 2)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"static async getAll\" /home/pumba/websiteloco/good/src/models/Product.js -A 20)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"fetchProducts\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 10 -B 2)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"useEffect\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 10 -B 2)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"openEditDialog\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 20 -B 2)",
+      "Bash(kill:*)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"handleEditProduct\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 25 -B 2)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"handleEditProduct\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 50 -B 2)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"handleAddProduct\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 30 -B 2)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"handleAddProduct\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 50 -B 2)"
     ],
     "deny": []
   }
