@@ -13,7 +13,11 @@
     "server": "node src/api/server.js",
     "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
     "test:db": "node src/test/testDbOperations.js",
-    "init:db": "node src/test/initDb.js"
+    "init:db": "node src/test/initDb.js",
+    "scrape:mcp": "node mcp-server-scraper.js",
+    "scrape:test": "node mcp-server-scraper.js --test",
+    "scrape:batch": "node batch-mcp-scraper.js",
+    "populate:mcp": "node quick-mcp-populate.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -62,6 +66,7 @@
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.364.0",
     "next-themes": "^0.4.4",
+    "node-fetch": "^3.3.2",
     "pg": "^8.16.0",
     "react": "^18.3.1",
     "react-day-picker": "8.10.1",

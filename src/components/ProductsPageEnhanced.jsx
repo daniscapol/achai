@@ -72,6 +72,8 @@ const ProductsPageEnhanced = () => {
   const [sortOption, setSortOption] = useState(initialState.sortOption);
   const [selectedFilters, setSelectedFilters] = useState(initialState.selectedFilters);
   const [maxPrice, setMaxPrice] = useState(1000);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(20);
   
   // Initialize with database products
   const {
@@ -379,6 +381,42 @@ const ProductsPageEnhanced = () => {
       setIsSearching(false);
     }
   };
+
+  // Calculate pagination for combined results
+  const calculatePagination = () => {
+    const totalItems = searchResults.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentItems = searchResults.slice(startIndex, endIndex);
+    
+    return {
+      totalItems,
+      totalPages,
+      currentPage,
+      itemsPerPage,
+      currentItems,
+      hasNextPage: currentPage < totalPages,
+      hasPrevPage: currentPage > 1
+    };
+  };
+
+  // Handle page change for frontend pagination
+  const handlePageChange = (newPage) => {
+    const paginationInfo = calculatePagination();
+    if (newPage >= 1 && newPage <= paginationInfo.totalPages) {
+      setCurrentPage(newPage);
+      // Scroll to top when page changes
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Get paginated results
+  const paginatedResults = useMemo(() => {
+    if (!searchResults.length) return [];
+    const paginationInfo = calculatePagination();
+    return paginationInfo.currentItems;
+  }, [searchResults, currentPage, itemsPerPage]);
   
   // Sort products based on sort option
   const sortProducts = (products) => {
@@ -408,6 +446,8 @@ const ProductsPageEnhanced = () => {
   // Load combined data when products change or filters change
   useEffect(() => {
     combineProductData();
+    // Reset to first page when filters change
+    setCurrentPage(1);
   }, [dbProducts, activeTab, categoryFilter, searchQuery, sortOption, selectedFilters, currentLanguage]);
   
   // Update URL when state changes
@@ -598,17 +638,17 @@ const ProductsPageEnhanced = () => {
 
   // Split components into batches for staggered animation
   const batchedResults = useMemo(() => {
-    if (!searchResults.length) return [];
+    if (!paginatedResults.length) return [];
     
     const batchSize = 8;
     const batches = [];
     
-    for (let i = 0; i < searchResults.length; i += batchSize) {
-      batches.push(searchResults.slice(i, i + batchSize));
+    for (let i = 0; i < paginatedResults.length; i += batchSize) {
+      batches.push(paginatedResults.slice(i, i + batchSize));
     }
     
     return batches;
-  }, [searchResults]);
+  }, [paginatedResults]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -629,7 +669,13 @@ const ProductsPageEnhanced = () => {
             
             {searchResults.length > 0 && (
               <p className="text-gray-300 text-sm">
-                {t('products.enhanced.showing_results', { count: searchResults.length })}
+                {(() => {
+                  const paginationInfo = calculatePagination();
+                  const startItem = (currentPage - 1) * itemsPerPage + 1;
+                  const endItem = Math.min(currentPage * itemsPerPage, searchResults.length);
+                  
+                  return `Showing ${startItem}-${endItem} of ${searchResults.length} products`;
+                })()}
                 {categoryFilter && categoryFilter !== 'all' && (
                   <> {t('products.enhanced.in_category', { category: categoryFilter })}</>
                 )}
@@ -776,7 +822,7 @@ const ProductsPageEnhanced = () => {
           </div>
         ) : (
           <>
-            {searchResults && searchResults.length > 0 ? (
+            {paginatedResults && paginatedResults.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {batchedResults.map((batch, batchIndex) => (
                   <React.Fragment key={`batch-${batchIndex}`}>
@@ -939,12 +985,15 @@ const ProductsPageEnhanced = () => {
       </div>
       
       {/* Pagination */}
-      {!isLoading && searchResults.length > 0 && pagination.totalPages > 1 && activeTab === 'custom-product' && (
+      {!isLoading && searchResults.length > 0 && (() => {
+        const paginationInfo = calculatePagination();
+        return paginationInfo.totalPages > 1;
+      })() && (
         <div className="mt-8 flex justify-center">
           <Pagination
-            currentPage={pagination.currentPage}
-            totalPages={pagination.totalPages}
-            onPageChange={changePage}
+            currentPage={currentPage}
+            totalPages={calculatePagination().totalPages}
+            onPageChange={handlePageChange}
           />
         </div>
       )}
