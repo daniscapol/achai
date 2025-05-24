@@ -117,15 +117,17 @@ const ProductsPageEnhanced = () => {
     }
   };
 
-  // Translation mapping for MCP data
+  // Translation mapping for MCP data ONLY (not database products)
   const translateMcpData = (mcpItems) => {
     if (currentLanguage !== 'pt') return mcpItems;
     
+    // Only translate MCP data, not database products
+    // Database products already come translated from the API
     const translations = {
-      // Names
+      // Names for MCP-only products
       'Visual Studio Code': 'Visual Studio Code',
       'Cursor': 'Cursor',
-      'FileStash': 'FileStash',
+      'FileStash': 'ArquivoStash',
       'Sourcegraph Cody': 'Sourcegraph Cody',
       'Claude Code': 'Claude Code',
       'Claude CLI': 'Claude CLI',
@@ -135,7 +137,7 @@ const ProductsPageEnhanced = () => {
       'Claude Desktop': 'Claude Desktop',
       'VSCode MCP Extension': 'Extensão MCP VSCode',
       
-      // Descriptions
+      // Descriptions for MCP-only products
       'Popular code editor with MCP integration for AI-powered development assistance.': 'Editor de código popular com integração MCP para assistência de desenvolvimento com IA.',
       'AI-powered code editor with MCP integration for advanced code completion and editing.': 'Editor de código alimentado por IA com integração MCP para autocompletar e edição avançada.',
       'Remote Storage Access service that supports SFTP, S3, FTP, SMB, NFS, WebDAV, GIT, FTPS, gcloud, azure blob, sharepoint, and more through a unified MCP interface.': 'Serviço de acesso a armazenamento remoto que suporta SFTP, S3, FTP, SMB, NFS, WebDAV, GIT, FTPS, gcloud, azure blob, sharepoint e mais através de uma interface MCP unificada.',
@@ -144,7 +146,7 @@ const ProductsPageEnhanced = () => {
       'Command-line interface for Anthropic Claude with MCP support. Access Claude and all your MCP servers through a simple command line tool.': 'Interface de linha de comando para Anthropic Claude com suporte MCP. Acesse Claude e todos os seus servidores MCP através de uma ferramenta simples de linha de comando.',
       'GitHub API integration for repository management, PRs, issues, and more. Enables AI to interact with and manage GitHub repositories and workflows.': 'Integração da API GitHub para gerenciamento de repositórios, PRs, issues e mais. Permite à IA interagir e gerenciar repositórios e fluxos de trabalho do GitHub.',
       
-      // Categories
+      // Categories for MCP-only products
       'Code Editor': 'Editor de Código',
       'Development Tool': 'Ferramenta de Desenvolvimento',
       'File Systems': 'Sistemas de Arquivos',
@@ -158,14 +160,22 @@ const ProductsPageEnhanced = () => {
       'IDE Extensions': 'Extensões IDE'
     };
     
-    return mcpItems.map(item => ({
-      ...item,
-      name: translations[item.name] || item.name,
-      description: translations[item.description] || item.description,
-      shortDescription: translations[item.shortDescription] || translations[item.description] || item.shortDescription,
-      category: translations[item.category] || item.category,
-      categories: item.categories?.map(cat => translations[cat] || cat) || item.categories
-    }));
+    // Only apply translations to MCP items (not database products)
+    return mcpItems.map(item => {
+      // Skip translation for database products - they come pre-translated from API
+      if (item.type === 'custom-product' || item.product_type) {
+        return item;
+      }
+      
+      return {
+        ...item,
+        name: translations[item.name] || item.name,
+        description: translations[item.description] || item.description,
+        shortDescription: translations[item.shortDescription] || translations[item.description] || item.shortDescription,
+        category: translations[item.category] || item.category,
+        categories: item.categories?.map(cat => translations[cat] || cat) || item.categories
+      };
+    });
   };
 
   // Function to fetch MCP unified data for integration
@@ -222,23 +232,37 @@ const ProductsPageEnhanced = () => {
       // Only process dbProducts if they exist and aren't loading
       if (!dbLoading && dbProducts && dbProducts.length > 0) {
         // Format database products to match MCP data format
-        formattedDbProducts = dbProducts.map(product => ({
-          ...product,
-          id: String(product.id),
-          type: 'custom-product',
-          stars: product.stars_numeric || 0,
-          shortDescription: product.description 
-            ? product.description.substring(0, 150) + (product.description.length > 150 ? '...' : '') 
-            : 'No description available.',
-          longDescription: product.description || 'No detailed description available.',
-          categories: product.category ? [product.category] : ['Products'],
-          name: product.name || 'Unnamed Product',
-          image_url: product.image_url || '/assets/news-images/fallback.jpg',
-          local_image_path: product.image_url || '/assets/news-images/fallback.jpg',
-          price: product.price || 0,
-          keyFeatures: [],
-          useCases: []
-        }));
+        formattedDbProducts = dbProducts.map(product => {
+          // Check if Portuguese description is a placeholder
+          const isPlaceholderPt = product.description_pt && (
+            product.description_pt.includes('Este servidor MCP foi desenvolvido para integração com Claude AI') ||
+            product.description_pt.includes('Este cliente MCP foi desenvolvido para integração com Claude AI') ||
+            product.description_pt.includes('Este servidor MCP oferece funcionalidades avançadas para integração com sistemas Claude')
+          );
+          
+          // Use English description if Portuguese is a placeholder
+          const displayDescription = isPlaceholderPt 
+            ? (product.description_en || product.description)
+            : (product.description || product.description_en);
+          
+          return {
+            ...product,
+            id: String(product.id),
+            type: 'custom-product',
+            stars: product.stars_numeric || 0,
+            shortDescription: displayDescription 
+              ? displayDescription.substring(0, 150) + (displayDescription.length > 150 ? '...' : '') 
+              : 'No description available.',
+            longDescription: displayDescription || 'No detailed description available.',
+            categories: product.category ? [product.category] : ['Products'],
+            name: product.name || 'Unnamed Product',
+            image_url: product.image_url || '/assets/news-images/fallback.jpg',
+            local_image_path: product.image_url || '/assets/news-images/fallback.jpg',
+            price: product.price || 0,
+            keyFeatures: [],
+            useCases: []
+          };
+        });
         console.log(`Processed ${formattedDbProducts.length} database products`);
       } else if (dbLoading) {
         console.log("Database products still loading, will refresh when ready");
