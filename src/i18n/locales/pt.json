@@ -190,14 +190,14 @@
   },
   "homepage": {
     "hero": {
-      "badge": "O Hub de Recursos Definitivo",
-      "title_prefix": "Potencialize",
+      "badge": "A Plataforma de IA Mais Completa",
+      "title_prefix": "Transforme sua",
       "title_suffix": "com a AchAI",
       "title": "O Futuro da IA Está Aqui",
-      "subtitle": "Descubra, integre e implante soluções de IA de ponta",
-      "description": "Descubra, compare e conecte-se com soluções premium da AchAI para aprimorar seus fluxos de trabalho de IA e aumentar a produtividade.",
-      "cta_primary": "Navegar Soluções",
-      "cta_secondary": "Saiba Mais sobre AchAI",
+      "subtitle": "Encontre, integre e implemente as melhores soluções de IA do mercado",
+      "description": "Explore e conecte-se com as melhores ferramentas de IA para turbinar seus projetos e multiplicar sua produtividade.",
+      "cta_primary": "Explorar Soluções",
+      "cta_secondary": "Conhecer a AchAI",
       "stats": {
         "servers": "{{count}}+ Servidores MCP",
         "users": "{{count}}+ Usuários Ativos",
@@ -210,9 +210,9 @@
       "scroll_to_explore": "Role para explorar"
     },
     "featured": {
-      "title": "Explore Todos os Tipos de Soluções de IA",
-      "subtitle": "Ferramentas e servidores de IA selecionados para máximo impacto",
-      "description": "De ferramentas prontas para uso a servidores MCP, clientes e agentes de IA autônomos - encontre a solução perfeita para suas necessidades",
+      "title": "Descubra o Melhor da IA em um Só Lugar",
+      "subtitle": "As melhores ferramentas de IA selecionadas especialmente para você",
+      "description": "Desde soluções prontas para usar até servidores MCP avançados, clientes e agentes autônomos - tudo que você precisa para levar seus projetos ao próximo nível",
       "view_all": "Ver Todas as Soluções",
       "view_all_short": "Ver Tudo"
     },
@@ -226,11 +226,11 @@
       "subtitle": "Descubra como as soluções AchAI transformaram fluxos de trabalho mundialmente"
     },
     "cta": {
-      "title": "Pronto para Transformar Seu Fluxo de Trabalho de IA?",
-      "description": "Junte-se a milhares de desenvolvedores e empresas que já usam soluções AchAI.",
-      "button": "Comece Hoje",
-      "homepage_title": "Pronto para turbinar seus fluxos de trabalho de IA?",
-      "homepage_description": "Descubra as soluções AchAI e desbloqueie todo o potencial da sua experiência com Claude."
+      "title": "Pronto para Revolucionar seu Trabalho com IA?",
+      "description": "Faça parte da comunidade de milhares de desenvolvedores e empresas que já transformaram seus projetos com a AchAI.",
+      "button": "Começar Agora",
+      "homepage_title": "Pronto para dar um upgrade nos seus projetos?",
+      "homepage_description": "Descubra as melhores soluções da AchAI e libere todo o poder da sua experiência com Claude."
     }
   },
   "about_us": {

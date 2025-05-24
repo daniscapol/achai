@@ -24,7 +24,7 @@ const DynamicHeroSection = ({
   // Words to cycle through - language-aware and memoized
   const cyclingWords = useMemo(() => {
     if (currentLanguage === 'pt') {
-      return ['IA', 'LLMs', 'Claude', 'Soluções de IA', 'Agentes'];
+      return ['Produtividade', 'Criatividade', 'Eficiência', 'Inovação', 'Empresa'];
     }
     return ['AI', 'LLMs', 'Claude', 'Solutions', 'Agents'];
   }, [currentLanguage]);

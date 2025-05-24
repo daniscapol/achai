@@ -58,8 +58,14 @@ class Product {
     console.log('Creating product with data:', JSON.stringify(productData, null, 2));
     
     const {
-      name,
-      description,
+      // Multilingual fields
+      name_en,
+      name_pt,
+      description_en,
+      description_pt,
+      // Legacy fields (for backward compatibility)
+      name = name_en,
+      description = description_en,
       price = 0, // Optional for tech products
       image_url,
       icon_url,
@@ -80,7 +86,7 @@ class Product {
       inventory_count = 0,
       is_featured = false,
       is_active = true,
-      slug = name ? name.toLowerCase().replace(/[^a-z0-9]+/g, '-') : null,
+      slug = (name_en || name) ? (name_en || name).toLowerCase().replace(/[^a-z0-9]+/g, '-') : null,
       stars_numeric = 0
     } = productData;
     
@@ -106,14 +112,16 @@ class Product {
       
       const result = await db.query(
         `INSERT INTO products 
-        (name, description, price, image_url, icon_url, category, categories, sku, 
+        (name, description, name_en, name_pt, description_en, description_pt, 
+        price, image_url, icon_url, category, categories, sku, 
         product_type, github_url, official, docs_url, demo_url, language, license, 
         creator, version, installation_command, tags, inventory_count, 
         is_featured, is_active, slug, stars_numeric, created_at, updated_at) 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, 
-        $16, $17, $18, $19, $20, $21, $22, $23, $24, NOW(), NOW()) 
+        $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, NOW(), NOW()) 
         RETURNING *`,
-        [name, description, price, image_url, icon_url, category, categoriesArray, sku, 
+        [name, description, name_en, name_pt, description_en, description_pt, 
+        price, image_url, icon_url, category, categoriesArray, sku, 
         product_type, github_url, official, docs_url, demo_url, language, license, 
         creator, version, installation_command, tags, inventory_count, 
         is_featured, is_active, slug, stars_numeric]
@@ -139,6 +147,12 @@ class Product {
   static async update(id, productData) {
     // Extract all possible fields from productData
     const {
+      // Multilingual fields
+      name_en,
+      name_pt,
+      description_en,
+      description_pt,
+      // Legacy fields
       name,
       description,
       price,
@@ -193,6 +207,11 @@ class Product {
       // Add all fields if they're defined
       addField('name', name);
       addField('description', description);
+      // Add multilingual fields
+      addField('name_en', name_en);
+      addField('name_pt', name_pt);
+      addField('description_en', description_en);
+      addField('description_pt', description_pt);
       addField('price', price);
       addField('image_url', image_url);
       addField('icon_url', icon_url);

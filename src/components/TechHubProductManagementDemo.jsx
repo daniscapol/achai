@@ -55,8 +55,15 @@ import { Edit, Trash2, Plus, Search, X, FileUp, FileDown, Database, Upload, Gith
 
 // Form validation schema 
 const productSchema = z.object({
-  name: z.string().min(2, { message: "Product name is required" }),
-  description: z.string().min(10, { message: "Description must be at least 10 characters" }),
+  // English fields (required)
+  name_en: z.string().min(2, { message: "English product name is required" }),
+  description_en: z.string().min(10, { message: "English description must be at least 10 characters" }),
+  // Portuguese fields (required)
+  name_pt: z.string().min(2, { message: "Portuguese product name is required" }),
+  description_pt: z.string().min(10, { message: "Portuguese description must be at least 10 characters" }),
+  // Legacy fields for backward compatibility (will be set to English values)
+  name: z.string().optional(),
+  description: z.string().optional(),
   image_url: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal('')),
   github_url: z.string().url({ message: "Please enter a valid GitHub URL" }).optional().or(z.literal('')),
   category: z.string().min(1, { message: "Category is required" }),
@@ -234,16 +241,24 @@ const TechHubProductManagementDemo = () => {
   // Handle add product - save to PostgreSQL database via API
   const handleAddProduct = async (data) => {
     try {
-      // Generate slug from name if not provided
-      const slug = data.slug || data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      // Generate slug from English name if not provided
+      const slug = data.slug || data.name_en.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       
       // Convert comma-separated strings to arrays
       const categories = stringToArray(data.categories);
       const tags = stringToArray(data.tags);
       
-      // Prepare data for submission
+      // Prepare data for submission with multilingual support
       const processedData = {
         ...data,
+        // Set legacy fields to English values for backward compatibility
+        name: data.name_en,
+        description: data.description_en,
+        // Include all multilingual fields
+        name_en: data.name_en,
+        name_pt: data.name_pt,
+        description_en: data.description_en,
+        description_pt: data.description_pt,
         slug,
         categories,
         tags,
@@ -295,16 +310,24 @@ const TechHubProductManagementDemo = () => {
   // Handle edit product - update in PostgreSQL database via API
   const handleEditProduct = async (data) => {
     try {
-      // Generate slug from name if not provided
-      const slug = data.slug || data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      // Generate slug from English name if not provided
+      const slug = data.slug || data.name_en.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       
       // Convert comma-separated strings to arrays
       const categories = stringToArray(data.categories);
       const tags = stringToArray(data.tags);
       
-      // Prepare data for update
+      // Prepare data for update with multilingual support
       const processedData = {
         ...data,
+        // Set legacy fields to English values for backward compatibility
+        name: data.name_en,
+        description: data.description_en,
+        // Include all multilingual fields
+        name_en: data.name_en,
+        name_pt: data.name_pt,
+        description_en: data.description_en,
+        description_pt: data.description_pt,
         slug,
         categories,
         tags,
@@ -508,8 +531,14 @@ const TechHubProductManagementDemo = () => {
     
     // Auto-populate default values based on product type
     let defaultValues = {
-      name: product.name,
-      description: product.description,
+      // Multilingual fields
+      name_en: product.name_en || product.name || '',
+      name_pt: product.name_pt || '',
+      description_en: product.description_en || product.description || '',
+      description_pt: product.description_pt || '',
+      // Legacy fields for backward compatibility
+      name: product.name || product.name_en || '',
+      description: product.description || product.description_en || '',
       image_url: product.image_url || '',
       github_url: product.github_url || '',
       category: product.category,
@@ -1141,63 +1170,119 @@ const TechHubProductManagementDemo = () => {
                     )}
                   />
                   
-                  {/* Main info grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Name */}
+                  {/* English Fields Section */}
+                  <div className="bg-blue-900/20 rounded-lg p-4 border border-blue-700/30 mb-6">
+                    <h3 className="text-lg font-medium text-blue-300 mb-4 flex items-center gap-2">
+                      🇺🇸 English Content
+                    </h3>
+                    
+                    {/* English Name and GitHub URL */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      {/* English Name */}
+                      <FormField
+                        control={addForm.control}
+                        name="name_en"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>English Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Product name in English" {...field} />
+                            </FormControl>
+                            <FormDescription className="form-description text-sm text-zinc-400 mt-1">
+                              The full name of the product in English
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      {/* GitHub URL */}
+                      <FormField
+                        control={addForm.control}
+                        name="github_url"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>GitHub Repository URL</FormLabel>
+                            <FormControl>
+                              <Input placeholder="https://github.com/username/repo" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    
+                    {/* English Description */}
                     <FormField
                       control={addForm.control}
-                      name="name"
+                      name="description_en"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Name</FormLabel>
+                          <FormLabel>English Description</FormLabel>
                           <FormControl>
-                            <Input placeholder="Product name" {...field} />
+                            <Textarea 
+                              placeholder="Detailed product description in English" 
+                              rows={4} 
+                              {...field} 
+                            />
                           </FormControl>
                           <FormDescription className="form-description text-sm text-zinc-400 mt-1">
-                            The full name of the product or tool
+                            A comprehensive description in English that will be displayed on the product page
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
+                  </div>
+
+                  {/* Portuguese Fields Section */}
+                  <div className="bg-green-900/20 rounded-lg p-4 border border-green-700/30 mb-6">
+                    <h3 className="text-lg font-medium text-green-300 mb-4 flex items-center gap-2">
+                      🇧🇷 Portuguese Content
+                    </h3>
                     
-                    {/* GitHub URL */}
+                    {/* Portuguese Name */}
+                    <div className="mb-4">
+                      <FormField
+                        control={addForm.control}
+                        name="name_pt"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Portuguese Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Nome do produto em português" {...field} />
+                            </FormControl>
+                            <FormDescription className="form-description text-sm text-zinc-400 mt-1">
+                              The full name of the product in Portuguese
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    
+                    {/* Portuguese Description */}
                     <FormField
                       control={addForm.control}
-                      name="github_url"
+                      name="description_pt"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>GitHub Repository URL</FormLabel>
+                          <FormLabel>Portuguese Description</FormLabel>
                           <FormControl>
-                            <Input placeholder="https://github.com/username/repo" {...field} />
+                            <Textarea 
+                              placeholder="Descrição detalhada do produto em português" 
+                              rows={4} 
+                              {...field} 
+                            />
                           </FormControl>
+                          <FormDescription className="form-description text-sm text-zinc-400 mt-1">
+                            A comprehensive description in Portuguese that will be displayed on the product page
+                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
-                  
-                  {/* Description */}
-                  <FormField
-                    control={addForm.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <Textarea 
-                            placeholder="Detailed product description" 
-                            rows={4} 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <FormDescription className="form-description text-sm text-zinc-400 mt-1">
-                          A comprehensive description that will be displayed on the product page
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                   
                   {/* Category and GitHub Stars */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1612,57 +1697,107 @@ const TechHubProductManagementDemo = () => {
                     )}
                   />
                   
-                  {/* Main info grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Name */}
-                    <FormField
-                      control={editForm.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Product name" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                  {/* English Fields Section */}
+                  <div className="bg-blue-900/20 rounded-lg p-4 border border-blue-700/30 mb-6">
+                    <h3 className="text-lg font-medium text-blue-300 mb-4 flex items-center gap-2">
+                      🇺🇸 English Content
+                    </h3>
                     
-                    {/* Creator */}
+                    {/* English Name and Creator */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      {/* English Name */}
+                      <FormField
+                        control={editForm.control}
+                        name="name_en"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>English Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Product name in English" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      {/* Creator */}
+                      <FormField
+                        control={editForm.control}
+                        name="creator"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Creator/Author</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Company or individual name" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    
+                    {/* English Description */}
                     <FormField
                       control={editForm.control}
-                      name="creator"
+                      name="description_en"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Creator/Author</FormLabel>
+                          <FormLabel>English Description</FormLabel>
                           <FormControl>
-                            <Input placeholder="Company or individual name" {...field} />
+                            <Textarea 
+                              placeholder="Detailed product description in English" 
+                              rows={4} 
+                              {...field} 
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
-                  
-                  {/* Description */}
-                  <FormField
-                    control={editForm.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <Textarea 
-                            placeholder="Detailed product description" 
-                            rows={4} 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+
+                  {/* Portuguese Fields Section */}
+                  <div className="bg-green-900/20 rounded-lg p-4 border border-green-700/30 mb-6">
+                    <h3 className="text-lg font-medium text-green-300 mb-4 flex items-center gap-2">
+                      🇧🇷 Portuguese Content
+                    </h3>
+                    
+                    {/* Portuguese Name */}
+                    <div className="mb-4">
+                      <FormField
+                        control={editForm.control}
+                        name="name_pt"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Portuguese Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Nome do produto em português" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    
+                    {/* Portuguese Description */}
+                    <FormField
+                      control={editForm.control}
+                      name="description_pt"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Portuguese Description</FormLabel>
+                          <FormControl>
+                            <Textarea 
+                              placeholder="Descrição detalhada do produto em português" 
+                              rows={4} 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                   
                   {/* Category info */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
