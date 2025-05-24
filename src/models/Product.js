@@ -69,8 +69,8 @@ class Product {
       description_en,
       description_pt,
       // Legacy fields (for backward compatibility)
-      name = name_en,
-      description = description_en,
+      name,
+      description,
       price = 0, // Optional for tech products
       image_url,
       icon_url,
@@ -91,20 +91,25 @@ class Product {
       inventory_count = 0,
       is_featured = false,
       is_active = true,
-      slug = (name_en || name) ? (name_en || name).toLowerCase().replace(/[^a-z0-9]+/g, '-') : null,
+      slug,
       stars_numeric = 0
     } = productData;
     
+    // Set legacy fields to English values for backward compatibility
+    const finalName = name || name_en;
+    const finalDescription = description || description_en;
+    const finalSlug = slug || (finalName ? finalName.toLowerCase().replace(/[^a-z0-9]+/g, '-') : null);
+    
     // Validate required fields
-    if (!name && !name_en) {
+    if (!finalName) {
       throw new Error('Product name (English) is required');
     }
     
-    if (!description && !description_en) {
+    if (!finalDescription) {
       throw new Error('Product description (English) is required');
     }
     
-    if (!slug) {
+    if (!finalSlug) {
       throw new Error('Product slug is required');
     }
 
@@ -119,12 +124,13 @@ class Product {
     try {
       console.log('Executing SQL query with required fields including slug');
       console.log('Values being inserted:');
-      console.log('- name:', name);
-      console.log('- description:', description);
+      console.log('- finalName:', finalName);
+      console.log('- finalDescription:', finalDescription);
       console.log('- name_en:', name_en);
       console.log('- name_pt:', name_pt);
       console.log('- description_en:', description_en);
       console.log('- description_pt:', description_pt);
+      console.log('- finalSlug:', finalSlug);
       
       const result = await db.query(
         `INSERT INTO products 
@@ -136,11 +142,11 @@ class Product {
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, 
         $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, NOW(), NOW()) 
         RETURNING *`,
-        [name, description, name_en, name_pt, description_en, description_pt, 
+        [finalName, finalDescription, name_en, name_pt, description_en, description_pt, 
         price, image_url, icon_url, category, categoriesArray, sku, 
         product_type, github_url, official, docs_url, demo_url, language, license, 
         creator, version, installation_command, tags, inventory_count, 
-        is_featured, is_active, slug, stars_numeric]
+        is_featured, is_active, finalSlug, stars_numeric]
       );
       
       console.log('Product created successfully:', result.rows[0]);
@@ -203,8 +209,9 @@ class Product {
     try {
       // Generate slug from name if name is provided but slug isn't
       let slugToUse = slug;
-      if (!slugToUse && name) {
-        slugToUse = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      if (!slugToUse && (name || name_en)) {
+        const nameForSlug = name || name_en;
+        slugToUse = nameForSlug.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       }
       
       // Build the query based on what fields are provided
