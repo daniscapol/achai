@@ -123,65 +123,8 @@ const ProductDetailTech = () => {
   // Load cached product data from localStorage on initial render
   useEffect(() => {
     if (id) {
-      // Check if we should bypass API on first load to prevent flash of error state
-      const bypassApi = localStorage.getItem('bypassProductApi') === 'true';
-      
-      if (bypassApi) {
-        console.log('Bypassing API on first load due to previous errors');
-        setRefreshAttempted(true);
-      }
-      
-      try {
-        // First try direct product storage
-        const localStorageKey = `product_${id}`;
-        const localProduct = localStorage.getItem(localStorageKey);
-        if (localProduct) {
-          console.log('Preloaded product from localStorage');
-          const parsedProduct = JSON.parse(localProduct);
-          // Mark any localStorage loaded data so we know it wasn't freshly fetched
-          parsedProduct.fromLocalStorage = true;
-          setProduct(translateProductData(parsedProduct));
-          setLoading(false);
-          return;
-        }
-        
-        // If that fails, try to find in global data
-        if (window.mcpServersDirectData) {
-          const mcpProduct = window.mcpServersDirectData.find(p => String(p.id) === String(id));
-          if (mcpProduct) {
-            console.log('Found product in preloaded global MCP data on initial render');
-            console.log('GitHub URL in global MCP data:', mcpProduct.github_url || mcpProduct.githubUrl || 'No GitHub URL found');
-            console.log('Docs URL in global MCP data:', mcpProduct.docs_url || mcpProduct.docsUrl || 'No Docs URL found');
-            mcpProduct.fromLocalStorage = true;
-            setProduct(translateProductData(mcpProduct));
-            setLoading(false);
-            
-            // Save to localStorage for future use
-            localStorage.setItem(localStorageKey, JSON.stringify(mcpProduct));
-            return;
-          }
-        }
-        
-        // Try checking sessionStorage too
-        const cachedProducts = sessionStorage.getItem('cached_custom_products');
-        if (cachedProducts) {
-          const parsedProducts = JSON.parse(cachedProducts);
-          const cachedProduct = parsedProducts.find(p => String(p.id) === String(id));
-          
-          if (cachedProduct) {
-            console.log(`Found product in sessionStorage cache on initial render`);
-            cachedProduct.fromLocalStorage = true;
-            setProduct(translateProductData(cachedProduct));
-            setLoading(false);
-            
-            // Also save to localStorage
-            localStorage.setItem(localStorageKey, JSON.stringify(cachedProduct));
-            return;
-          }
-        }
-      } catch (err) {
-        console.warn('Error loading from initial caches:', err);
-      }
+      // API-only mode - no fallbacks
+      console.log(`Loading product ${id} from API only`);
     }
   }, [id]);
 
@@ -306,66 +249,12 @@ const ProductDetailTech = () => {
           }
           clearTimeout(timeoutId);
           
-          // Set a flag to bypass API on future loads to prevent repeated failures
-          localStorage.setItem('bypassProductApi', 'true');
-          
-          // Fall back to cached data if API fails
-          console.log('API failed, trying cached data sources');
+          // NO FALLBACK - API is required
+          console.error('API is required - no fallback data available');
+          setError(`Failed to load product ${id}: ${apiError.message}`);
+          setLoading(false);
+          return;
         }
-        
-        // Fallback 1: try sessionStorage cache
-        try {
-          const cachedProducts = sessionStorage.getItem('cached_custom_products');
-          if (cachedProducts) {
-            const parsedProducts = JSON.parse(cachedProducts);
-            const cachedProduct = parsedProducts.find(p => String(p.id) === String(id));
-            
-            if (cachedProduct) {
-              console.log(`Found product in sessionStorage cache: ${cachedProduct.name}`);
-              setProduct(translateProductData(cachedProduct));
-              fetchRelatedProducts(cachedProduct.category);
-              setLoading(false);
-              return;
-            }
-          }
-        } catch (cacheErr) {
-          console.warn('Error accessing sessionStorage cache:', cacheErr);
-        }
-        
-        // Fallback 2: try global MCP data (contains English but better than nothing)
-        if (window.mcpServersDirectData) {
-          const mcpProduct = window.mcpServersDirectData.find(p => String(p.id) === String(id));
-          if (mcpProduct) {
-            console.log('Found product in global MCP data (fallback):', mcpProduct);
-            setProduct(translateProductData(mcpProduct));
-            fetchRelatedProducts(mcpProduct.category);
-            setLoading(false);
-            setError(null); // Clear any previous error since we found the product
-            return;
-          }
-        }
-        
-        // Final fallback: try localStorage
-        try {
-          const localStorageKey = `product_${id}`;
-          const localProduct = localStorage.getItem(localStorageKey);
-          if (localProduct) {
-            console.log('Found product in localStorage (final fallback)');
-            const parsedProduct = JSON.parse(localProduct);
-            setProduct(translateProductData(parsedProduct));
-            setError(null);
-            fetchRelatedProducts(parsedProduct.category);
-            setLoading(false);
-            return;
-          }
-        } catch (localErr) {
-          console.warn('Error accessing localStorage fallback:', localErr);
-        }
-        
-        // If we reach here, no product was found anywhere
-        console.error('Product not found in any data source');
-        setError('Product not found');
-        setLoading(false);
       } catch (err) {
         console.error('Error fetching product details:', err);
         if (!error) { // Only set error if not already set
@@ -382,124 +271,31 @@ const ProductDetailTech = () => {
   const fetchRelatedProducts = async (category) => {
     if (!category) return;
     
-    // Set a timeout to prevent hanging requests
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
-    
     try {
       console.log(`Fetching related products for category: ${category}`);
       
-      // Try to find related products in MCP data if available
-      if (window.mcpServersDirectData && category) {
-        const relatedFromMcp = window.mcpServersDirectData
-          .filter(p => 
-            p.category === category || 
-            (p.categories && p.categories.includes(category))
-          )
+      // Get related products from API
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 
+        (window.location.hostname === 'localhost' ? 'http://localhost:3001/api' : '/api');
+      
+      const response = await fetch(`${API_BASE_URL}/products/category/${encodeURIComponent(category)}?limit=5`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        const relatedProducts = (data.products || [])
           .filter(p => String(p.id) !== String(id))
           .slice(0, 4);
           
-        if (relatedFromMcp.length > 0) {
-          console.log(`Found ${relatedFromMcp.length} related products in MCP data for category ${category}`);
-          setRelatedProducts(relatedFromMcp);
-          clearTimeout(timeoutId);
-          return;
-        }
-      }
-      
-      // Try to get related products from sessionStorage cache
-      try {
-        const cachedProducts = sessionStorage.getItem('cached_custom_products');
-        if (cachedProducts) {
-          const parsedProducts = JSON.parse(cachedProducts);
-          const relatedFromCache = parsedProducts
-            .filter(p => p.category === category)
-            .filter(p => String(p.id) !== String(id))
-            .slice(0, 4);
-            
-          if (relatedFromCache.length > 0) {
-            console.log(`Found ${relatedFromCache.length} related products in cache for category ${category}`);
-            const translatedRelated = relatedFromCache.map(translateProductData);
-            setRelatedProducts(translatedRelated);
-            clearTimeout(timeoutId);
-            return;
-          }
-        }
-      } catch (cacheErr) {
-        console.warn('Error accessing sessionStorage cache for related products:', cacheErr);
-      }
-      
-      // If not found or we're in the regular interface, fetch from API with timeout protection
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
-      
-      // Skip API call if no API URL is configured (production static mode)
-      if (!API_BASE_URL || API_BASE_URL.trim() === '') {
-        console.log('No API configured for related products - using static data only');
+        console.log(`Found ${relatedProducts.length} related products from API for category ${category}`);
+        setRelatedProducts(relatedProducts);
         return;
+      } else {
+        throw new Error(`API request failed: ${response.status}`);
       }
-      
-      try {
-        const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
-        const response = await fetch(`${API_BASE_URL}/products/category/${category}?limit=4&language=${langParam}`, {
-          signal: controller.signal,
-          headers: { 'Cache-Control': 'no-cache' }
-        });
-        
-        clearTimeout(timeoutId);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        console.log(`Fetched ${data.products?.length || 0} related products from API`);
-        
-        // Filter out the current product and apply translations
-        const filtered = data.products?.filter(p => String(p.id) !== String(id)) || [];
-        const translatedRelated = filtered.map(translateProductData);
-        setRelatedProducts(translatedRelated.slice(0, 4)); // Show at most 4 related products
-      } catch (apiError) {
-        clearTimeout(timeoutId);
-        
-        // Check if it was an abort error
-        if (apiError.name === 'AbortError') {
-          console.warn('Related products API request timed out');
-          // Just log the timeout but don't show error to user for related products
-        } else {
-          console.error('Error fetching related products from API:', apiError);
-        }
-        
-        // Fallback: Create some generic related products
-        const fallbackProducts = [
-          {
-            id: 'fallback-1',
-            name: 'Related Product 1',
-            description: 'Fallback related product',
-            category,
-            type: 'custom-product',
-            price: 79.99,
-            image_url: '/assets/news-images/fallback.jpg'
-          },
-          {
-            id: 'fallback-2',
-            name: 'Related Product 2',
-            description: 'Another related product',
-            category,
-            type: 'custom-product',
-            price: 89.99,
-            image_url: '/assets/news-images/fallback.jpg'
-          }
-        ];
-        
-        // Only set fallback if we have no other related products
-        if (relatedProducts.length === 0) {
-          console.log('Using fallback related products');
-          setRelatedProducts(fallbackProducts);
-        }
-      }
-    } catch (err) {
-      console.error('Error in fetchRelatedProducts:', err);
-      clearTimeout(timeoutId);
+    } catch (error) {
+      console.error('Error fetching related products from API:', error);
+      console.log('Using fallback related products');
+      setRelatedProducts([]);
     }
   };
 

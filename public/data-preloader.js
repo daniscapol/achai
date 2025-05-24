@@ -45,8 +45,8 @@
       return data;
     } catch (e) {
       console.error(`Data Preloader: Error loading data from ${url}:`, e);
-      console.log(`Data Preloader: Using fallback data for ${storageKey}`);
-      return fallbackArray;
+      console.error(`Data Preloader: NO FALLBACK - API is required`);
+      throw new Error(`Failed to load ${storageKey} from API - no fallbacks available`);
     }
   }
   
@@ -111,74 +111,50 @@
    */
   async function initializeAllData() {
     try {
-      // Load server data
-      const serversData = await loadData(
-        '/src/mcp_servers_data.json', 
-        'mcp_servers_data', 
-        [
-          {
-            "id": "server-default-01",
-            "name": "Default MCP Server",
-            "description": "This is a fallback MCP server entry.",
-            "type": "server",
-            "category": "General",
-            "official": true,
-            "stars_numeric": 1000,
-            "tags": ["fallback", "default", "mcp"]
-          }
-        ]
-      );
+      // Determine API base URL based on environment
+      const API_BASE_URL = (typeof window !== 'undefined' && window.location.hostname === 'localhost') 
+        ? 'http://localhost:3001/api' 
+        : '/api';
+      
+      console.log(`Data Preloader: Using API base URL: ${API_BASE_URL}`);
+      
+      // Load all products from API instead of static files
+      const response = await fetch(`${API_BASE_URL}/products?limit=200`);
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status}`);
+      }
+      
+      const apiData = await response.json();
+      const allProducts = apiData.products || [];
+      
+      console.log(`Data Preloader: Loaded ${allProducts.length} products from API`);
+      
+      // Separate products by type
+      const serversData = allProducts.filter(p => p.product_type === 'mcp_server');
+      const clientsData = allProducts.filter(p => p.product_type === 'mcp_client');  
+      const agentsData = allProducts.filter(p => p.product_type === 'ai_agent');
+      
+      // Set global data for backwards compatibility
       window.mcpServersData = serversData;
-      
-      // Also set as direct data for compatibility with components
-      window.mcpServersDirectData = [...serversData];
-      
-      // Load clients data
-      const clientsData = await loadData(
-        '/src/mcp_clients_data.json', 
-        'mcp_clients_data',
-        [
-          {
-            "id": "client-default-01",
-            "name": "Default MCP Client",
-            "description": "This is a fallback MCP client entry.",
-            "type": "client",
-            "category": "General",
-            "official": true,
-            "stars_numeric": 500,
-            "tags": ["fallback", "default", "mcp"]
-          }
-        ]
-      );
       window.mcpClientsData = clientsData;
+      window.aiAgentsData = agentsData;
+      window.mcpServersDirectData = [...serversData, ...clientsData, ...agentsData];
       
-      // Add clients to the direct data array for compatibility
-      if (window.mcpServersDirectData) {
-        window.mcpServersDirectData = [...window.mcpServersDirectData, ...clientsData];
-      }
-      
-      // Load AI agents data if available
-      const aiAgentsData = await loadData(
-        '/src/ai_agents_data.json', 
-        'ai_agents_data',
-        []
-      );
-      window.aiAgentsData = aiAgentsData;
-      
-      // Add AI agents to direct data if available
-      if (aiAgentsData.length > 0 && window.mcpServersDirectData) {
-        window.mcpServersDirectData = [...window.mcpServersDirectData, ...aiAgentsData];
-      }
+      console.log(`Data Preloader: Separated into ${serversData.length} servers, ${clientsData.length} clients, ${agentsData.length} agents`);
       
       // Initialize unified search data
       initializeUnifiedSearchData();
+      
+      // Cache the API data in localStorage for performance
+      localStorage.setItem('api_products_cache', JSON.stringify(allProducts));
+      localStorage.setItem('api_cache_timestamp', Date.now().toString());
       
       // Dispatch event to notify components
       window.dispatchEvent(new CustomEvent('mcp_data_loaded', {
         detail: {
           serversCount: serversData.length,
           clientsCount: clientsData.length,
-          aiAgentsCount: aiAgentsData.length,
+          aiAgentsCount: agentsData.length,
           totalCount: window.unifiedSearchData ? window.unifiedSearchData.length : 0
         }
       }));
