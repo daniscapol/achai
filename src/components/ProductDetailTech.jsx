@@ -153,6 +153,21 @@ const ProductDetailTech = () => {
     }
   }, [id]);
 
+  // Scroll to top when component mounts or id changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  // Force page refresh when language changes on product detail pages
+  useEffect(() => {
+    // Skip the initial render to avoid infinite refresh loop
+    const isInitialRender = !product;
+    if (isInitialRender) return;
+
+    console.log('Language changed to:', currentLanguage, '- refreshing product page');
+    window.location.reload();
+  }, [currentLanguage]);
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       if (!id) return;
