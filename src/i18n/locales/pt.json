@@ -395,8 +395,8 @@
       "tabs": {
         "all": "Todos",
         "products": "Produtos", 
-        "servers": "Servidores",
-        "clients": "Clientes",
+        "servers": "Servidores MCP",
+        "clients": "Clientes MCP",
         "ai_agents": "Agentes IA"
       },
       "type_badges": {
