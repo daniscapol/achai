@@ -73,19 +73,19 @@ const ProductsPageEnhanced = () => {
   const [selectedFilters, setSelectedFilters] = useState(initialState.selectedFilters);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(20);
+  const [itemsPerPage] = useState(50);
   
   // Initialize with database products
   const {
     products: dbProducts,
     loading: dbLoading,
     error: dbError,
-    pagination,
-    changePage,
+    pagination: dbPagination,
+    changePage: changeDbPage,
     changeLimit,
     searchProducts: searchDbProducts,
     filterByCategory: filterDbByCategory
-  } = useProducts();
+  } = useProducts(1, 50);
 
   // Update URL with current filters
   const updateUrl = () => {
@@ -211,6 +211,17 @@ const ProductsPageEnhanced = () => {
     setIsLoading(true);
     
     try {
+      // Check if we should use backend filtering/pagination for database products
+      const hasActiveFilters = selectedFilters.types.length > 0 || 
+                             selectedFilters.categories.length > 0 || 
+                             selectedFilters.ratings.length > 0 ||
+                             selectedFilters.priceRange.min > 0 ||
+                             selectedFilters.priceRange.max < maxPrice;
+      const hasActiveSearch = searchQuery.trim() !== '';
+      const hasActiveTab = activeTab && activeTab !== 'all';
+      
+      // If we have active filters or search, we need to use frontend filtering
+      // Otherwise, we can rely on backend pagination
       // Get MCP data with a timeout to prevent long-running operations
       const fetchMcpDataWithTimeout = async () => {
         const timeoutPromise = new Promise((_, reject) => {
@@ -382,8 +393,24 @@ const ProductsPageEnhanced = () => {
     }
   };
 
-  // Calculate pagination for combined results
-  const calculatePagination = () => {
+  // Determine if we should use backend or frontend pagination
+  const shouldUseBackendPagination = useMemo(() => {
+    // Use backend pagination if we have only database products (no MCP data mixed in)
+    // and no frontend filters applied
+    const hasOnlyDbProducts = searchResults.every(product => product.type === 'custom-product');
+    const hasActiveFilters = selectedFilters.types.length > 0 || 
+                           selectedFilters.categories.length > 0 || 
+                           selectedFilters.ratings.length > 0 ||
+                           selectedFilters.priceRange.min > 0 ||
+                           selectedFilters.priceRange.max < maxPrice;
+    const hasActiveSearch = searchQuery.trim() !== '';
+    const hasActiveTab = activeTab && activeTab !== 'all';
+    
+    return hasOnlyDbProducts && !hasActiveFilters && !hasActiveSearch && !hasActiveTab;
+  }, [searchResults, selectedFilters, searchQuery, activeTab, maxPrice]);
+
+  // Calculate pagination for combined results (frontend pagination)
+  const calculateFrontendPagination = () => {
     const totalItems = searchResults.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -401,22 +428,45 @@ const ProductsPageEnhanced = () => {
     };
   };
 
-  // Handle page change for frontend pagination
-  const handlePageChange = (newPage) => {
-    const paginationInfo = calculatePagination();
-    if (newPage >= 1 && newPage <= paginationInfo.totalPages) {
-      setCurrentPage(newPage);
-      // Scroll to top when page changes
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Get the appropriate pagination info
+  const getPaginationInfo = () => {
+    if (shouldUseBackendPagination && dbPagination) {
+      return {
+        totalItems: dbPagination.total || 0,
+        totalPages: dbPagination.totalPages || 0,
+        currentPage: dbPagination.currentPage || 1,
+        itemsPerPage: dbPagination.limit || 20,
+        currentItems: searchResults, // All results since they're already paginated from backend
+        hasNextPage: dbPagination.currentPage < dbPagination.totalPages,
+        hasPrevPage: dbPagination.currentPage > 1
+      };
+    } else {
+      return calculateFrontendPagination();
     }
+  };
+
+  // Handle page change (either backend or frontend)
+  const handlePageChange = (newPage) => {
+    if (shouldUseBackendPagination) {
+      // Use backend pagination
+      changeDbPage(newPage);
+    } else {
+      // Use frontend pagination
+      const paginationInfo = calculateFrontendPagination();
+      if (newPage >= 1 && newPage <= paginationInfo.totalPages) {
+        setCurrentPage(newPage);
+      }
+    }
+    // Scroll to top when page changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Get paginated results
   const paginatedResults = useMemo(() => {
     if (!searchResults.length) return [];
-    const paginationInfo = calculatePagination();
+    const paginationInfo = getPaginationInfo();
     return paginationInfo.currentItems;
-  }, [searchResults, currentPage, itemsPerPage]);
+  }, [searchResults, currentPage, itemsPerPage, shouldUseBackendPagination, dbPagination]);
   
   // Sort products based on sort option
   const sortProducts = (products) => {
@@ -449,6 +499,13 @@ const ProductsPageEnhanced = () => {
     // Reset to first page when filters change
     setCurrentPage(1);
   }, [dbProducts, activeTab, categoryFilter, searchQuery, sortOption, selectedFilters, currentLanguage]);
+
+  // Reset frontend pagination when switching to backend pagination
+  useEffect(() => {
+    if (shouldUseBackendPagination) {
+      setCurrentPage(1);
+    }
+  }, [shouldUseBackendPagination]);
   
   // Update URL when state changes
   useEffect(() => {
@@ -670,11 +727,11 @@ const ProductsPageEnhanced = () => {
             {searchResults.length > 0 && (
               <p className="text-gray-300 text-sm">
                 {(() => {
-                  const paginationInfo = calculatePagination();
-                  const startItem = (currentPage - 1) * itemsPerPage + 1;
-                  const endItem = Math.min(currentPage * itemsPerPage, searchResults.length);
+                  const paginationInfo = getPaginationInfo();
+                  const startItem = (paginationInfo.currentPage - 1) * paginationInfo.itemsPerPage + 1;
+                  const endItem = Math.min(paginationInfo.currentPage * paginationInfo.itemsPerPage, paginationInfo.totalItems);
                   
-                  return `Showing ${startItem}-${endItem} of ${searchResults.length} products`;
+                  return `Showing ${startItem}-${endItem} of ${paginationInfo.totalItems} products`;
                 })()}
                 {categoryFilter && categoryFilter !== 'all' && (
                   <> {t('products.enhanced.in_category', { category: categoryFilter })}</>
@@ -986,13 +1043,13 @@ const ProductsPageEnhanced = () => {
       
       {/* Pagination */}
       {!isLoading && searchResults.length > 0 && (() => {
-        const paginationInfo = calculatePagination();
+        const paginationInfo = getPaginationInfo();
         return paginationInfo.totalPages > 1;
       })() && (
         <div className="mt-8 flex justify-center">
           <Pagination
-            currentPage={currentPage}
-            totalPages={calculatePagination().totalPages}
+            currentPage={getPaginationInfo().currentPage}
+            totalPages={getPaginationInfo().totalPages}
             onPageChange={handlePageChange}
           />
         </div>

@@ -1840,8 +1840,8 @@ function App() {
                 
                 {/* Language-specific routes */}
                 <Route path="/:lang/products/:id" element={<ProductDetailTech />} />
-                <Route path="/:lang/products" element={<PremiumProductsPage />} />
-                <Route path="/:lang/products-original" element={<OriginalProductsPage />} />
+                <Route path="/:lang/products" element={<OriginalProductsPage />} />
+                <Route path="/:lang/products-original" element={<PremiumProductsPage />} />
                 <Route path="/:lang/product-management" element={<TechHubProductManagementDemo />} />
                 <Route path="/:lang/browse-categories" element={<NewCategoriesPage onNavigateToCategorySearch={navigateToList} />} />
                 <Route path="/:lang/what-is-an-mcp-server" element={<WhatIsAnMcpServerPage />} />
@@ -1878,8 +1878,8 @@ function App() {
                 
                 {/* Legacy routes without language prefix (will redirect) */}
                 <Route path="/products/:id" element={<ProductDetailTech />} />
-                <Route path="/products" element={<PremiumProductsPage />} />
-                <Route path="/products-original" element={<OriginalProductsPage />} />
+                <Route path="/products" element={<OriginalProductsPage />} />
+                <Route path="/products-original" element={<PremiumProductsPage />} />
                 <Route path="/product-management" element={<TechHubProductManagementDemo />} />
                 <Route path="/browse-categories" element={<NewCategoriesPage onNavigateToCategorySearch={navigateToList} />} />
                 <Route path="/what-is-an-mcp-server" element={<WhatIsAnMcpServerPage />} />

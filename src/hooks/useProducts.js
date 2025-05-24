@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_API_BASE_URL ?
   `${import.meta.env.VITE_API_BASE_URL}/products` : 
   'http://localhost:3001/api/products';
 
-const useProducts = (initialPage = 1, initialLimit = 20) => {
+const useProducts = (initialPage = 1, initialLimit = 50) => {
   const { currentLanguage } = useLanguage();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
