@@ -545,25 +545,25 @@ const ProductsPageEnhanced = () => {
     switch (product.type) {
       case 'server':
         return (
-          <Badge className="absolute top-2 right-2" variant="secondary">
+          <Badge className="absolute top-2 right-2 bg-blue-500 hover:bg-blue-600 text-white font-medium shadow-lg border-0">
             {t('products.enhanced.type_badges.server')}
           </Badge>
         );
       case 'client':
         return (
-          <Badge className="absolute top-2 right-2" variant="default">
+          <Badge className="absolute top-2 right-2 bg-green-500 hover:bg-green-600 text-white font-medium shadow-lg border-0">
             {t('products.enhanced.type_badges.client')}
           </Badge>
         );
       case 'custom-product':
         return (
-          <Badge className="absolute top-2 right-2" variant="outline">
+          <Badge className="absolute top-2 right-2 bg-purple-500 hover:bg-purple-600 text-white font-medium shadow-lg border-0">
             {t('products.enhanced.type_badges.product')}
           </Badge>
         );
       case 'ai-agent':
         return (
-          <Badge className="absolute top-2 right-2" variant="destructive">
+          <Badge className="absolute top-2 right-2 bg-orange-500 hover:bg-orange-600 text-white font-medium shadow-lg border-0">
             {t('products.enhanced.type_badges.ai_agent')}
           </Badge>
         );
@@ -789,52 +789,86 @@ const ProductsPageEnhanced = () => {
         </div>
       </div>
       
-      {/* Resource type tabs with icons */}
-      <Tabs 
-        defaultValue="all" 
-        value={activeTab} 
-        onValueChange={handleTabChange}
-        className="mb-6"
-      >
-        <TabsList className="grid grid-cols-4 w-full sm:w-auto bg-zinc-800/80 rounded-xl p-1 shadow-inner">
-          <TabsTrigger 
-            value="all"
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-1.5`}
+      {/* Premium SaaS Resource type tabs */}
+      <div className="mb-8">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <button
+            onClick={() => handleTabChange('all')}
+            className={`group relative px-8 py-4 rounded-xl font-semibold text-base transition-all duration-300 backdrop-blur-sm border ${
+              activeTab === 'all'
+                ? 'bg-purple-600/20 border-purple-500/50 text-purple-300 shadow-lg shadow-purple-500/25'
+                : 'bg-zinc-900/40 border-zinc-700/50 text-gray-400 hover:bg-zinc-800/60 hover:border-zinc-600/60 hover:text-gray-200'
+            }`}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-            </svg>
-            <span>{t('products.enhanced.tabs.all')}</span>
-          </TabsTrigger>
-          <TabsTrigger 
-            value="server"
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-1.5`}
+            <div className="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+              </svg>
+              <span>{t('products.enhanced.tabs.all')}</span>
+            </div>
+            {activeTab === 'all' && (
+              <div className="absolute inset-0 rounded-xl bg-purple-500/10 animate-pulse"></div>
+            )}
+          </button>
+
+          <button
+            onClick={() => handleTabChange('server')}
+            className={`group relative px-8 py-4 rounded-xl font-semibold text-base transition-all duration-300 backdrop-blur-sm border ${
+              activeTab === 'server'
+                ? 'bg-blue-600/20 border-blue-500/50 text-blue-300 shadow-lg shadow-blue-500/25'
+                : 'bg-zinc-900/40 border-zinc-700/50 text-gray-400 hover:bg-zinc-800/60 hover:border-zinc-600/60 hover:text-gray-200'
+            }`}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
-            </svg>
-            <span>{t('products.enhanced.tabs.servers')}</span>
-          </TabsTrigger>
-          <TabsTrigger 
-            value="client"
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-1.5`}
+            <div className="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
+              </svg>
+              <span>{t('products.enhanced.tabs.servers')}</span>
+            </div>
+            {activeTab === 'server' && (
+              <div className="absolute inset-0 rounded-xl bg-blue-500/10 animate-pulse"></div>
+            )}
+          </button>
+
+          <button
+            onClick={() => handleTabChange('client')}
+            className={`group relative px-8 py-4 rounded-xl font-semibold text-base transition-all duration-300 backdrop-blur-sm border ${
+              activeTab === 'client'
+                ? 'bg-green-600/20 border-green-500/50 text-green-300 shadow-lg shadow-green-500/25'
+                : 'bg-zinc-900/40 border-zinc-700/50 text-gray-400 hover:bg-zinc-800/60 hover:border-zinc-600/60 hover:text-gray-200'
+            }`}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            <span>{t('products.enhanced.tabs.clients')}</span>
-          </TabsTrigger>
-          <TabsTrigger 
-            value="ai-agent"
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-1.5`}
+            <div className="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>{t('products.enhanced.tabs.clients')}</span>
+            </div>
+            {activeTab === 'client' && (
+              <div className="absolute inset-0 rounded-xl bg-green-500/10 animate-pulse"></div>
+            )}
+          </button>
+
+          <button
+            onClick={() => handleTabChange('ai-agent')}
+            className={`group relative px-8 py-4 rounded-xl font-semibold text-base transition-all duration-300 backdrop-blur-sm border ${
+              activeTab === 'ai-agent'
+                ? 'bg-orange-600/20 border-orange-500/50 text-orange-300 shadow-lg shadow-orange-500/25'
+                : 'bg-zinc-900/40 border-zinc-700/50 text-gray-400 hover:bg-zinc-800/60 hover:border-zinc-600/60 hover:text-gray-200'
+            }`}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 9.75L15 15m0-5.25L9.75 15M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>{t('products.enhanced.tabs.ai_agents')}</span>
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
+            <div className="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 9.75L15 15m0-5.25L9.75 15M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{t('products.enhanced.tabs.ai_agents')}</span>
+            </div>
+            {activeTab === 'ai-agent' && (
+              <div className="absolute inset-0 rounded-xl bg-orange-500/10 animate-pulse"></div>
+            )}
+          </button>
+        </div>
+      </div>
       
       {/* Premium filters */}
       <PremiumFilter 
@@ -923,18 +957,18 @@ const ProductsPageEnhanced = () => {
                           
                           {/* Featured badge if applicable */}
                           {product.is_featured && (
-                            <Badge className="absolute top-2 left-2" variant="secondary">
-                              {t('products.enhanced.featured')}
+                            <Badge className="absolute top-2 left-2 bg-yellow-500 hover:bg-yellow-600 text-black font-bold shadow-lg border-0 animate-pulse">
+                              ⭐ {t('products.enhanced.featured')}
                             </Badge>
                           )}
                           
                           {/* Thumbnail image section */}
-                          <div className="relative h-44 bg-gradient-to-br from-zinc-800/70 to-zinc-900/70 flex items-center justify-center overflow-hidden">
+                          <div className="relative h-44 bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center overflow-hidden border-b border-zinc-700">
                             {product.image_url || product.local_image_path ? (
                               <img
                                 src={product.local_image_path || product.image_url}
                                 alt={product.name}
-                                className="max-w-[80%] max-h-[80%] object-contain transition-transform duration-700 group-hover:scale-110"
+                                className="max-w-[80%] max-h-[80%] object-contain transition-transform duration-700 group-hover:scale-110 drop-shadow-sm"
                                 onError={(e) => {
                                   e.target.onerror = null;
                                   e.target.src = '/assets/news-images/fallback.jpg';
@@ -949,8 +983,8 @@ const ProductsPageEnhanced = () => {
                               </div>
                             )}
                             
-                            {/* Gradient overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/95 via-zinc-900/70 to-transparent"></div>
+                            {/* Lighter gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/30 via-transparent to-transparent"></div>
                             
                             {/* Product name overlaid on image */}
                             <div className="absolute bottom-0 left-0 right-0 p-3">

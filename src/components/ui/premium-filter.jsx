@@ -267,85 +267,85 @@ const PremiumFilter = ({
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden"
             >
-              <div className="px-4 pb-4 border-t border-zinc-800/70">
+              <div className="px-4 pb-4 border-t border-zinc-700 bg-zinc-900/95 rounded-b-xl">
                 {/* Filter tabs */}
-                <div className="flex border-b border-zinc-800/70 -mx-4 px-4 mb-4">
+                <div className="flex border-b border-zinc-700 -mx-4 px-4 mb-4">
                   <button
-                    className={`px-4 py-3 text-sm font-medium transition-colors relative ${
+                    className={`px-4 py-3 text-sm font-bold transition-colors relative ${
                       activeTab === 'categories' 
                         ? 'text-purple-400' 
-                        : 'text-gray-400 hover:text-gray-300'
+                        : 'text-gray-300 hover:text-white'
                     }`}
                     onClick={() => setActiveTab('categories')}
                   >
                     Categories
                     {activeTab === 'categories' && (
                       <motion.div 
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-400"
                         layoutId="activeTab"
                       />
                     )}
                   </button>
                   <button
-                    className={`px-4 py-3 text-sm font-medium transition-colors relative ${
+                    className={`px-4 py-3 text-sm font-bold transition-colors relative ${
                       activeTab === 'types' 
                         ? 'text-purple-400' 
-                        : 'text-gray-400 hover:text-gray-300'
+                        : 'text-gray-300 hover:text-white'
                     }`}
                     onClick={() => setActiveTab('types')}
                   >
                     Product Types
                     {activeTab === 'types' && (
                       <motion.div 
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-400"
                         layoutId="activeTab"
                       />
                     )}
                   </button>
                   <button
-                    className={`px-4 py-3 text-sm font-medium transition-colors relative ${
+                    className={`px-4 py-3 text-sm font-bold transition-colors relative ${
                       activeTab === 'price' 
                         ? 'text-purple-400' 
-                        : 'text-gray-400 hover:text-gray-300'
+                        : 'text-gray-300 hover:text-white'
                     }`}
                     onClick={() => setActiveTab('price')}
                   >
                     Price
                     {activeTab === 'price' && (
                       <motion.div 
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-400"
                         layoutId="activeTab"
                       />
                     )}
                   </button>
                   <button
-                    className={`px-4 py-3 text-sm font-medium transition-colors relative ${
+                    className={`px-4 py-3 text-sm font-bold transition-colors relative ${
                       activeTab === 'ratings' 
                         ? 'text-purple-400' 
-                        : 'text-gray-400 hover:text-gray-300'
+                        : 'text-gray-300 hover:text-white'
                     }`}
                     onClick={() => setActiveTab('ratings')}
                   >
                     Ratings
                     {activeTab === 'ratings' && (
                       <motion.div 
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-400"
                         layoutId="activeTab"
                       />
                     )}
                   </button>
                   <button
-                    className={`px-4 py-3 text-sm font-medium transition-colors relative ${
+                    className={`px-4 py-3 text-sm font-bold transition-colors relative ${
                       activeTab === 'sort' 
                         ? 'text-purple-400' 
-                        : 'text-gray-400 hover:text-gray-300'
+                        : 'text-gray-300 hover:text-white'
                     }`}
                     onClick={() => setActiveTab('sort')}
                   >
                     Sort
                     {activeTab === 'sort' && (
                       <motion.div 
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-400"
                         layoutId="activeTab"
                       />
                     )}
@@ -367,21 +367,21 @@ const PremiumFilter = ({
                           <Badge
                             key={category}
                             variant="outline"
-                            className={`py-2 px-3 cursor-pointer transition-all duration-300 flex items-center justify-between ${
+                            className={`py-3 px-4 cursor-pointer transition-all duration-300 flex items-center justify-between rounded-lg font-medium ${
                               activeFilters.categories.includes(category)
-                                ? 'bg-purple-950/60 border-purple-500/50 text-purple-300 hover:bg-purple-900/60'
-                                : 'hover:border-zinc-600 hover:bg-zinc-800/70'
+                                ? 'bg-gradient-to-r from-purple-600 to-purple-500 border-purple-400 text-white shadow-lg hover:shadow-purple-500/25'
+                                : 'bg-zinc-800 hover:bg-zinc-700 border-zinc-600 text-gray-200 hover:border-purple-400 shadow-sm'
                             }`}
                             onClick={() => onCategoryChange(category)}
                           >
-                            <span className="truncate mr-2">{category}</span>
+                            <span className="truncate mr-2 text-sm font-medium">{category}</span>
                             {activeFilters.categories.includes(category) && (
-                              <Check className="h-3.5 w-3.5 text-purple-400 flex-shrink-0" />
+                              <Check className="h-4 w-4 text-white flex-shrink-0" />
                             )}
                           </Badge>
                         ))
                       ) : (
-                        <div className="col-span-full text-gray-400 text-center py-6">
+                        <div className="col-span-full text-gray-500 text-center py-6">
                           No categories available
                         </div>
                       )}
@@ -401,29 +401,24 @@ const PremiumFilter = ({
                           <Badge
                             key={type}
                             variant="outline"
-                            className={`py-2 px-3 cursor-pointer transition-all duration-300 flex items-center justify-between ${
+                            className={`py-3 px-4 cursor-pointer transition-all duration-300 flex items-center justify-between rounded-lg font-medium ${
                               activeFilters.types.includes(type)
-                                ? type === 'server' ? 'bg-indigo-950/60 border-indigo-500/50 text-indigo-300 hover:bg-indigo-900/60' : 
-                                  type === 'client' ? 'bg-blue-950/60 border-blue-500/50 text-blue-300 hover:bg-blue-900/60' : 
-                                  type === 'ai-agent' ? 'bg-rose-950/60 border-rose-500/50 text-rose-300 hover:bg-rose-900/60' : 
-                                  'bg-purple-950/60 border-purple-500/50 text-purple-300 hover:bg-purple-900/60'
-                                : 'hover:border-zinc-600 hover:bg-zinc-800/70'
+                                ? type === 'server' ? 'bg-gradient-to-r from-blue-600 to-blue-500 border-blue-400 text-white shadow-lg hover:shadow-blue-500/25' : 
+                                  type === 'client' ? 'bg-gradient-to-r from-green-600 to-green-500 border-green-400 text-white shadow-lg hover:shadow-green-500/25' : 
+                                  type === 'ai-agent' ? 'bg-gradient-to-r from-orange-600 to-orange-500 border-orange-400 text-white shadow-lg hover:shadow-orange-500/25' : 
+                                  'bg-gradient-to-r from-purple-600 to-purple-500 border-purple-400 text-white shadow-lg hover:shadow-purple-500/25'
+                                : 'bg-zinc-800 hover:bg-zinc-700 border-zinc-600 text-gray-200 hover:border-purple-400 shadow-sm'
                             }`}
                             onClick={() => onTypeChange(type)}
                           >
-                            <span className="truncate mr-2">{type === 'custom-product' ? 'Product' : type}</span>
+                            <span className="truncate mr-2 text-sm font-medium">{type === 'custom-product' ? 'Product' : type}</span>
                             {activeFilters.types.includes(type) && (
-                              <Check className={`h-3.5 w-3.5 flex-shrink-0 ${
-                                type === 'server' ? 'text-indigo-400' : 
-                                type === 'client' ? 'text-blue-400' : 
-                                type === 'ai-agent' ? 'text-rose-400' : 
-                                'text-purple-400'
-                              }`} />
+                              <Check className="h-4 w-4 text-white flex-shrink-0" />
                             )}
                           </Badge>
                         ))
                       ) : (
-                        <div className="col-span-full text-gray-400 text-center py-6">
+                        <div className="col-span-full text-gray-500 text-center py-6">
                           No product types available
                         </div>
                       )}
@@ -450,11 +445,11 @@ const PremiumFilter = ({
                         />
                         
                         <div className="flex justify-between items-center mt-2">
-                          <div className="bg-zinc-800 rounded-md px-3 py-1.5 text-white min-w-16 text-center">
+                          <div className="bg-purple-600 rounded-md px-3 py-1.5 text-white min-w-16 text-center font-medium">
                             ${localPriceRange.min}
                           </div>
-                          <div className="text-gray-400 text-sm">to</div>
-                          <div className="bg-zinc-800 rounded-md px-3 py-1.5 text-white min-w-16 text-center">
+                          <div className="text-gray-400 text-sm font-medium">to</div>
+                          <div className="bg-purple-600 rounded-md px-3 py-1.5 text-white min-w-16 text-center font-medium">
                             ${localPriceRange.max}
                           </div>
                         </div>
@@ -463,7 +458,7 @@ const PremiumFilter = ({
                       <div className="flex justify-center gap-3">
                         <Button 
                           variant="outline"
-                          className="bg-zinc-800 border-zinc-700 hover:border-purple-500/50 hover:bg-zinc-700"
+                          className="bg-zinc-800 border-zinc-600 text-gray-200 hover:border-purple-500 hover:bg-zinc-700"
                           onClick={() => onPriceRangeChange({ min: 0, max: maxPrice })}
                         >
                           Reset
@@ -492,25 +487,29 @@ const PremiumFilter = ({
                           variant="outline"
                           className={`py-2 px-3 cursor-pointer transition-all duration-300 ${
                             activeFilters.ratings.includes(rating)
-                              ? 'bg-amber-950/60 border-amber-500/50 text-amber-300 hover:bg-amber-900/60'
-                              : 'hover:border-zinc-600 hover:bg-zinc-800/70'
+                              ? 'bg-gradient-to-r from-amber-500 to-yellow-500 border-amber-400 text-white shadow-lg hover:shadow-amber-500/25'
+                              : 'bg-zinc-800 hover:bg-zinc-700 border-zinc-600 text-gray-200 hover:border-amber-400 shadow-sm'
                           }`}
                           onClick={() => onRatingChange(rating)}
                         >
                           <div className="flex items-center">
-                            <span className="mr-1">{rating}+</span>
+                            <span className="mr-1 font-medium">{rating}+</span>
                             {[...Array(5)].map((_, i) => (
                               <Star 
                                 key={i} 
                                 className={`h-3.5 w-3.5 ${
                                   i < rating 
-                                    ? 'text-amber-400 fill-amber-400' 
-                                    : 'text-gray-600'
+                                    ? activeFilters.ratings.includes(rating) 
+                                      ? 'text-white fill-white' 
+                                      : 'text-amber-400 fill-amber-400'
+                                    : activeFilters.ratings.includes(rating)
+                                      ? 'text-amber-200 fill-amber-200'
+                                      : 'text-gray-500'
                                 }`} 
                               />
                             ))}
                             {activeFilters.ratings.includes(rating) && (
-                              <Check className="h-3.5 w-3.5 ml-1.5 text-amber-400" />
+                              <Check className="h-3.5 w-3.5 ml-1.5 text-white" />
                             )}
                           </div>
                         </Badge>
@@ -531,31 +530,35 @@ const PremiumFilter = ({
                           key={option.value}
                           className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 ${
                             sortOption === option.value
-                              ? 'bg-purple-950/60 border border-purple-500/50 text-white'
-                              : 'hover:bg-zinc-800/70 border border-zinc-800'
+                              ? 'bg-gradient-to-r from-purple-600 to-purple-500 border border-purple-400 text-white shadow-lg hover:shadow-purple-500/25'
+                              : 'bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 text-gray-200 hover:border-purple-400 shadow-sm'
                           }`}
                           onClick={() => {
                             onSortChange(option.value);
                             setTimeout(() => setIsOpen(false), 300);
                           }}
                         >
-                          <div className={`mr-3 text-center flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                          <div className={`mr-3 text-center flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-medium ${
                             sortOption === option.value
                               ? 'bg-purple-700 text-white'
-                              : 'bg-zinc-800 text-gray-400'
+                              : 'bg-zinc-700 text-gray-400'
                           }`}>
                             <span>{option.icon}</span>
                           </div>
                           <div className="flex-grow">
-                            <div className="text-sm font-medium">
+                            <div className={`text-sm font-medium ${
+                              sortOption === option.value ? 'text-white' : 'text-gray-200'
+                            }`}>
                               {option.label}
                             </div>
-                            <div className="text-xs text-gray-400">
+                            <div className={`text-xs ${
+                              sortOption === option.value ? 'text-purple-100' : 'text-gray-400'
+                            }`}>
                               {option.description}
                             </div>
                           </div>
                           {sortOption === option.value && (
-                            <Check className="h-5 w-5 text-purple-400 ml-2" />
+                            <Check className="h-5 w-5 text-white ml-2" />
                           )}
                         </div>
                       ))}
