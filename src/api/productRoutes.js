@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Product from '../models/Product.js';
+import { ProductMultilingual } from '../../api/_lib/ProductMultilingual.js';
 import db from '../utils/db.js';
 
 // Create Express router
@@ -33,7 +34,8 @@ router.get('/', async (req, res) => {
 // GET product by ID
 router.get('/id/:id', async (req, res) => {
   try {
-    const product = await Product.getById(req.params.id);
+    const language = req.query.language || 'en';
+    const product = await ProductMultilingual.getById(req.params.id, language);
     
     if (!product) {
       return res.status(404).json({ 

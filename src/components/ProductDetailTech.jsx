@@ -227,7 +227,7 @@ const ProductDetailTech = () => {
         console.log(`Fetching product ${id} from API`);
         try {
           const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
-          const response = await fetch(`http://localhost:3001/api/products/${id}?language=${langParam}`, {
+          const response = await fetch(`http://localhost:3001/api/products/id/${id}?language=${langParam}`, {
             signal: controller.signal,
             headers: { 'Cache-Control': 'no-cache' }
           });
