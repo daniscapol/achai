@@ -188,42 +188,7 @@ const ProductDetailTech = () => {
           }
         }
         
-        // First check: if we're in the search interface or have global MCP data, try to find the product there
-        if (window.mcpServersDirectData) {
-          // Try to find the product in the loaded MCP data
-          const mcpProduct = window.mcpServersDirectData.find(p => String(p.id) === String(id));
-          if (mcpProduct) {
-            console.log('Found product in global MCP data:', mcpProduct);
-            setProduct(translateProductData(mcpProduct));
-            // Still fetch related products if needed
-            fetchRelatedProducts(mcpProduct.category);
-            clearTimeout(timeoutId);
-            setLoading(false);
-            return;
-          }
-        }
-        
-        // Second check: try to use sessionStorage cache
-        try {
-          const cachedProducts = sessionStorage.getItem('cached_custom_products');
-          if (cachedProducts) {
-            const parsedProducts = JSON.parse(cachedProducts);
-            const cachedProduct = parsedProducts.find(p => String(p.id) === String(id));
-            
-            if (cachedProduct) {
-              console.log(`Found product in sessionStorage cache: ${cachedProduct.name}`);
-              setProduct(translateProductData(cachedProduct));
-              fetchRelatedProducts(cachedProduct.category);
-              clearTimeout(timeoutId);
-              setLoading(false);
-              return;
-            }
-          }
-        } catch (cacheErr) {
-          console.warn('Error accessing sessionStorage cache:', cacheErr);
-        }
-        
-        // Final attempt: fetch from API with timeout protection
+        // First priority: fetch from API to get latest database translations
         console.log(`Fetching product ${id} from API`);
         try {
           const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
@@ -267,6 +232,8 @@ const ProductDetailTech = () => {
           }
           
           fetchRelatedProducts(data.category);
+          setLoading(false);
+          return;
         } catch (apiError) {
           // Check if it was an abort error
           if (apiError.name === 'AbortError') {
@@ -278,32 +245,62 @@ const ProductDetailTech = () => {
           }
           clearTimeout(timeoutId);
           
-          // No longer re-throwing to allow for retries and fallbacks
-          // Mark that we've attempted a refresh if this isn't already a refresh attempt
-          if (!refreshAttempted) {
-            console.log('Setting refreshAttempted flag');
-            setRefreshAttempted(true);
-          }
-          
-          // Mark that the API is failing so future page loads can bypass it immediately
-          localStorage.setItem('bypassProductApi', 'true');
-          
-          // Additional fallback for the refresh case - try to load from localStorage
-          try {
-            const localStorageKey = `product_${id}`;
-            const localProduct = localStorage.getItem(localStorageKey);
-            if (localProduct) {
-              console.log('Found product in localStorage');
-              const parsedProduct = JSON.parse(localProduct);
-              setProduct(translateProductData(parsedProduct));
-              setError(null);
-              fetchRelatedProducts(parsedProduct.category);
+          // Fall back to cached data if API fails
+          console.log('API failed, trying cached data sources');
+        }
+        
+        // Fallback 1: try sessionStorage cache
+        try {
+          const cachedProducts = sessionStorage.getItem('cached_custom_products');
+          if (cachedProducts) {
+            const parsedProducts = JSON.parse(cachedProducts);
+            const cachedProduct = parsedProducts.find(p => String(p.id) === String(id));
+            
+            if (cachedProduct) {
+              console.log(`Found product in sessionStorage cache: ${cachedProduct.name}`);
+              setProduct(translateProductData(cachedProduct));
+              fetchRelatedProducts(cachedProduct.category);
+              setLoading(false);
               return;
             }
-          } catch (localErr) {
-            console.warn('Error accessing localStorage fallback:', localErr);
+          }
+        } catch (cacheErr) {
+          console.warn('Error accessing sessionStorage cache:', cacheErr);
+        }
+        
+        // Fallback 2: try global MCP data (contains English but better than nothing)
+        if (window.mcpServersDirectData) {
+          const mcpProduct = window.mcpServersDirectData.find(p => String(p.id) === String(id));
+          if (mcpProduct) {
+            console.log('Found product in global MCP data (fallback):', mcpProduct);
+            setProduct(translateProductData(mcpProduct));
+            fetchRelatedProducts(mcpProduct.category);
+            setLoading(false);
+            return;
           }
         }
+        
+        // Final fallback: try localStorage
+        try {
+          const localStorageKey = `product_${id}`;
+          const localProduct = localStorage.getItem(localStorageKey);
+          if (localProduct) {
+            console.log('Found product in localStorage (final fallback)');
+            const parsedProduct = JSON.parse(localProduct);
+            setProduct(translateProductData(parsedProduct));
+            setError(null);
+            fetchRelatedProducts(parsedProduct.category);
+            setLoading(false);
+            return;
+          }
+        } catch (localErr) {
+          console.warn('Error accessing localStorage fallback:', localErr);
+        }
+        
+        // If we reach here, no product was found anywhere
+        console.error('Product not found in any data source');
+        setError('Product not found');
+        setLoading(false);
       } catch (err) {
         console.error('Error fetching product details:', err);
         if (!error) { // Only set error if not already set
