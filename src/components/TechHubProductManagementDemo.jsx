@@ -253,6 +253,13 @@ const TechHubProductManagementDemo = () => {
   // Handle add product - save to PostgreSQL database via API
   const handleAddProduct = async (data) => {
     try {
+      console.log('handleAddProduct received data:', data);
+      console.log('Multilingual fields received:');
+      console.log('- name_en:', data.name_en);
+      console.log('- name_pt:', data.name_pt);
+      console.log('- description_en:', data.description_en);
+      console.log('- description_pt:', data.description_pt);
+      
       // Generate slug from English name if not provided
       const slug = data.slug || data.name_en.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       
