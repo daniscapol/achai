@@ -33,6 +33,11 @@ const ProductDetailTech = () => {
   const translateProductData = (productData) => {
     if (!productData || currentLanguage !== 'pt') return productData;
     
+    // Skip translation for database products - they come pre-translated from API
+    if (productData.type === 'custom-product' || productData.product_type || productData.id) {
+      return productData;
+    }
+    
     const translations = {
       // Names
       'Visual Studio Code': 'Visual Studio Code',
