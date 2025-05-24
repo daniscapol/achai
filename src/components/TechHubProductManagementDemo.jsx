@@ -356,7 +356,7 @@ const TechHubProductManagementDemo = () => {
       console.log('Updating product:', processedData);
       
       // Update in database via API
-      const response = await fetch(`${API_BASE_URL}/products/${currentProduct.id}`, {
+      const response = await fetch(`${API_BASE_URL}/products?id=${currentProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

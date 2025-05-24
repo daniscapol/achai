@@ -77,6 +77,23 @@ export default async function handler(req, res) {
       const newProduct = await Product.create(productData);
       res.status(201).json(newProduct);
       
+    } else if (req.method === 'PUT') {
+      // Handle product updates
+      const { id } = req.query;
+      const productData = req.body;
+      
+      if (!id) {
+        return res.status(400).json({ error: 'Product ID is required for updates' });
+      }
+      
+      const updatedProduct = await Product.update(id, productData);
+      
+      if (!updatedProduct) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+      
+      res.status(200).json(updatedProduct);
+      
     } else {
       res.status(405).json({ error: 'Method not allowed' });
     }

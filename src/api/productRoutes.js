@@ -104,7 +104,29 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT update product
+// PUT update product (query parameter format for production compatibility)
+router.put('/', async (req, res) => {
+  try {
+    const productId = req.query.id;
+    
+    if (!productId) {
+      return res.status(400).json({ error: 'Product ID is required in query parameter' });
+    }
+    
+    const product = await Product.update(productId, req.body);
+    
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    
+    res.json(product);
+  } catch (error) {
+    console.error(`Error updating product with ID ${productId}:`, error);
+    res.status(500).json({ error: 'Failed to update product', details: error.message });
+  }
+});
+
+// PUT update product (path parameter format)
 router.put('/:id', async (req, res) => {
   try {
     const product = await Product.update(req.params.id, req.body);
