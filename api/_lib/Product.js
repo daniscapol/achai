@@ -97,13 +97,19 @@ export class Product {
   static async create(productData) {
     try {
       const {
+        // Multilingual fields
+        name_en,
+        name_pt,
+        description_en,
+        description_pt,
+        // Legacy fields (for backward compatibility)
         name,
         description,
         price = 0,
         image_url,
         icon_url,
         category,
-        categories,
+        categories = [],
         sku,
         product_type = 'mcp_server',
         github_url,
@@ -123,22 +129,44 @@ export class Product {
         stars_numeric = 0
       } = productData;
 
+      // Set legacy fields to English values for backward compatibility
+      const finalName = name || name_en;
+      const finalDescription = description || description_en;
+      const finalSlug = slug || (finalName ? finalName.toLowerCase().replace(/[^a-z0-9]+/g, '-') : null);
+      
+      // Validate required fields
+      if (!finalName) {
+        throw new Error('Product name (English) is required');
+      }
+      
+      if (!finalDescription) {
+        throw new Error('Product description (English) is required');
+      }
+      
+      if (!finalSlug) {
+        throw new Error('Product slug is required');
+      }
+
+      // Convert single category to array if categories is empty
+      const categoriesArray = categories.length > 0 ? categories : (category ? [category] : []);
+
       const result = await query(`
         INSERT INTO products (
-          name, description, price, image_url, icon_url, category, categories, 
-          sku, product_type, github_url, official, docs_url, demo_url, language, 
-          license, creator, version, installation_command, tags, inventory_count, 
-          is_featured, is_active, slug, stars_numeric
+          name, description, name_en, name_pt, description_en, description_pt, 
+          price, image_url, icon_url, category, categories, sku, 
+          product_type, github_url, official, docs_url, demo_url, language, license, 
+          creator, version, installation_command, tags, inventory_count, 
+          is_featured, is_active, slug, stars_numeric, created_at, updated_at
         ) VALUES (
           $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, 
-          $16, $17, $18, $19, $20, $21, $22, $23, $24
+          $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, NOW(), NOW()
         ) RETURNING *
       `, [
-        name, description, price, image_url, icon_url, category, 
-        categories || [category], sku, product_type, github_url, official, 
-        docs_url, demo_url, language, license, creator, version, 
-        installation_command, tags, inventory_count, is_featured, is_active, 
-        slug, stars_numeric
+        finalName, finalDescription, name_en, name_pt, description_en, description_pt, 
+        price, image_url, icon_url, category, categoriesArray, sku, 
+        product_type, github_url, official, docs_url, demo_url, language, license, 
+        creator, version, installation_command, tags, inventory_count, 
+        is_featured, is_active, finalSlug, stars_numeric
       ]);
 
       return result.rows[0];
@@ -148,9 +176,15 @@ export class Product {
     }
   }
   
-  static async updateById(id, productData) {
+  static async update(id, productData) {
     try {
       const {
+        // Multilingual fields
+        name_en,
+        name_pt,
+        description_en,
+        description_pt,
+        // Legacy fields
         name,
         description,
         price,
@@ -177,48 +211,82 @@ export class Product {
         stars_numeric
       } = productData;
 
+      // Build the query based on what fields are provided
+      const updates = [];
+      const values = [];
+      let paramCount = 1;
+      
+      // Helper function to add field to updates if defined
+      const addField = (field, value) => {
+        if (value !== undefined) {
+          updates.push(`${field} = $${paramCount++}`);
+          values.push(value);
+        }
+      };
+      
+      // Add all fields if they're defined
+      addField('name', name);
+      addField('description', description);
+      // Add multilingual fields
+      addField('name_en', name_en);
+      addField('name_pt', name_pt);
+      addField('description_en', description_en);
+      addField('description_pt', description_pt);
+      addField('price', price);
+      addField('image_url', image_url);
+      addField('icon_url', icon_url);
+      addField('category', category);
+      addField('sku', sku);
+      addField('product_type', product_type);
+      addField('github_url', github_url);
+      addField('official', official);
+      addField('docs_url', docs_url);
+      addField('demo_url', demo_url);
+      addField('language', language);
+      addField('license', license);
+      addField('creator', creator);
+      addField('version', version);
+      addField('installation_command', installation_command);
+      addField('inventory_count', inventory_count);
+      addField('is_featured', is_featured);
+      addField('is_active', is_active);
+      addField('slug', slug);
+      addField('stars_numeric', stars_numeric);
+      
+      // Handle arrays separately with type casting
+      if (categories !== undefined) {
+        updates.push(`categories = $${paramCount++}`);
+        values.push(categories);
+      }
+      
+      if (tags !== undefined) {
+        updates.push(`tags = $${paramCount++}`);
+        values.push(tags);
+      }
+      
+      // Add updated_at timestamp
+      updates.push(`updated_at = NOW()`);
+      
+      // Add ID to values array as the last parameter
+      values.push(id);
+      
       const result = await query(`
-        UPDATE products SET
-          name = COALESCE($1, name),
-          description = COALESCE($2, description),
-          price = COALESCE($3, price),
-          image_url = COALESCE($4, image_url),
-          icon_url = COALESCE($5, icon_url),
-          category = COALESCE($6, category),
-          categories = COALESCE($7, categories),
-          sku = COALESCE($8, sku),
-          product_type = COALESCE($9, product_type),
-          github_url = COALESCE($10, github_url),
-          official = COALESCE($11, official),
-          docs_url = COALESCE($12, docs_url),
-          demo_url = COALESCE($13, demo_url),
-          language = COALESCE($14, language),
-          license = COALESCE($15, license),
-          creator = COALESCE($16, creator),
-          version = COALESCE($17, version),
-          installation_command = COALESCE($18, installation_command),
-          tags = COALESCE($19, tags),
-          inventory_count = COALESCE($20, inventory_count),
-          is_featured = COALESCE($21, is_featured),
-          is_active = COALESCE($22, is_active),
-          slug = COALESCE($23, slug),
-          stars_numeric = COALESCE($24, stars_numeric),
-          updated_at = CURRENT_TIMESTAMP
-        WHERE id = $25 AND is_active = TRUE
+        UPDATE products 
+        SET ${updates.join(', ')}
+        WHERE id = $${paramCount} 
         RETURNING *
-      `, [
-        name, description, price, image_url, icon_url, category,
-        categories, sku, product_type, github_url, official,
-        docs_url, demo_url, language, license, creator, version,
-        installation_command, tags, inventory_count, is_featured,
-        is_active, slug, stars_numeric, id
-      ]);
-
+      `, values);
+      
       return result.rows[0] || null;
     } catch (error) {
-      console.error('Error in Product.updateById:', error);
+      console.error('Error in Product.update:', error);
       throw error;
     }
+  }
+
+  static async updateById(id, productData) {
+    // Delegate to the new update method for backward compatibility
+    return this.update(id, productData);
   }
   
   static async deleteById(id) {

@@ -73,7 +73,9 @@
       "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"handleEditProduct\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 25 -B 2)",
       "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"handleEditProduct\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 50 -B 2)",
       "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"handleAddProduct\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 30 -B 2)",
-      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"handleAddProduct\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 50 -B 2)"
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"handleAddProduct\" /home/pumba/websiteloco/good/src/components/TechHubProductManagementDemo.jsx -A 50 -B 2)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"static async update\" /home/pumba/websiteloco/good/api/_lib/Product.js)",
+      "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"updateById\" /home/pumba/websiteloco/good/api/_lib/Product.js -A 30 -B 2)"
     ],
     "deny": []
   }
