@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -29,17 +29,28 @@ const ProductDetailTech = () => {
   const [reviews, setReviews] = useState([]);
   const [refreshAttempted, setRefreshAttempted] = useState(false);
 
-  // Translation function for MCP data
-  const translateProductData = (productData) => {
+  // Translation function for MCP data (memoized to avoid dependency issues)
+  const translateProductData = useCallback((productData) => {
     if (!productData || currentLanguage !== 'pt') return productData;
     
-    // Skip translation for database products - they come pre-translated from API
-    if (productData.type === 'custom-product' || productData.product_type || productData.id) {
-      return productData;
+    // For database products, check if we have Portuguese fields available
+    // If not, or if we're in static mode, apply manual translations
+    const hasPortugueseFromDb = productData.name_pt && productData.description_pt && 
+                                !productData.description_pt.includes('Este servidor MCP foi desenvolvido');
+    
+    if (hasPortugueseFromDb) {
+      // Use database Portuguese translations
+      return {
+        ...productData,
+        name: productData.name_pt || productData.name,
+        description: productData.description_pt || productData.description,
+        shortDescription: productData.description_pt || productData.shortDescription,
+        longDescription: productData.description_pt || productData.longDescription
+      };
     }
     
     const translations = {
-      // Names
+      // Common Names
       'Visual Studio Code': 'Visual Studio Code',
       'Cursor': 'Cursor',
       'FileStash': 'FileStash',
@@ -48,11 +59,28 @@ const ProductDetailTech = () => {
       'Claude CLI': 'Claude CLI',
       'GitHub': 'GitHub',
       'PostgreSQL MCP Server': 'Servidor MCP PostgreSQL',
+      'GitHub MCP Server': 'Servidor MCP GitHub',
       'MCP CLI Client': 'Cliente MCP CLI',
       'Claude Desktop': 'Claude Desktop',
       'VSCode MCP Extension': 'Extensão MCP VSCode',
+      'Slack MCP Server': 'Servidor MCP Slack',
+      'Discord MCP Server': 'Servidor MCP Discord',
+      'Google Drive MCP Server': 'Servidor MCP Google Drive',
+      'Notion MCP Server': 'Servidor MCP Notion',
+      'Airtable MCP Server': 'Servidor MCP Airtable',
+      'SQLite MCP Server': 'Servidor MCP SQLite',
+      'MySQL MCP Server': 'Servidor MCP MySQL',
       
-      // Descriptions
+      // Common Descriptions  
+      'Connect to PostgreSQL databases through MCP': 'Conecte-se a bancos de dados PostgreSQL através do MCP',
+      'Interact with GitHub repositories, issues, and PRs through MCP': 'Interaja com repositórios GitHub, issues e PRs através do MCP',
+      'Access Slack workspaces and channels through MCP': 'Acesse workspaces e canais do Slack através do MCP',
+      'Connect to Discord servers and channels through MCP': 'Conecte-se a servidores e canais do Discord através do MCP',
+      'Access Google Drive files and folders through MCP': 'Acesse arquivos e pastas do Google Drive através do MCP',
+      'Interact with Notion databases and pages through MCP': 'Interaja com bancos de dados e páginas do Notion através do MCP',
+      'Connect to Airtable bases and tables through MCP': 'Conecte-se a bases e tabelas do Airtable através do MCP',
+      'Access SQLite databases through MCP': 'Acesse bancos de dados SQLite através do MCP',
+      'Connect to MySQL databases through MCP': 'Conecte-se a bancos de dados MySQL através do MCP',
       'Popular code editor with MCP integration for AI-powered development assistance.': 'Editor de código popular com integração MCP para assistência de desenvolvimento com IA.',
       'AI-powered code editor with MCP integration for advanced code completion and editing.': 'Editor de código alimentado por IA com integração MCP para autocompletar e edição avançada.',
       'Remote Storage Access service that supports SFTP, S3, FTP, SMB, NFS, WebDAV, GIT, FTPS, gcloud, azure blob, sharepoint, and more through a unified MCP interface.': 'Serviço de acesso a armazenamento remoto que suporta SFTP, S3, FTP, SMB, NFS, WebDAV, GIT, FTPS, gcloud, azure blob, sharepoint e mais através de uma interface MCP unificada.',
@@ -72,7 +100,11 @@ const ProductDetailTech = () => {
       'Version Control': 'Controle de Versão',
       'CLI': 'CLI',
       'Desktop Applications': 'Aplicações Desktop',
-      'IDE Extensions': 'Extensões IDE'
+      'IDE Extensions': 'Extensões IDE',
+      'Databases': 'Bancos de Dados',
+      'Communication': 'Comunicação',
+      'Cloud Storage': 'Armazenamento em Nuvem',
+      'Productivity': 'Produtividade'
     };
     
     return {
@@ -84,7 +116,7 @@ const ProductDetailTech = () => {
       category: translations[productData.category] || productData.category,
       categories: productData.categories?.map(cat => translations[cat] || cat) || productData.categories
     };
-  };
+  }, [currentLanguage]);
 
   // No need for navigation fix with path-based routing
 
@@ -158,15 +190,22 @@ const ProductDetailTech = () => {
     window.scrollTo(0, 0);
   }, [id]);
 
-  // Force page refresh when language changes on product detail pages
+  // Handle language changes by re-translating current product data
   useEffect(() => {
-    // Skip the initial render to avoid infinite refresh loop
-    const isInitialRender = !product;
-    if (isInitialRender) return;
+    // Only re-translate if we have a product and the language actually changed
+    if (!product) return;
 
-    console.log('Language changed to:', currentLanguage, '- refreshing product page');
-    window.location.reload();
-  }, [currentLanguage]);
+    console.log('Language changed to:', currentLanguage, '- re-translating product data');
+    
+    // Re-translate the current product data
+    setProduct(prevProduct => {
+      // Store the original if not already stored
+      const originalData = prevProduct.originalData || prevProduct;
+      const translatedData = translateProductData(originalData);
+      translatedData.originalData = originalData;
+      return translatedData;
+    });
+  }, [currentLanguage, translateProductData]);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
