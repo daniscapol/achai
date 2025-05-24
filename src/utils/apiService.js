@@ -3,8 +3,9 @@
  * Handles product data fetching
  */
 
-// API base URL - defaults to localhost in development, can be empty in production
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+// API base URL - automatically detects environment
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 
+  (typeof window !== 'undefined' && window.location.hostname === 'localhost' ? 'http://localhost:3001/api' : '/api');
 
 /**
  * Generic fetch helper with error handling

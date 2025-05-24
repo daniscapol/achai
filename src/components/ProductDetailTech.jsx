@@ -243,7 +243,8 @@ const ProductDetailTech = () => {
         }
         
         // First priority: fetch from API to get latest database translations
-        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 
+          (window.location.hostname === 'localhost' ? 'http://localhost:3001/api' : '/api');
         
         // Skip API call if no API URL is configured (production static mode)
         if (!API_BASE_URL || API_BASE_URL.trim() === '') {
