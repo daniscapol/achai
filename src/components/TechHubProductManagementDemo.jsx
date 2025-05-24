@@ -123,6 +123,11 @@ const TechHubProductManagementDemo = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);  // Increased from 10 to 20
   const [totalProducts, setTotalProducts] = useState(0);
+  
+  // State for filters (moved up to be used in API calls)
+  const [categoryFilter, setCategoryFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [productTypeFilter, setProductTypeFilter] = useState('all');
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -193,13 +198,47 @@ const TechHubProductManagementDemo = () => {
     }
   });
 
-  // Load products from the PostgreSQL database via API with pagination
+  // Load products from the PostgreSQL database via API with pagination and filters
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
       try {
-        // Fetch products from API with pagination
-        const response = await fetch(`${API_BASE_URL}/products?page=${currentPage}&limit=${itemsPerPage}`);
+        // Build query parameters with search and filters
+        const params = new URLSearchParams({
+          page: currentPage.toString(),
+          limit: itemsPerPage.toString()
+        });
+        
+        // Add search term if provided
+        if (searchTerm.trim()) {
+          params.append('search', searchTerm.trim());
+        }
+        
+        // Add category filter if provided
+        if (categoryFilter) {
+          params.append('category', categoryFilter);
+        }
+        
+        // Add product type filter if provided
+        if (productTypeFilter !== 'all') {
+          params.append('type', productTypeFilter);
+        }
+        
+        // Add status filter if provided
+        if (statusFilter !== 'all') {
+          if (statusFilter === 'active') {
+            params.append('is_active', 'true');
+          } else if (statusFilter === 'inactive') {
+            params.append('is_active', 'false');
+          } else if (statusFilter === 'featured') {
+            params.append('is_featured', 'true');
+          } else if (statusFilter === 'official') {
+            params.append('official', 'true');
+          }
+        }
+        
+        // Fetch products from API with pagination and filters
+        const response = await fetch(`${API_BASE_URL}/products?${params.toString()}`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -236,7 +275,7 @@ const TechHubProductManagementDemo = () => {
     };
     
     loadProducts();
-  }, [currentPage, itemsPerPage, toast]);
+  }, [currentPage, itemsPerPage, searchTerm, categoryFilter, productTypeFilter, statusFilter, toast]);
 
   // Helper to convert comma-separated string to array
   const stringToArray = (str) => {
@@ -662,67 +701,32 @@ const TechHubProductManagementDemo = () => {
     setCurrentPage(1); // Reset to first page when changing items per page
   };
 
-  // State for filters
-  const [categoryFilter, setCategoryFilter] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [productTypeFilter, setProductTypeFilter] = useState('all');
-  
-  // Get unique categories for filter dropdown
+  // Handle filter changes (reset to page 1 when filters change)
+  const handleSearchChange = (value) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
+
+  const handleCategoryFilterChange = (value) => {
+    setCategoryFilter(value);
+    setCurrentPage(1);
+  };
+
+  const handleStatusFilterChange = (value) => {
+    setStatusFilter(value);
+    setCurrentPage(1);
+  };
+
+  const handleProductTypeFilterChange = (value) => {
+    setProductTypeFilter(value);
+    setCurrentPage(1);
+  };
+
+  // Get unique categories for filter dropdown (from current products)
   const uniqueCategories = [...new Set(products.map(product => product.category))].filter(Boolean);
 
-  // Apply all filters
-  const applyFilters = () => {
-    let filtered = [...products];
-    
-    // Apply search filter
-    if (searchTerm) {
-      filtered = filtered.filter(product => 
-        product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.product_type?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    
-    // Apply category filter
-    if (categoryFilter) {
-      filtered = filtered.filter(product => 
-        product.category?.toLowerCase() === categoryFilter.toLowerCase()
-      );
-    }
-    
-    // Apply status filter
-    if (statusFilter !== 'all') {
-      if (statusFilter === 'active') {
-        filtered = filtered.filter(product => product.is_active);
-      } else if (statusFilter === 'inactive') {
-        filtered = filtered.filter(product => !product.is_active);
-      } else if (statusFilter === 'featured') {
-        filtered = filtered.filter(product => product.is_featured);
-      } else if (statusFilter === 'official') {
-        filtered = filtered.filter(product => product.official);
-      }
-    }
-    
-    // Apply product type filter
-    if (productTypeFilter !== 'all') {
-      filtered = filtered.filter(product => 
-        product.product_type === productTypeFilter
-      );
-    }
-    
-    return filtered;
-  };
-  
-  // Get filtered products
-  const filteredProducts = applyFilters();
-  
-  // Calculate pagination values
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  
-  // Calculate total pages based on filtered products and items per page
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  // Calculate total pages based on server-side pagination
+  const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
   return (
     <div className="container mx-auto px-4 py-8 bg-zinc-900 text-gray-100">
@@ -756,12 +760,12 @@ const TechHubProductManagementDemo = () => {
               type="text"
               placeholder="Search products by name, description, category..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => handleSearchChange(e.target.value)}
               className="pl-10 pr-10 bg-zinc-800 border-zinc-700 text-white placeholder:text-gray-500"
             />
             {searchTerm && (
               <button 
-                onClick={() => setSearchTerm('')}
+                onClick={() => handleSearchChange('')}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200"
               >
                 <X className="h-4 w-4" />
@@ -772,7 +776,7 @@ const TechHubProductManagementDemo = () => {
           {/* Product Type filter */}
           <div>
             <label className="block text-sm font-medium text-gray-400 mb-1">Product Type</label>
-            <Select value={productTypeFilter} onValueChange={setProductTypeFilter}>
+            <Select value={productTypeFilter} onValueChange={handleProductTypeFilterChange}>
               <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
                 <div className="flex items-center gap-2">
                   <Server className="h-4 w-4 text-gray-400" />
@@ -800,7 +804,7 @@ const TechHubProductManagementDemo = () => {
           {/* Status filter */}
           <div>
             <label className="block text-sm font-medium text-gray-400 mb-1">Status</label>
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <Select value={statusFilter} onValueChange={handleStatusFilterChange}>
               <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
                 <SelectValue placeholder="All Statuses" />
               </SelectTrigger>
@@ -820,7 +824,7 @@ const TechHubProductManagementDemo = () => {
           {/* Category filter */}
           <div>
             <label className="block text-sm font-medium text-gray-400 mb-1">Category</label>
-            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+            <Select value={categoryFilter} onValueChange={handleCategoryFilterChange}>
               <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
@@ -870,7 +874,7 @@ const TechHubProductManagementDemo = () => {
         {/* Pagination and results info */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-4 border-t border-zinc-800">
           <div className="text-sm text-gray-400 mb-3 md:mb-0">
-            Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredProducts.length)} of {filteredProducts.length} products
+            Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, totalProducts)} of {totalProducts} products
           </div>
           
           {totalPages > 1 && (
@@ -905,8 +909,8 @@ const TechHubProductManagementDemo = () => {
               </TableRow>
             </TableHeader>
             <TableBody className="bg-zinc-900/70">
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((product) => (
+              {products.length > 0 ? (
+                products.map((product) => (
                   <TableRow key={product.id} className="border-zinc-700/50 hover:bg-zinc-800/50">
                     <TableCell className="font-medium">
                       <div className="flex items-center gap-3">

@@ -78,7 +78,8 @@
       "Bash(/usr/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/x64-linux/rg \"updateById\" /home/pumba/websiteloco/good/api/_lib/Product.js -A 30 -B 2)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(sudo service:*)"
+      "Bash(sudo service:*)",
+      "Bash(wget:*)"
     ],
     "deny": []
   }

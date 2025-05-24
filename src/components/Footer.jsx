@@ -5,7 +5,15 @@ const Footer = () => {
   const { t } = useTranslation();
   // Easter egg state and handler
   const [easterEggActive, setEasterEggActive] = React.useState(false);
+  const [currentEasterEgg, setCurrentEasterEgg] = React.useState(0);
+  
+  const easterEggGifs = [
+    "/assets/easter-eggs/raon_idle.gif",
+    "/assets/easter-eggs/secret_animation.gif"
+  ];
+
   const activateEasterEgg = () => {
+    setCurrentEasterEgg(Math.floor(Math.random() * easterEggGifs.length));
     setEasterEggActive(true);
     setTimeout(() => setEasterEggActive(false), 5000); // Hide after 5 seconds
   };
@@ -219,7 +227,7 @@ const Footer = () => {
             {easterEggActive && (
               <div className="absolute -top-[300px] -right-[200px] w-[200px] h-[200px] z-50 transform scale-0 animate-scale-up pointer-events-none">
                 <img 
-                  src="/assets/easter-eggs/raon_idle.gif" 
+                  src={easterEggGifs[currentEasterEgg]} 
                   alt="" 
                   className="w-full h-full object-contain"
                 />
