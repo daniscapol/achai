@@ -28,6 +28,27 @@ const FeaturedSection = ({
     }
     
     const translations = {
+      // Generic patterns
+      'Connect to': 'Conecte-se a',
+      'Interact with': 'Interaja com',
+      'Access': 'Acesse',
+      'Manage': 'Gerencie',
+      'Control': 'Controle',
+      'through MCP': 'através do MCP',
+      'via MCP': 'via MCP',
+      'with MCP': 'com MCP',
+      'MCP integration': 'integração MCP',
+      'MCP server': 'servidor MCP',
+      'MCP client': 'cliente MCP',
+      'AI agent': 'agente de IA',
+      'autonomous': 'autônomo',
+      'framework': 'framework',
+      
+      // Complete descriptions for fallback
+      'Server for connecting to PostgreSQL databases via MCP': 'Servidor para conectar a bancos de dados PostgreSQL via MCP',
+      'GitHub integration server for MCP': 'Servidor de integração GitHub para MCP',
+      'Web search capabilities through MCP': 'Capacidades de pesquisa web através do MCP',
+      'File system access via MCP': 'Acesso ao sistema de arquivos via MCP',
       // Common Names - MCP Servers
       'PostgreSQL MCP Server': 'Servidor MCP PostgreSQL',
       'GitHub MCP Server': 'Servidor MCP GitHub',
@@ -83,7 +104,7 @@ const FeaturedSection = ({
       'Connect to Azure services through MCP': 'Conecte-se a serviços Azure através do MCP',
       'Integrate with Google Cloud Platform through MCP': 'Integre com Google Cloud Platform através do MCP',
       
-      // AI Agents Descriptions
+      // AI Agents Descriptions (covering all possible descriptions)
       'An autonomous agent for conducting thorough web research on any topic': 'Um agente autônomo para conduzir pesquisas web completas sobre qualquer tópico',
       'An experimental open-source AI agent that autonomously achieves goals': 'Um agente de IA experimental de código aberto que alcança objetivos de forma autônoma',
       'A simple AI agent using task-driven autonomous execution': 'Um agente de IA simples usando execução autônoma orientada por tarefas',
@@ -92,6 +113,9 @@ const FeaturedSection = ({
       'Framework for orchestrating role-playing autonomous AI agents': 'Framework para orquestrar agentes de IA autônomos com papéis definidos',
       'Multi-agent conversation framework with customizable agents': 'Framework de conversação multi-agente com agentes personalizáveis',
       'Minimal implementation of a general AI agent': 'Implementação mínima de um agente de IA geral',
+      'Autonomous Data (Labeling) Agent framework for building AI agents': 'Framework de Agente Autônomo de Dados (Rotulagem) para construir agentes de IA',
+      'Recommender system simulator with 1,000 agents for recommendation tasks': 'Simulador de sistema de recomendação com 1.000 agentes para tarefas de recomendação',
+      'LLM-agnostic platform for agent building and testing with multi-agent support': 'Plataforma agnóstica a LLM para construção e teste de agentes com suporte multi-agente',
       'Command line interface for interacting with MCP servers': 'Interface de linha de comando para interagir com servidores MCP',
       'Official desktop application for Claude with MCP integration': 'Aplicação desktop oficial para Claude com integração MCP',
       'Visual Studio Code extension for MCP integration': 'Extensão do Visual Studio Code para integração MCP',
@@ -128,14 +152,32 @@ const FeaturedSection = ({
       'Cloud Services': 'Serviços em Nuvem'
     };
     
+    // Smart translation with fallback for partial matches
+    const translateText = (text) => {
+      if (!text) return text;
+      
+      // First try exact match
+      if (translations[text]) return translations[text];
+      
+      // Then try partial replacements for common patterns
+      let translatedText = text;
+      Object.keys(translations).forEach(key => {
+        if (key.length > 5 && text.includes(key)) { // Only replace longer phrases to avoid conflicts
+          translatedText = translatedText.replace(new RegExp(key, 'gi'), translations[key]);
+        }
+      });
+      
+      return translatedText;
+    };
+
     return {
       ...productData,
-      name: translations[productData.name] || productData.name,
-      description: translations[productData.description] || productData.description,
-      shortDescription: translations[productData.shortDescription] || translations[productData.description] || productData.shortDescription,
-      longDescription: translations[productData.longDescription] || translations[productData.description] || productData.longDescription,
-      category: translations[productData.category] || productData.category,
-      categories: productData.categories?.map(cat => translations[cat] || cat) || productData.categories
+      name: translateText(productData.name),
+      description: translateText(productData.description),
+      shortDescription: translateText(productData.shortDescription) || translateText(productData.description),
+      longDescription: translateText(productData.longDescription) || translateText(productData.description),
+      category: translateText(productData.category),
+      categories: productData.categories?.map(cat => translateText(cat)) || productData.categories
     };
   }, [currentLanguage]);
   

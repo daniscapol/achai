@@ -6,8 +6,9 @@ import {
 } from './animations';
 // Import AboutUsSection separately to optimize loading
 import AboutUsSection from './animations/AboutUsSection';
-// Import client data
+// Import client and agent data
 import mcpClientsData from '../mcp_clients_data.json';
+import aiAgentsData from '../ai_agents_data.json';
 // Product data comes from window.mcpServersDirectData (same source as ProductDetailTech)
 
 /**
@@ -153,11 +154,19 @@ const ModernHomePage = ({
     };
   });
   
-  // Combine featuredProducts with global products data and clients
+  // Add AI agents data with proper type mapping
+  const agentProducts = aiAgentsData.map(agent => ({
+    ...agent,
+    product_type: 'ai_agent',
+    type: 'agent'
+  }));
+
+  // Combine featuredProducts with global products data, clients, and agents
   const combinedProducts = [
     ...featuredProducts,
     ...globalProducts,
-    ...clientProducts
+    ...clientProducts,
+    ...agentProducts
   ];
   
   // Add category type based on product properties with fallback rules to ensure coverage
