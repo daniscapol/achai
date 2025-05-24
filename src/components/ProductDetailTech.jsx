@@ -151,15 +151,20 @@ const ProductDetailTech = () => {
   }, [currentLanguage, translateProductData]);
 
   useEffect(() => {
+    let isMounted = true; // Track if component is still mounted
+    
     const fetchProductDetails = async () => {
-      if (!id) return;
+      if (!id || !isMounted) return;
       
       setLoading(true);
       setError(null); // Reset error state on each fetch attempt
       
       // Set a timeout to prevent hanging requests
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+      const timeoutId = setTimeout(() => {
+        console.log('API request timeout - aborting');
+        controller.abort();
+      }, 10000); // 10 second timeout
       
       try {
         console.log(`Fetching product details for ID: ${id}`);
@@ -196,9 +201,11 @@ const ProductDetailTech = () => {
         }
         
         console.log(`Fetching product ${id} from API`);
+        const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
+        const apiUrl = `${API_BASE_URL}/products/id/${id}?language=${langParam}`;
+        console.log(`API URL: ${apiUrl}`);
         try {
-          const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
-          const response = await fetch(`${API_BASE_URL}/products/id/${id}?language=${langParam}`, {
+          const response = await fetch(apiUrl, {
             signal: controller.signal,
             headers: { 'Cache-Control': 'no-cache' }
           });
@@ -243,9 +250,9 @@ const ProductDetailTech = () => {
         } catch (apiError) {
           // Check if it was an abort error
           if (apiError.name === 'AbortError') {
-            console.warn('API request timed out');
+            console.warn('API request timed out for URL:', apiUrl);
           } else {
-            console.error('API error:', apiError);
+            console.error('API error for URL:', apiUrl, 'Error:', apiError);
           }
           clearTimeout(timeoutId);
           
@@ -266,6 +273,11 @@ const ProductDetailTech = () => {
     };
 
     fetchProductDetails();
+    
+    // Cleanup function
+    return () => {
+      isMounted = false;
+    };
   }, [id, currentLanguage]);
 
   const fetchRelatedProducts = async (category) => {
