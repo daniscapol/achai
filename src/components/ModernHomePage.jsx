@@ -6,6 +6,8 @@ import {
 } from './animations';
 // Import AboutUsSection separately to optimize loading
 import AboutUsSection from './animations/AboutUsSection';
+// Import client data
+import mcpClientsData from '../mcp_clients_data.json';
 // Product data comes from window.mcpServersDirectData (same source as ProductDetailTech)
 
 /**
@@ -120,10 +122,42 @@ const ModernHomePage = ({
   // Use the same data source as ProductDetailTech for consistency
   const globalProducts = window.mcpServersDirectData || [];
   
-  // Combine featuredProducts with global products data
+  // Add client data with proper type mapping and image URLs
+  const clientProducts = mcpClientsData.map(client => {
+    let imageUrl = null;
+    
+    // Map client names to their logo images
+    const imageMap = {
+      'MCP CLI Client': '/assets/client-logos/mcp-cli-client.png',
+      'Claude Desktop': '/assets/client-logos/claude-desktop.png',
+      'VSCode MCP Extension': '/assets/client-logos/vscode.png',
+      'Continue': '/assets/client-logos/continue.svg',
+      'Cursor': '/assets/client-logos/cursor.png',
+      'Zed': '/assets/client-logos/zed.png',
+      'ChatMCP': '/assets/client-logos/chatmcp.png',
+      'SeekChat': '/assets/client-logos/seekchat.png',
+      'HyperChat': '/assets/client-logos/hyperchat.png',
+      'MindPal': '/assets/client-logos/mindpal.png',
+      'Claude CLI': '/assets/client-logos/claude-cli.png',
+      'Claude SDK': '/assets/client-logos/sdk.png'
+    };
+    
+    imageUrl = imageMap[client.name] || null;
+    
+    return {
+      ...client,
+      product_type: 'mcp_client',
+      type: 'client',
+      image_url: imageUrl,
+      imageUrl: imageUrl
+    };
+  });
+  
+  // Combine featuredProducts with global products data and clients
   const combinedProducts = [
     ...featuredProducts,
-    ...globalProducts
+    ...globalProducts,
+    ...clientProducts
   ];
   
   // Add category type based on product properties with fallback rules to ensure coverage
@@ -219,10 +253,10 @@ const ModernHomePage = ({
     
     // The exact categories we want to display, in order
     const mainCategories = [
-      'ready-to-use',
+      'ai-agent',
+      'mcp-server',
       'mcp-client',
-      'mcp-server', 
-      'ai-agent'
+      'ready-to-use'
     ];
     
     // Result will hold exactly 3 products from each category

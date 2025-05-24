@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -19,6 +19,125 @@ const FeaturedSection = ({
   const { currentLanguage } = useLanguage();
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isReady, setIsReady] = useState(false);
+  const [translatedProducts, setTranslatedProducts] = useState([]);
+
+  // Translation function for product data
+  const translateProductData = useCallback((productData) => {
+    if (currentLanguage !== 'pt') {
+      return productData;
+    }
+    
+    const translations = {
+      // Common Names - MCP Servers
+      'PostgreSQL MCP Server': 'Servidor MCP PostgreSQL',
+      'GitHub MCP Server': 'Servidor MCP GitHub',
+      'Web Search MCP Server': 'Servidor MCP Pesquisa Web',
+      'File System MCP Server': 'Servidor MCP Sistema de Arquivos',
+      'Slack MCP Server': 'Servidor MCP Slack',
+      'Discord MCP Server': 'Servidor MCP Discord',
+      'Google Drive MCP Server': 'Servidor MCP Google Drive',
+      'Notion MCP Server': 'Servidor MCP Notion',
+      'Airtable MCP Server': 'Servidor MCP Airtable',
+      'SQLite MCP Server': 'Servidor MCP SQLite',
+      'MySQL MCP Server': 'Servidor MCP MySQL',
+      'MongoDB MCP Server': 'Servidor MCP MongoDB',
+      'Redis MCP Server': 'Servidor MCP Redis',
+      'Docker MCP Server': 'Servidor MCP Docker',
+      'Kubernetes MCP Server': 'Servidor MCP Kubernetes',
+      'AWS MCP Server': 'Servidor MCP AWS',
+      'Azure MCP Server': 'Servidor MCP Azure',
+      'GCP MCP Server': 'Servidor MCP GCP',
+      
+      // AI Agents
+      'GPT Researcher': 'GPT Pesquisador',
+      'Auto-GPT': 'Auto-GPT',
+      'BabyAGI': 'BabyAGI',
+      'AgentGPT': 'AgentGPT',
+      'LangGraph': 'LangGraph',
+      'CrewAI': 'CrewAI',
+      'AutoGen': 'AutoGen',
+      'SmolAGI': 'SmolAGI',
+      
+      // MCP Clients
+      'MCP CLI Client': 'Cliente MCP CLI',
+      'Claude Desktop': 'Claude Desktop',
+      'VSCode MCP Extension': 'Extensão MCP VSCode',
+      
+      // Common Descriptions - MCP Servers
+      'Connect to PostgreSQL databases through MCP': 'Conecte-se a bancos de dados PostgreSQL através do MCP',
+      'Interact with GitHub repositories, issues, and PRs through MCP': 'Interaja com repositórios GitHub, issues e PRs através do MCP',
+      'Perform web searches through MCP': 'Realize pesquisas na web através do MCP',
+      'Access file system operations through MCP': 'Acesse operações do sistema de arquivos através do MCP',
+      'Access Slack workspaces and channels through MCP': 'Acesse workspaces e canais do Slack através do MCP',
+      'Connect to Discord servers and channels through MCP': 'Conecte-se a servidores e canais do Discord através do MCP',
+      'Access Google Drive files and folders through MCP': 'Acesse arquivos e pastas do Google Drive através do MCP',
+      'Interact with Notion databases and pages through MCP': 'Interaja com bancos de dados e páginas do Notion através do MCP',
+      'Connect to Airtable bases and tables through MCP': 'Conecte-se a bases e tabelas do Airtable através do MCP',
+      'Access SQLite databases through MCP': 'Acesse bancos de dados SQLite através do MCP',
+      'Connect to MySQL databases through MCP': 'Conecte-se a bancos de dados MySQL através do MCP',
+      'Connect to MongoDB databases through MCP': 'Conecte-se a bancos de dados MongoDB através do MCP',
+      'Access Redis cache through MCP': 'Acesse cache Redis através do MCP',
+      'Manage Docker containers through MCP': 'Gerencie contêineres Docker através do MCP',
+      'Control Kubernetes clusters through MCP': 'Controle clusters Kubernetes através do MCP',
+      'Access AWS services through MCP': 'Acesse serviços AWS através do MCP',
+      'Connect to Azure services through MCP': 'Conecte-se a serviços Azure através do MCP',
+      'Integrate with Google Cloud Platform through MCP': 'Integre com Google Cloud Platform através do MCP',
+      
+      // AI Agents Descriptions
+      'An autonomous agent for conducting thorough web research on any topic': 'Um agente autônomo para conduzir pesquisas web completas sobre qualquer tópico',
+      'An experimental open-source AI agent that autonomously achieves goals': 'Um agente de IA experimental de código aberto que alcança objetivos de forma autônoma',
+      'A simple AI agent using task-driven autonomous execution': 'Um agente de IA simples usando execução autônoma orientada por tarefas',
+      'Autonomous AI agent that can browse the web and execute tasks': 'Agente de IA autônomo que pode navegar na web e executar tarefas',
+      'Build multi-agent teams with graph-based workflows': 'Construa equipes multi-agente com fluxos de trabalho baseados em grafos',
+      'Framework for orchestrating role-playing autonomous AI agents': 'Framework para orquestrar agentes de IA autônomos com papéis definidos',
+      'Multi-agent conversation framework with customizable agents': 'Framework de conversação multi-agente com agentes personalizáveis',
+      'Minimal implementation of a general AI agent': 'Implementação mínima de um agente de IA geral',
+      'Command line interface for interacting with MCP servers': 'Interface de linha de comando para interagir com servidores MCP',
+      'Official desktop application for Claude with MCP integration': 'Aplicação desktop oficial para Claude com integração MCP',
+      'Visual Studio Code extension for MCP integration': 'Extensão do Visual Studio Code para integração MCP',
+      'A tool that bridges desktop Claude app with the Model Context Protocol (MCP)': 'Uma ferramenta que conecta o aplicativo Claude desktop com o Protocolo de Contexto de Modelo (MCP)',
+      'Popular code editor with MCP integration for AI-powered development assistance.': 'Editor de código popular com integração MCP para assistência de desenvolvimento com IA.',
+      'AI-powered code editor with MCP integration for advanced code completion and editing.': 'Editor de código alimentado por IA com integração MCP para autocompletar e edição avançada.',
+      'AI-first code editor that makes you extraordinarily productive': 'Editor de código com IA que te torna extraordinariamente produtivo',
+      'The editor for tomorrow, today': 'O editor para o amanhã, hoje',
+      'High-performance, multiplayer code editor from the creators of Atom and Tree-sitter': 'Editor de código de alta performance e multiplayer dos criadores do Atom e Tree-sitter',
+      
+      // Categories
+      'Code Editor': 'Editor de Código',
+      'Development Tool': 'Ferramenta de Desenvolvimento',
+      'CLI Tools': 'Ferramentas CLI',
+      'File Systems': 'Sistemas de Arquivos',
+      'Remote Storage': 'Armazenamento Remoto',
+      'Coding Assistant': 'Assistente de Codificação',
+      'CLI Tool': 'Ferramenta CLI',
+      'Terminal': 'Terminal',
+      'Desktop Applications': 'Aplicações Desktop',
+      'Communication': 'Comunicação',
+      'Cloud Storage': 'Armazenamento em Nuvem',
+      'Productivity': 'Produtividade',
+      'Databases': 'Bancos de Dados',
+      'Version Control': 'Controle de Versão',
+      'Web & Search': 'Web e Pesquisa',
+      'Research & Knowledge': 'Pesquisa e Conhecimento',
+      'Autonomous Agents': 'Agentes Autônomos',
+      'Task Management': 'Gerenciamento de Tarefas',
+      'Multi-Agent Systems': 'Sistemas Multi-Agente',
+      'AI Development': 'Desenvolvimento de IA',
+      'IDE Extensions': 'Extensões IDE',
+      'Container Management': 'Gerenciamento de Contêineres',
+      'Cloud Services': 'Serviços em Nuvem'
+    };
+    
+    return {
+      ...productData,
+      name: translations[productData.name] || productData.name,
+      description: translations[productData.description] || productData.description,
+      shortDescription: translations[productData.shortDescription] || translations[productData.description] || productData.shortDescription,
+      longDescription: translations[productData.longDescription] || translations[productData.description] || productData.longDescription,
+      category: translations[productData.category] || productData.category,
+      categories: productData.categories?.map(cat => translations[cat] || cat) || productData.categories
+    };
+  }, [currentLanguage]);
   
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -27,9 +146,15 @@ const FeaturedSection = ({
     
     return () => clearTimeout(timer);
   }, []);
+
+  // Update translated products when language or featuredProducts change
+  useEffect(() => {
+    const translated = featuredProducts.map(product => translateProductData(product));
+    setTranslatedProducts(translated);
+  }, [featuredProducts, currentLanguage, translateProductData]);
   
-  // Group products by category type
-  const categorizedProducts = featuredProducts.reduce((acc, product) => {
+  // Group products by category type using translated products
+  const categorizedProducts = translatedProducts.reduce((acc, product) => {
     const categoryType = product.categoryType || 'other';
     if (!acc[categoryType]) {
       acc[categoryType] = [];
@@ -227,7 +352,7 @@ const FeaturedSection = ({
                     </div>
                     <div>
                       <span className={`inline-block px-3 py-1 rounded-full ${config.badgeClass} text-sm font-medium mb-1`}>
-                        {currentLanguage === 'pt' ? 'Categoria' : 'Category'}
+                        {t('common.category')}
                       </span>
                       <h3 className={`text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${config.gradient}`}>
                         {config.title}
@@ -258,9 +383,9 @@ const FeaturedSection = ({
                       <div className={`absolute top-0 left-0 right-0 h-2 bg-gradient-to-r ${config.gradient}`}></div>
                       
                       {/* Category badge */}
-                      <div className={`absolute top-3 left-3 ${config.badgeClass} px-2 py-1 rounded-full text-xs font-medium flex items-center`}>
-                        <span className="mr-1 w-3 h-3">{config.icon}</span>
-                        {config.title}
+                      <div className={`absolute top-3 left-3 ${config.badgeClass} px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-2`}>
+                        <span className="w-4 h-4 flex-shrink-0">{config.icon}</span>
+                        <span className="whitespace-nowrap">{config.title}</span>
                       </div>
                       
                       {/* Shine effect */}
@@ -272,25 +397,17 @@ const FeaturedSection = ({
                       {/* Enhanced glow effect on hover */}
                       <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${config.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
                       
-                      {/* Corner accent */}
-                      <div className="absolute top-0 right-0 w-20 h-20 overflow-hidden">
-                        <div className={`absolute top-0 right-0 w-full h-full transform rotate-45 translate-x-1/2 -translate-y-1/2 bg-gradient-to-r ${product.officialSource ? 'from-emerald-600 to-emerald-500' : config.gradient} opacity-90`}></div>
-                        
-                        <div className="absolute top-[10px] right-[10px] text-white text-xs font-bold">
-                          {product.officialSource ? 'Official' : 'Community'}
-                        </div>
-                      </div>
                       
                       {/* Content */}
                       <div className="flex flex-col h-full pt-10 mt-3">
                         {/* Product image with fallback to icon */}
                         <div className="mb-4 relative">
                           {product.image_url || product.imageUrl || product.logo ? (
-                            <div className="relative w-16 h-16 rounded-xl overflow-hidden mb-2">
+                            <div className="relative w-20 h-20 rounded-xl overflow-hidden mb-2 bg-white/5 border border-white/10 flex items-center justify-center p-2">
                               <img 
                                 src={product.image_url || product.imageUrl || product.logo} 
                                 alt={product.name}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-contain"
                                 onError={(e) => {
                                   e.target.style.display = 'none';
                                   e.target.nextSibling.style.display = 'flex';
@@ -305,7 +422,7 @@ const FeaturedSection = ({
                             </div>
                           ) : (
                             /* Icon circle with gradient background (fallback) */
-                            <div className={`w-16 h-16 mb-2 rounded-xl flex items-center justify-center bg-gradient-to-br ${product.gradient || config.gradient}`}>
+                            <div className={`w-20 h-20 mb-2 rounded-xl flex items-center justify-center bg-gradient-to-br ${product.gradient || config.gradient}`}>
                               <span className="text-white text-xl">
                                 {config.icon}
                               </span>
