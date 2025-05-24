@@ -258,10 +258,26 @@ const ProductsPageEnhanced = () => {
             ? (product.description_en || product.description)
             : (product.description || product.description_en);
           
+          // Map product_type to our expected types
+          let productType = 'custom-product'; // default
+          if (product.product_type === 'mcp_server') {
+            productType = 'server';
+          } else if (product.product_type === 'mcp_client') {
+            productType = 'client';
+          } else if (product.product_type === 'ai_agent') {
+            productType = 'ai-agent';
+          } else if (product.category === 'MCP Server') {
+            productType = 'server';
+          } else if (product.category === 'MCP Client') {
+            productType = 'client';
+          } else if (product.category === 'AI Agent') {
+            productType = 'ai-agent';
+          }
+
           return {
             ...product,
             id: String(product.id),
-            type: 'custom-product',
+            type: productType,
             stars: product.stars_numeric || 0,
             shortDescription: displayDescription 
               ? displayDescription.substring(0, 150) + (displayDescription.length > 150 ? '...' : '') 
@@ -397,7 +413,12 @@ const ProductsPageEnhanced = () => {
   const shouldUseBackendPagination = useMemo(() => {
     // Use backend pagination if we have only database products (no MCP data mixed in)
     // and no frontend filters applied
-    const hasOnlyDbProducts = searchResults.every(product => product.type === 'custom-product');
+    const hasOnlyDbProducts = searchResults.every(product => 
+      product.type === 'custom-product' || 
+      product.type === 'server' || 
+      product.type === 'client' || 
+      product.type === 'ai-agent'
+    );
     const hasActiveFilters = selectedFilters.types.length > 0 || 
                            selectedFilters.categories.length > 0 || 
                            selectedFilters.ratings.length > 0 ||
@@ -779,7 +800,7 @@ const ProductsPageEnhanced = () => {
         onValueChange={handleTabChange}
         className="mb-6"
       >
-        <TabsList className="grid grid-cols-4 w-full sm:w-auto bg-zinc-800/80 rounded-xl p-1 shadow-inner">
+        <TabsList className="grid grid-cols-5 w-full sm:w-auto bg-zinc-800/80 rounded-xl p-1 shadow-inner">
           <TabsTrigger 
             value="all"
             className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-1.5`}
@@ -815,6 +836,15 @@ const ProductsPageEnhanced = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
             <span>{t('products.enhanced.tabs.clients')}</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="ai-agent"
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-1.5`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 9.75L15 15m0-5.25L9.75 15M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{t('products.enhanced.tabs.ai_agents')}</span>
           </TabsTrigger>
         </TabsList>
       </Tabs>
@@ -912,12 +942,12 @@ const ProductsPageEnhanced = () => {
                           )}
                           
                           {/* Thumbnail image section */}
-                          <div className="relative w-full h-40 overflow-hidden">
+                          <div className="relative h-44 bg-gradient-to-br from-zinc-800/70 to-zinc-900/70 flex items-center justify-center overflow-hidden">
                             {product.image_url || product.local_image_path ? (
                               <img
                                 src={product.local_image_path || product.image_url}
                                 alt={product.name}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                className="max-w-[80%] max-h-[80%] object-contain transition-transform duration-700 group-hover:scale-110"
                                 onError={(e) => {
                                   e.target.onerror = null;
                                   e.target.src = '/assets/news-images/fallback.jpg';

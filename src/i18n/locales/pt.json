@@ -396,7 +396,8 @@
         "all": "Todos",
         "products": "Produtos", 
         "servers": "Servidores",
-        "clients": "Clientes"
+        "clients": "Clientes",
+        "ai_agents": "Agentes IA"
       },
       "type_badges": {
         "server": "Servidor",
