@@ -75,7 +75,7 @@ const ProductsPageEnhanced = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(50);
   
-  // Initialize with database products
+  // Initialize with database products - load more initially to support filtering
   const {
     products: dbProducts,
     loading: dbLoading,
@@ -84,8 +84,10 @@ const ProductsPageEnhanced = () => {
     changePage: changeDbPage,
     changeLimit,
     searchProducts: searchDbProducts,
-    filterByCategory: filterDbByCategory
-  } = useProducts(1, 50);
+    filterByCategory: filterDbByCategory,
+    fetchProducts,
+    filterByProductType
+  } = useProducts(1, 200); // Load 200 products initially to support tab filtering
 
   // Update URL with current filters
   const updateUrl = () => {
@@ -425,10 +427,10 @@ const ProductsPageEnhanced = () => {
                            selectedFilters.priceRange.min > 0 ||
                            selectedFilters.priceRange.max < maxPrice;
     const hasActiveSearch = searchQuery.trim() !== '';
-    const hasActiveTab = activeTab && activeTab !== 'all';
+    // Note: activeTab is now handled by backend filtering, so we don't exclude it
     
-    return hasOnlyDbProducts && !hasActiveFilters && !hasActiveSearch && !hasActiveTab;
-  }, [searchResults, selectedFilters, searchQuery, activeTab, maxPrice]);
+    return hasOnlyDbProducts && !hasActiveFilters && !hasActiveSearch;
+  }, [searchResults, selectedFilters, searchQuery, maxPrice]);
 
   // Calculate pagination for combined results (frontend pagination)
   const calculateFrontendPagination = () => {
@@ -514,6 +516,8 @@ const ProductsPageEnhanced = () => {
     }
   };
 
+  // Removed the separate useEffect for tab loading to prevent infinite loops
+
   // Load combined data when products change or filters change
   useEffect(() => {
     combineProductData();
@@ -586,6 +590,7 @@ const ProductsPageEnhanced = () => {
 
   // Handle tab change
   const handleTabChange = (value) => {
+    console.log(`Tab change: ${activeTab} -> ${value}`);
     setActiveTab(value);
   };
 
@@ -701,17 +706,8 @@ const ProductsPageEnhanced = () => {
       console.warn("Could not cache product data:", err);
     }
     
-    // Determine the appropriate URL based on product type
-    if (product.type === 'custom-product') {
-      // Always use React Router path for custom products
-      navigate(`/products/${product.id}`);
-    } else if (product.type === 'client') {
-      // Use hash-based routing for clients
-      window.location.hash = `#/products/client-${product.id}`;
-    } else {
-      // Use hash-based routing for servers
-      window.location.hash = `#/products/${product.id}`;
-    }
+    // Use clean React Router URLs for all products
+    navigate(`/products/${product.id}`);
   };
 
   // Split components into batches for staggered animation
@@ -800,7 +796,7 @@ const ProductsPageEnhanced = () => {
         onValueChange={handleTabChange}
         className="mb-6"
       >
-        <TabsList className="grid grid-cols-5 w-full sm:w-auto bg-zinc-800/80 rounded-xl p-1 shadow-inner">
+        <TabsList className="grid grid-cols-4 w-full sm:w-auto bg-zinc-800/80 rounded-xl p-1 shadow-inner">
           <TabsTrigger 
             value="all"
             className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-1.5`}
@@ -809,15 +805,6 @@ const ProductsPageEnhanced = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
             </svg>
             <span>{t('products.enhanced.tabs.all')}</span>
-          </TabsTrigger>
-          <TabsTrigger 
-            value="custom-product"
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-1.5`}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-            </svg>
-            <span>{t('products.enhanced.tabs.products')}</span>
           </TabsTrigger>
           <TabsTrigger 
             value="server"
