@@ -130,6 +130,12 @@ const TechHubProductManagementDemo = () => {
   const addForm = useForm({
     resolver: zodResolver(productSchema),
     defaultValues: {
+      // Multilingual fields
+      name_en: '',
+      name_pt: '',
+      description_en: '',
+      description_pt: '',
+      // Legacy fields
       name: '',
       description: '',
       image_url: '',
@@ -157,6 +163,12 @@ const TechHubProductManagementDemo = () => {
   const editForm = useForm({
     resolver: zodResolver(productSchema),
     defaultValues: {
+      // Multilingual fields
+      name_en: '',
+      name_pt: '',
+      description_en: '',
+      description_pt: '',
+      // Legacy fields
       name: '',
       description: '',
       image_url: '',

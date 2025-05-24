@@ -56,6 +56,11 @@ class Product {
   static async create(productData) {
     // Log the received product data
     console.log('Creating product with data:', JSON.stringify(productData, null, 2));
+    console.log('Multilingual fields received:');
+    console.log('- name_en:', productData.name_en);
+    console.log('- name_pt:', productData.name_pt);
+    console.log('- description_en:', productData.description_en);
+    console.log('- description_pt:', productData.description_pt);
     
     const {
       // Multilingual fields
@@ -91,8 +96,12 @@ class Product {
     } = productData;
     
     // Validate required fields
-    if (!name) {
-      throw new Error('Product name is required');
+    if (!name && !name_en) {
+      throw new Error('Product name (English) is required');
+    }
+    
+    if (!description && !description_en) {
+      throw new Error('Product description (English) is required');
     }
     
     if (!slug) {
@@ -109,6 +118,13 @@ class Product {
     
     try {
       console.log('Executing SQL query with required fields including slug');
+      console.log('Values being inserted:');
+      console.log('- name:', name);
+      console.log('- description:', description);
+      console.log('- name_en:', name_en);
+      console.log('- name_pt:', name_pt);
+      console.log('- description_en:', description_en);
+      console.log('- description_pt:', description_pt);
       
       const result = await db.query(
         `INSERT INTO products 
