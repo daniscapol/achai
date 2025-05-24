@@ -202,18 +202,44 @@ const ProductDetailTech = () => {
         
         console.log(`Fetching product ${id} from API`);
         const langParam = currentLanguage === 'pt' ? 'pt' : 'en';
-        const apiUrl = `${API_BASE_URL}/products/id/${id}?language=${langParam}`;
+        
+        // Try individual product endpoint first, fallback to main products endpoint
+        let apiUrl = `${API_BASE_URL}/products/id/${id}?language=${langParam}`;
         console.log(`API URL: ${apiUrl}`);
         try {
-          const response = await fetch(apiUrl, {
+          let response = await fetch(apiUrl, {
             signal: controller.signal,
             headers: { 'Cache-Control': 'no-cache' }
           });
           
           clearTimeout(timeoutId);
           
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+          // Check if response is HTML (indicates routing issue) or JSON
+          const contentType = response.headers.get('content-type');
+          if (!response.ok || (contentType && contentType.includes('text/html'))) {
+            console.log(`Individual product endpoint returned HTML or failed (${response.status}), trying main products endpoint`);
+            apiUrl = `${API_BASE_URL}/products?language=${langParam}&limit=200`;
+            response = await fetch(apiUrl, {
+              signal: controller.signal,
+              headers: { 'Cache-Control': 'no-cache' }
+            });
+            
+            if (!response.ok) {
+              throw new Error(`Both API endpoints failed! Status: ${response.status}`);
+            }
+            
+            const productsData = await response.json();
+            const product = productsData.products?.find(p => String(p.id) === String(id));
+            
+            if (!product) {
+              throw new Error(`Product ${id} not found in products list`);
+            }
+            
+            console.log('Found product in main products endpoint:', product);
+            setProduct(translateProductData(product));
+            fetchRelatedProducts(product.category);
+            setLoading(false);
+            return;
           }
           
           const data = await response.json();
