@@ -6,9 +6,9 @@ import {
 } from './animations';
 // Import AboutUsSection separately to optimize loading
 import AboutUsSection from './animations/AboutUsSection';
-// Import client and agent data
+// Import client data
 import mcpClientsData from '../mcp_clients_data.json';
-import aiAgentsData from '../ai_agents_data.json';
+// AI agents will be loaded from database API
 // Product data comes from window.mcpServersDirectData (same source as ProductDetailTech)
 
 /**
@@ -25,6 +25,7 @@ const ModernHomePage = ({
 }) => {
   const { t, i18n } = useTranslation();
   const [isAppInitialized, setIsAppInitialized] = useState(false);
+  const [aiAgentsData, setAiAgentsData] = useState([]);
   
   // Debug: Component lifecycle logging
   useEffect(() => {
@@ -38,6 +39,24 @@ const ModernHomePage = ({
   // useEffect(() => {
   //   console.log('ModernHomePage: Language loaded:', i18n.language, 'Title:', t('homepage.featured.title'));
   // }, [i18n.language, t]);
+  
+  // Load AI agents from database
+  useEffect(() => {
+    const loadAiAgents = async () => {
+      try {
+        const response = await fetch('/api/products/type/ai_agent?limit=20');
+        const data = await response.json();
+        if (data.products && Array.isArray(data.products)) {
+          setAiAgentsData(data.products);
+        }
+      } catch (error) {
+        console.error('Failed to load AI agents:', error);
+        setAiAgentsData([]); // Fallback to empty array
+      }
+    };
+    
+    loadAiAgents();
+  }, []);
   
   // Initialization effect
   useEffect(() => {
@@ -158,7 +177,9 @@ const ModernHomePage = ({
   const agentProducts = aiAgentsData.map(agent => ({
     ...agent,
     product_type: 'ai_agent',
-    type: 'agent'
+    type: 'agent',
+    // Ensure agents have the required properties for navigation
+    categoryType: 'ai-agent'
   }));
 
   // Combine featuredProducts with global products data, clients, and agents
