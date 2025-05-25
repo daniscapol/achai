@@ -50,9 +50,26 @@ const CourseManagement = () => {
       
       if (data.success) {
         setCategories(data.data);
+      } else {
+        // Fallback to default categories if API fails
+        setCategories([
+          { name: 'AI Development', slug: 'ai-development' },
+          { name: 'MCP Integration', slug: 'mcp-integration' },
+          { name: 'Agent Development', slug: 'agent-development' },
+          { name: 'Web Development', slug: 'web-development' },
+          { name: 'Data Science', slug: 'data-science' }
+        ]);
       }
     } catch (error) {
       console.error('Error loading categories:', error);
+      // Fallback to default categories on error
+      setCategories([
+        { name: 'AI Development', slug: 'ai-development' },
+        { name: 'MCP Integration', slug: 'mcp-integration' },
+        { name: 'Agent Development', slug: 'agent-development' },
+        { name: 'Web Development', slug: 'web-development' },
+        { name: 'Data Science', slug: 'data-science' }
+      ]);
     }
   };
 

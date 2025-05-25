@@ -50,9 +50,24 @@ const NewsManagement = () => {
       
       if (data.success) {
         setCategories(data.data);
+      } else {
+        // Fallback to default categories if API fails
+        setCategories([
+          { name: 'Technical Articles', slug: 'technical-articles' },
+          { name: 'Product Updates', slug: 'product-updates' },
+          { name: 'Industry News', slug: 'industry-news' },
+          { name: 'Company News', slug: 'company-news' }
+        ]);
       }
     } catch (error) {
       console.error('Error loading categories:', error);
+      // Fallback to default categories on error
+      setCategories([
+        { name: 'Technical Articles', slug: 'technical-articles' },
+        { name: 'Product Updates', slug: 'product-updates' },
+        { name: 'Industry News', slug: 'industry-news' },
+        { name: 'Company News', slug: 'company-news' }
+      ]);
     }
   };
 
