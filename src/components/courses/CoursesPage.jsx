@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import Pagination from '../Pagination';
 import SkeletonLoader from '../animations/SkeletonLoader';
 import { motion } from 'framer-motion';
+import { fetchWithFallback, fallbackCoursesData, fallbackCourseCategories } from '../../utils/productionFallback';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 
@@ -57,8 +58,7 @@ const CoursesPage = () => {
         ...(sortBy && { sort: sortBy })
       });
 
-      const response = await fetch(`${API_BASE_URL}/courses?${params}`);
-      const data = await response.json();
+      const data = await fetchWithFallback(`${API_BASE_URL}/courses?${params}`, fallbackCoursesData);
 
       if (data.success) {
         setCourses(data.data || []);
@@ -71,6 +71,10 @@ const CoursesPage = () => {
       }
     } catch (error) {
       console.error('Error loading courses:', error);
+      // Use fallback data on error
+      setCourses(fallbackCoursesData.data);
+      setTotalPages(1);
+      setFeaturedCourses(fallbackCoursesData.data.slice(0, 3));
     } finally {
       setIsLoading(false);
     }
@@ -78,25 +82,25 @@ const CoursesPage = () => {
 
   const loadCategories = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/courses/categories`);
-      const data = await response.json();
+      const data = await fetchWithFallback(`${API_BASE_URL}/courses/categories`, fallbackCourseCategories);
       if (data.success) {
         setCategories(data.data || []);
       }
     } catch (error) {
       console.error('Error loading categories:', error);
+      setCategories(fallbackCourseCategories.data);
     }
   };
 
   const loadRecentCourses = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/courses?limit=5&status=published`);
-      const data = await response.json();
+      const data = await fetchWithFallback(`${API_BASE_URL}/courses?limit=5&status=published`, fallbackCoursesData);
       if (data.success) {
         setRecentCourses(data.data || []);
       }
     } catch (error) {
       console.error('Error loading recent courses:', error);
+      setRecentCourses(fallbackCoursesData.data.slice(0, 5));
     }
   };
 

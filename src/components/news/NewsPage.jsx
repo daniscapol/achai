@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import Pagination from '../Pagination';
 import SkeletonLoader from '../animations/SkeletonLoader';
 import { motion } from 'framer-motion';
+import { fetchWithFallback, fallbackNewsData, fallbackNewsCategories } from '../../utils/productionFallback';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 
@@ -48,8 +49,7 @@ const NewsPage = () => {
         ...(selectedCategory && { category: selectedCategory })
       });
 
-      const response = await fetch(`${API_BASE_URL}/news?${params}`);
-      const data = await response.json();
+      const data = await fetchWithFallback(`${API_BASE_URL}/news?${params}`, fallbackNewsData);
 
       if (data.success) {
         setArticles(data.data || []);
@@ -62,6 +62,10 @@ const NewsPage = () => {
       }
     } catch (error) {
       console.error('Error loading articles:', error);
+      // Use fallback data on error
+      setArticles(fallbackNewsData.data);
+      setTotalPages(1);
+      setFeaturedArticles(fallbackNewsData.data.slice(0, 3));
     } finally {
       setIsLoading(false);
     }
@@ -69,25 +73,25 @@ const NewsPage = () => {
 
   const loadCategories = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/news/categories`);
-      const data = await response.json();
+      const data = await fetchWithFallback(`${API_BASE_URL}/news/categories`, fallbackNewsCategories);
       if (data.success) {
         setCategories(data.data || []);
       }
     } catch (error) {
       console.error('Error loading categories:', error);
+      setCategories(fallbackNewsCategories.data);
     }
   };
 
   const loadRecentArticles = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/news?limit=5&status=published`);
-      const data = await response.json();
+      const data = await fetchWithFallback(`${API_BASE_URL}/news?limit=5&status=published`, fallbackNewsData);
       if (data.success) {
         setRecentArticles(data.data || []);
       }
     } catch (error) {
       console.error('Error loading recent articles:', error);
+      setRecentArticles(fallbackNewsData.data.slice(0, 5));
     }
   };
 
