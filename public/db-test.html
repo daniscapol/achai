@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Test - ACHAI</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #1a1a1a; color: white; }
+        .container { max-width: 800px; margin: 0 auto; }
+        button { padding: 10px 20px; margin: 10px; background: #6366f1; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #4f46e5; }
+        .result { background: #2a2a2a; padding: 15px; margin: 10px 0; border-radius: 5px; white-space: pre-wrap; font-family: monospace; }
+        .success { border-left: 4px solid #10b981; }
+        .error { border-left: 4px solid #ef4444; }
+        .loading { opacity: 0.6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 ACHAI Database Test & Setup</h1>
+        <p>Use these tools to test your database connection and initialize the required tables.</p>
+        
+        <div>
+            <button onclick="testDatabase()">🔍 Test Database Connection</button>
+            <button onclick="initDatabase()">🚀 Initialize Database Tables</button>
+            <button onclick="testApis()">📡 Test All APIs</button>
+        </div>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function addResult(title, data, isError = false) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${isError ? 'error' : 'success'}`;
+            div.innerHTML = `<strong>${title}</strong>\n${JSON.stringify(data, null, 2)}`;
+            results.appendChild(div);
+            results.scrollTop = results.scrollHeight;
+        }
+
+        function addLoading(title) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = 'result loading';
+            div.innerHTML = `<strong>${title}</strong>\nLoading...`;
+            div.id = 'loading';
+            results.appendChild(div);
+            return div;
+        }
+
+        function removeLoading() {
+            const loading = document.getElementById('loading');
+            if (loading) loading.remove();
+        }
+
+        async function testDatabase() {
+            const loading = addLoading('🔍 Testing Database Connection');
+            try {
+                const response = await fetch('/api/test-db');
+                const data = await response.json();
+                removeLoading();
+                addResult('✅ Database Connection Test', data, !data.success);
+            } catch (error) {
+                removeLoading();
+                addResult('❌ Database Connection Test Failed', { error: error.message }, true);
+            }
+        }
+
+        async function initDatabase() {
+            const loading = addLoading('🚀 Initializing Database');
+            try {
+                const response = await fetch('/api/init-database', { method: 'POST' });
+                const data = await response.json();
+                removeLoading();
+                addResult('✅ Database Initialization', data, !data.success);
+            } catch (error) {
+                removeLoading();
+                addResult('❌ Database Initialization Failed', { error: error.message }, true);
+            }
+        }
+
+        async function testApis() {
+            const apis = [
+                { name: 'News API', url: '/api/news?limit=3' },
+                { name: 'News Categories API', url: '/api/news/categories' },
+                { name: 'Courses API', url: '/api/courses?limit=3' },
+                { name: 'Course Categories API', url: '/api/courses/categories' }
+            ];
+
+            for (const api of apis) {
+                const loading = addLoading(`📡 Testing ${api.name}`);
+                try {
+                    const response = await fetch(api.url);
+                    const data = await response.json();
+                    removeLoading();
+                    addResult(`✅ ${api.name}`, { 
+                        status: response.status, 
+                        success: data.success,
+                        data_count: data.data?.length || 0,
+                        sample: data.data?.[0] || data
+                    }, !data.success);
+                } catch (error) {
+                    removeLoading();
+                    addResult(`❌ ${api.name} Failed`, { error: error.message }, true);
+                }
+                // Small delay between requests
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+        }
+
+        // Auto-test connection on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            addResult('🏠 Database Test Page Loaded', {
+                message: 'Click the buttons above to test your database connection and APIs.',
+                host: 'achai.cn2ayqgqu2w8.us-east-2.rds.amazonaws.com',
+                database: 'achai',
+                user: 'achai'
+            });
+        });
+    </script>
+</body>
+</html>
