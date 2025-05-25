@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 import Pagination from '../Pagination';
 import SkeletonLoader from '../animations/SkeletonLoader';
 import { motion } from 'framer-motion';
-import { fetchWithFallback, fallbackNewsData, fallbackNewsCategories } from '../../utils/productionFallback';
+// Removed fallback system - using real database APIs only
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 
@@ -49,7 +49,8 @@ const NewsPage = () => {
         ...(selectedCategory && { category: selectedCategory })
       });
 
-      const data = await fetchWithFallback(`${API_BASE_URL}/news?${params}`, fallbackNewsData);
+      const response = await fetch(`${API_BASE_URL}/news?${params}`);
+      const data = await response.json();
 
       if (data.success) {
         setArticles(data.data || []);
@@ -73,25 +74,27 @@ const NewsPage = () => {
 
   const loadCategories = async () => {
     try {
-      const data = await fetchWithFallback(`${API_BASE_URL}/news/categories`, fallbackNewsCategories);
+      const response = await fetch(`${API_BASE_URL}/news/categories`);
+      const data = await response.json();
       if (data.success) {
         setCategories(data.data || []);
       }
     } catch (error) {
       console.error('Error loading categories:', error);
-      setCategories(fallbackNewsCategories.data);
+      setCategories([]);
     }
   };
 
   const loadRecentArticles = async () => {
     try {
-      const data = await fetchWithFallback(`${API_BASE_URL}/news?limit=5&status=published`, fallbackNewsData);
+      const response = await fetch(`${API_BASE_URL}/news?limit=5&status=published`);
+      const data = await response.json();
       if (data.success) {
         setRecentArticles(data.data || []);
       }
     } catch (error) {
       console.error('Error loading recent articles:', error);
-      setRecentArticles(fallbackNewsData.data.slice(0, 5));
+      setRecentArticles([]);
     }
   };
 

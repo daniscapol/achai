@@ -1,4 +1,4 @@
-import { News } from '../src/utils/News.js';
+import { query } from './_lib/db.js';
 
 export default async function handler(req, res) {
   try {
@@ -13,111 +13,128 @@ export default async function handler(req, res) {
       return res.status(200).end();
     }
 
-    switch (method) {
-      case 'GET':
-        const { page = 1, limit = 20, search, category, popular, slug } = req.query;
-        
+    if (method === 'GET') {
+      const { page = 1, limit = 20, search, category, popular, slug } = req.query;
+      
+      try {
         // Get single article by slug
         if (slug) {
-          const article = await News.getBySlug(slug);
-          if (!article) {
-            return res.status(404).json({ error: 'Article not found' });
+          const result = await query(`
+            SELECT 
+              id, title, slug, content, summary as excerpt, 
+              author, category, published_at, updated_at, views_count
+            FROM news_articles 
+            WHERE slug = $1 AND is_published = true
+          `, [slug]);
+          
+          if (!result.rows[0]) {
+            return res.status(404).json({ 
+              success: false,
+              error: 'Article not found' 
+            });
           }
-          return res.status(200).json({ article });
+          
+          // Increment view count
+          await query(
+            'UPDATE news_articles SET views_count = COALESCE(views_count, 0) + 1 WHERE id = $1',
+            [result.rows[0].id]
+          );
+          
+          return res.status(200).json({ 
+            success: true,
+            data: result.rows[0] 
+          });
         }
         
         // Get popular articles
         if (popular) {
-          const articles = await News.getPopular(parseInt(limit));
-          return res.status(200).json({ articles });
+          const result = await query(`
+            SELECT 
+              id, title, slug, content, summary as excerpt, 
+              author, category, published_at, updated_at, views_count
+            FROM news_articles 
+            WHERE is_published = true
+            ORDER BY views_count DESC, published_at DESC
+            LIMIT $1
+          `, [parseInt(limit)]);
+          
+          return res.status(200).json({ 
+            success: true,
+            data: result.rows 
+          });
         }
+        
+        const offset = (parseInt(page) - 1) * parseInt(limit);
+        let whereClause = 'WHERE is_published = true';
+        let queryParams = [parseInt(limit), offset];
+        let paramCount = 2;
         
         // Search articles
         if (search) {
-          const result = await News.search(search, parseInt(page), parseInt(limit));
-          return res.status(200).json({
-            success: true,
-            data: result.articles,
-            pagination: result.pagination
-          });
+          const searchPattern = `%${search}%`;
+          whereClause += ` AND (title ILIKE $${++paramCount} OR content ILIKE $${paramCount} OR summary ILIKE $${paramCount})`;
+          queryParams.splice(-2, 0, searchPattern);
         }
         
-        // Get articles by category
+        // Filter by category
         if (category) {
-          const result = await News.getByCategory(category, parseInt(page), parseInt(limit));
-          return res.status(200).json({
-            success: true,
-            data: result.articles,
-            pagination: result.pagination
-          });
+          whereClause += ` AND category = $${++paramCount}`;
+          queryParams.splice(-2, 0, category);
         }
         
-        // Get all articles
-        const result = await News.getAll(parseInt(page), parseInt(limit));
+        // Get total count
+        const countResult = await query(
+          `SELECT COUNT(*) FROM news_articles ${whereClause}`,
+          queryParams.slice(0, -2)
+        );
+        const total = parseInt(countResult.rows[0].count);
+        
+        // Get articles
+        const articlesResult = await query(`
+          SELECT 
+            id, title, slug, content, summary as excerpt, 
+            author, category, published_at, updated_at, views_count
+          FROM news_articles 
+          ${whereClause}
+          ORDER BY published_at DESC
+          LIMIT $1 OFFSET $2
+        `, queryParams);
+        
+        const totalPages = Math.ceil(total / parseInt(limit));
+        
         return res.status(200).json({
           success: true,
-          data: result.articles,
-          pagination: result.pagination
+          data: articlesResult.rows,
+          pagination: {
+            total,
+            totalPages,
+            currentPage: parseInt(page),
+            limit: parseInt(limit),
+            hasNext: parseInt(page) < totalPages,
+            hasPrev: parseInt(page) > 1
+          }
         });
 
-      case 'POST':
-        // Create new article (admin only)
-        const articleData = req.body;
-        
-        // Basic validation
-        if (!articleData.title || !articleData.content || !articleData.author_id) {
-          return res.status(400).json({ 
-            error: 'Missing required fields: title, content, author_id' 
-          });
-        }
-        
-        const newArticle = await News.create(articleData);
-        return res.status(201).json({ article: newArticle });
-
-      case 'PUT':
-        // Update article (admin only)
-        const { id } = req.query;
-        
-        if (!id) {
-          return res.status(400).json({ error: 'Article ID is required' });
-        }
-        
-        const updateData = req.body;
-        const updatedArticle = await News.update(parseInt(id), updateData);
-        
-        if (!updatedArticle) {
-          return res.status(404).json({ error: 'Article not found' });
-        }
-        
-        return res.status(200).json({ article: updatedArticle });
-
-      case 'DELETE':
-        // Delete article (admin only)
-        const { id: deleteId } = req.query;
-        
-        if (!deleteId) {
-          return res.status(400).json({ error: 'Article ID is required' });
-        }
-        
-        const deletedArticle = await News.delete(parseInt(deleteId));
-        
-        if (!deletedArticle) {
-          return res.status(404).json({ error: 'Article not found' });
-        }
-        
-        return res.status(200).json({ 
-          message: 'Article archived successfully',
-          id: deletedArticle.id 
+      } catch (dbError) {
+        console.error('Database Error:', dbError);
+        return res.status(500).json({ 
+          success: false,
+          error: 'Database connection failed',
+          message: dbError.message 
         });
-
-      default:
-        res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
-        return res.status(405).json({ error: `Method ${method} not allowed` });
+      }
     }
+
+    // Handle other methods
+    return res.status(405).json({ 
+      success: false,
+      error: `Method ${method} not allowed` 
+    });
 
   } catch (error) {
     console.error('News API Error:', error);
     return res.status(500).json({ 
+      success: false,
       error: 'Internal server error',
       message: error.message 
     });

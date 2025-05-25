@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 import Pagination from '../Pagination';
 import SkeletonLoader from '../animations/SkeletonLoader';
 import { motion } from 'framer-motion';
-import { fetchWithFallback, fallbackCoursesData, fallbackCourseCategories } from '../../utils/productionFallback';
+// Removed fallback system - using real database APIs only
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 
@@ -58,7 +58,8 @@ const CoursesPage = () => {
         ...(sortBy && { sort: sortBy })
       });
 
-      const data = await fetchWithFallback(`${API_BASE_URL}/courses?${params}`, fallbackCoursesData);
+      const response = await fetch(`${API_BASE_URL}/courses?${params}`);
+      const data = await response.json();
 
       if (data.success) {
         setCourses(data.data || []);
@@ -71,10 +72,9 @@ const CoursesPage = () => {
       }
     } catch (error) {
       console.error('Error loading courses:', error);
-      // Use fallback data on error
-      setCourses(fallbackCoursesData.data);
+      setCourses([]);
       setTotalPages(1);
-      setFeaturedCourses(fallbackCoursesData.data.slice(0, 3));
+      setFeaturedCourses([]);
     } finally {
       setIsLoading(false);
     }
@@ -82,25 +82,27 @@ const CoursesPage = () => {
 
   const loadCategories = async () => {
     try {
-      const data = await fetchWithFallback(`${API_BASE_URL}/courses/categories`, fallbackCourseCategories);
+      const response = await fetch(`${API_BASE_URL}/courses/categories`);
+      const data = await response.json();
       if (data.success) {
         setCategories(data.data || []);
       }
     } catch (error) {
       console.error('Error loading categories:', error);
-      setCategories(fallbackCourseCategories.data);
+      setCategories([]);
     }
   };
 
   const loadRecentCourses = async () => {
     try {
-      const data = await fetchWithFallback(`${API_BASE_URL}/courses?limit=5&status=published`, fallbackCoursesData);
+      const response = await fetch(`${API_BASE_URL}/courses?limit=5&status=published`);
+      const data = await response.json();
       if (data.success) {
         setRecentCourses(data.data || []);
       }
     } catch (error) {
       console.error('Error loading recent courses:', error);
-      setRecentCourses(fallbackCoursesData.data.slice(0, 5));
+      setRecentCourses([]);
     }
   };
 

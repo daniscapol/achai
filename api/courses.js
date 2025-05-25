@@ -1,4 +1,4 @@
-import { Course } from '../src/utils/Course.js';
+import { query } from './_lib/db.js';
 
 export default async function handler(req, res) {
   try {
@@ -13,136 +13,139 @@ export default async function handler(req, res) {
       return res.status(200).end();
     }
 
-    switch (method) {
-      case 'GET':
-        const { 
-          page = 1, 
-          limit = 20, 
-          search, 
-          category, 
-          difficulty, 
-          popular, 
-          featured,
-          slug 
-        } = req.query;
-        
+    if (method === 'GET') {
+      const { 
+        page = 1, 
+        limit = 20, 
+        search, 
+        category, 
+        difficulty, 
+        popular, 
+        featured,
+        slug,
+        status = 'published',
+        sort = 'newest'
+      } = req.query;
+      
+      try {
         // Get single course by slug
         if (slug) {
-          const course = await Course.getBySlug(slug);
-          if (!course) {
-            return res.status(404).json({ error: 'Course not found' });
+          const result = await query(`
+            SELECT 
+              id, title, slug, description, content, thumbnail_url,
+              instructor_name, instructor_bio, price, currency,
+              duration_hours, difficulty_level as difficulty, status,
+              enrollment_count, rating, rating_count,
+              created_at, updated_at, category_name, category_slug
+            FROM courses 
+            WHERE slug = $1 AND status = 'published'
+          `, [slug]);
+          
+          if (!result.rows[0]) {
+            return res.status(404).json({ 
+              success: false,
+              error: 'Course not found' 
+            });
           }
-          return res.status(200).json({ course });
+          
+          return res.status(200).json({ 
+            success: true,
+            data: result.rows[0] 
+          });
         }
         
-        // Get popular courses
-        if (popular) {
-          const courses = await Course.getPopular(parseInt(limit));
-          return res.status(200).json({ courses });
-        }
-        
-        // Get featured courses
-        if (featured) {
-          const courses = await Course.getFeatured(parseInt(limit));
-          return res.status(200).json({ courses });
-        }
+        const offset = (parseInt(page) - 1) * parseInt(limit);
+        let whereClause = 'WHERE status = $1';
+        let queryParams = [status, parseInt(limit), offset];
+        let paramCount = 1;
         
         // Search courses
         if (search) {
-          const result = await Course.search(search, parseInt(page), parseInt(limit));
-          return res.status(200).json({
-            success: true,
-            data: result.courses,
-            pagination: result.pagination
-          });
+          const searchPattern = `%${search}%`;
+          whereClause += ` AND (title ILIKE $${++paramCount} OR description ILIKE $${paramCount} OR content ILIKE $${paramCount})`;
+          queryParams.splice(-2, 0, searchPattern);
         }
         
-        // Get courses by category
+        // Filter by category
         if (category) {
-          const result = await Course.getByCategory(category, parseInt(page), parseInt(limit));
-          return res.status(200).json({
-            success: true,
-            data: result.courses,
-            pagination: result.pagination
-          });
+          whereClause += ` AND category_slug = $${++paramCount}`;
+          queryParams.splice(-2, 0, category);
         }
         
-        // Get courses by difficulty
+        // Filter by difficulty
         if (difficulty) {
-          const result = await Course.getByDifficulty(difficulty, parseInt(page), parseInt(limit));
-          return res.status(200).json({
-            success: true,
-            data: result.courses,
-            pagination: result.pagination
-          });
+          whereClause += ` AND difficulty_level = $${++paramCount}`;
+          queryParams.splice(-2, 0, difficulty);
         }
         
-        // Get all courses
-        const result = await Course.getAll(parseInt(page), parseInt(limit));
+        // Get total count
+        const countResult = await query(
+          `SELECT COUNT(*) FROM courses ${whereClause}`,
+          queryParams.slice(0, -2)
+        );
+        const total = parseInt(countResult.rows[0].count);
+        
+        // Determine sort order
+        let orderBy = 'ORDER BY created_at DESC';
+        if (sort === 'popular') {
+          orderBy = 'ORDER BY enrollment_count DESC, rating DESC';
+        } else if (sort === 'rating') {
+          orderBy = 'ORDER BY rating DESC, rating_count DESC';
+        } else if (sort === 'price_low') {
+          orderBy = 'ORDER BY CAST(price AS DECIMAL) ASC';
+        } else if (sort === 'price_high') {
+          orderBy = 'ORDER BY CAST(price AS DECIMAL) DESC';
+        }
+        
+        // Get courses
+        const coursesResult = await query(`
+          SELECT 
+            id, title, slug, description, content, thumbnail_url,
+            instructor_name, instructor_bio, price, currency,
+            duration_hours, difficulty_level as difficulty, status,
+            enrollment_count, rating, rating_count,
+            created_at, updated_at, category_name, category_slug
+          FROM courses 
+          ${whereClause}
+          ${orderBy}
+          LIMIT $${queryParams.length - 1} OFFSET $${queryParams.length}
+        `, queryParams);
+        
+        const totalPages = Math.ceil(total / parseInt(limit));
+        
         return res.status(200).json({
           success: true,
-          data: result.courses,
-          pagination: result.pagination
+          data: coursesResult.rows,
+          pagination: {
+            total,
+            totalPages,
+            currentPage: parseInt(page),
+            limit: parseInt(limit),
+            hasNext: parseInt(page) < totalPages,
+            hasPrev: parseInt(page) > 1
+          }
         });
 
-      case 'POST':
-        // Create new course (admin only)
-        const courseData = req.body;
-        
-        // Basic validation
-        if (!courseData.title || !courseData.description || !courseData.content || !courseData.instructor_name) {
-          return res.status(400).json({ 
-            error: 'Missing required fields: title, description, content, instructor_name' 
-          });
-        }
-        
-        const newCourse = await Course.create(courseData);
-        return res.status(201).json({ course: newCourse });
-
-      case 'PUT':
-        // Update course (admin only)
-        const { id } = req.query;
-        
-        if (!id) {
-          return res.status(400).json({ error: 'Course ID is required' });
-        }
-        
-        const updateData = req.body;
-        const updatedCourse = await Course.update(parseInt(id), updateData);
-        
-        if (!updatedCourse) {
-          return res.status(404).json({ error: 'Course not found' });
-        }
-        
-        return res.status(200).json({ course: updatedCourse });
-
-      case 'DELETE':
-        // Delete course (admin only)
-        const { id: deleteId } = req.query;
-        
-        if (!deleteId) {
-          return res.status(400).json({ error: 'Course ID is required' });
-        }
-        
-        const deletedCourse = await Course.delete(parseInt(deleteId));
-        
-        if (!deletedCourse) {
-          return res.status(404).json({ error: 'Course not found' });
-        }
-        
-        return res.status(200).json({ 
-          message: 'Course archived successfully',
-          id: deletedCourse.id 
+      } catch (dbError) {
+        console.error('Database Error:', dbError);
+        return res.status(500).json({ 
+          success: false,
+          error: 'Database connection failed',
+          message: dbError.message 
         });
-
-      default:
-        res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
-        return res.status(405).json({ error: `Method ${method} not allowed` });
+      }
     }
 
+    // Handle other methods
+    return res.status(405).json({ 
+      success: false,
+      error: `Method ${method} not allowed` 
+    });
+
   } catch (error) {
-    console.error('Course API Error:', error);
+    console.error('Courses API Error:', error);
     return res.status(500).json({ 
+      success: false,
       error: 'Internal server error',
       message: error.message 
     });

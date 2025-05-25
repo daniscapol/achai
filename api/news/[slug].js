@@ -3,6 +3,7 @@ import { query } from '../_lib/db.js';
 export default async function handler(req, res) {
   try {
     const { method } = req;
+    const { slug } = req.query;
     
     // Handle CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,16 +16,31 @@ export default async function handler(req, res) {
 
     if (method === 'GET') {
       try {
+        // Get single article by slug
         const result = await query(`
-          SELECT DISTINCT category as name, category as slug
+          SELECT 
+            id, title, slug, content, summary as excerpt, 
+            author, category, published_at, updated_at, views_count
           FROM news_articles 
-          WHERE is_published = true AND category IS NOT NULL
-          ORDER BY category
-        `);
+          WHERE slug = $1 AND is_published = true
+        `, [slug]);
         
-        return res.status(200).json({
+        if (!result.rows[0]) {
+          return res.status(404).json({ 
+            success: false,
+            error: 'Article not found' 
+          });
+        }
+        
+        // Increment view count
+        await query(
+          'UPDATE news_articles SET views_count = COALESCE(views_count, 0) + 1 WHERE id = $1',
+          [result.rows[0].id]
+        );
+        
+        return res.status(200).json({ 
           success: true,
-          data: result.rows
+          data: result.rows[0] 
         });
 
       } catch (dbError) {
@@ -43,7 +59,7 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error('News Categories API Error:', error);
+    console.error('News Article API Error:', error);
     return res.status(500).json({ 
       success: false,
       error: 'Internal server error',

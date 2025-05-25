@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import SkeletonLoader from '../animations/SkeletonLoader';
 import { motion } from 'framer-motion';
 import EnrollmentModal from './EnrollmentModal';
-import { fetchWithFallback, fallbackCoursesData } from '../../utils/productionFallback';
+// Removed fallback system - using real database APIs only
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 
@@ -26,13 +26,8 @@ const CoursePage = () => {
   const loadCourse = async () => {
     setIsLoading(true);
     try {
-      // Find the course by slug in fallback data
-      const fallbackCourse = fallbackCoursesData.data.find(c => c.slug === slug);
-      
-      const data = await fetchWithFallback(
-        `${API_BASE_URL}/courses/${slug}`, 
-        { success: true, data: fallbackCourse }
-      );
+      const response = await fetch(`${API_BASE_URL}/courses/${slug}`);
+      const data = await response.json();
 
       if (data.success && data.data) {
         setCourse(data.data);
@@ -55,15 +50,8 @@ const CoursePage = () => {
 
   const loadRelatedCourses = async (categoryId, currentCourseId) => {
     try {
-      // Create fallback related courses from the same category
-      const fallbackRelated = fallbackCoursesData.data
-        .filter(c => c.category_id === categoryId && c.id !== currentCourseId)
-        .slice(0, 3);
-      
-      const data = await fetchWithFallback(
-        `${API_BASE_URL}/courses?category_id=${categoryId}&limit=3&status=published`,
-        { success: true, data: fallbackRelated }
-      );
+      const response = await fetch(`${API_BASE_URL}/courses?category_id=${categoryId}&limit=3&status=published`);
+      const data = await response.json();
       
       if (data.success) {
         // Filter out the current course
