@@ -27,7 +27,7 @@ const CoursePage = () => {
     setIsLoading(true);
     try {
       // Find the course by slug in fallback data
-      const fallbackCourse = fallbackCoursesData.find(c => c.slug === slug);
+      const fallbackCourse = fallbackCoursesData.data.find(c => c.slug === slug);
       
       const data = await fetchWithFallback(
         `${API_BASE_URL}/courses/${slug}`, 
@@ -56,7 +56,7 @@ const CoursePage = () => {
   const loadRelatedCourses = async (categoryId, currentCourseId) => {
     try {
       // Create fallback related courses from the same category
-      const fallbackRelated = fallbackCoursesData
+      const fallbackRelated = fallbackCoursesData.data
         .filter(c => c.category_id === categoryId && c.id !== currentCourseId)
         .slice(0, 3);
       
