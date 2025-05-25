@@ -138,6 +138,93 @@ export default async function handler(req, res) {
       }
     }
 
+    if (method === 'POST') {
+      try {
+        const {
+          title,
+          slug,
+          description,
+          content,
+          instructor_name,
+          instructor_bio,
+          price = 0,
+          currency = 'USD',
+          duration_hours,
+          difficulty_level = 'beginner',
+          category,
+          status = 'published'
+        } = req.body;
+
+        // Basic validation
+        if (!title || !description || !content || !instructor_name) {
+          return res.status(400).json({
+            success: false,
+            error: 'Missing required fields: title, description, content, instructor_name'
+          });
+        }
+
+        // Generate slug if not provided
+        const courseSlug = slug || title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+
+        // Get category ID by name
+        let categoryId = null;
+        if (category) {
+          const categoryResult = await query(
+            'SELECT id FROM course_categories WHERE name = $1',
+            [category]
+          );
+          categoryId = categoryResult.rows[0]?.id || null;
+        }
+
+        // Insert new course
+        const result = await query(`
+          INSERT INTO courses (
+            title, slug, description, content, instructor_name, instructor_bio,
+            price, currency, duration_hours, difficulty_level, category_id,
+            status, created_at, updated_at
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW(), NOW())
+          RETURNING *
+        `, [
+          title, courseSlug, description, content, instructor_name, instructor_bio,
+          parseFloat(price), currency, parseFloat(duration_hours) || null,
+          difficulty_level, categoryId, status
+        ]);
+
+        if (result.rows[0]) {
+          return res.status(201).json({
+            success: true,
+            data: result.rows[0],
+            message: 'Course created successfully'
+          });
+        } else {
+          return res.status(500).json({
+            success: false,
+            error: 'Failed to create course'
+          });
+        }
+
+      } catch (dbError) {
+        console.error('Database Error creating course:', dbError);
+        
+        // Handle unique constraint violation (duplicate slug)
+        if (dbError.code === '23505') {
+          return res.status(400).json({
+            success: false,
+            error: 'Course with this title/slug already exists'
+          });
+        }
+
+        return res.status(500).json({
+          success: false,
+          error: 'Database error',
+          message: dbError.message
+        });
+      }
+    }
+
     // Handle other methods
     return res.status(405).json({ 
       success: false,
