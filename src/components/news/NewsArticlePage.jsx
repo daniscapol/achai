@@ -12,6 +12,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useToast } from '../../hooks/use-toast';
 import CommentsSection from './CommentsSection';
+import { fetchWithFallback, fallbackNewsData } from '../../utils/productionFallback';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 
@@ -75,10 +76,15 @@ const NewsArticlePage = () => {
   const loadArticle = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/news/${slug}`);
-      const data = await response.json();
+      // Find the article by slug in fallback data
+      const fallbackArticle = fallbackNewsData.data.find(a => a.slug === slug);
+      
+      const data = await fetchWithFallback(
+        `${API_BASE_URL}/news/${slug}`, 
+        { success: true, data: fallbackArticle }
+      );
 
-      if (data.success) {
+      if (data.success && data.data) {
         setArticle(data.data);
       } else {
         navigate('/news');
@@ -99,8 +105,15 @@ const NewsArticlePage = () => {
         status: 'published'
       });
 
-      const response = await fetch(`${API_BASE_URL}/news?${params}`);
-      const data = await response.json();
+      // Create fallback related articles from the same category
+      const fallbackRelated = fallbackNewsData.data
+        .filter(a => a.category === article.category && a.id !== article.id)
+        .slice(0, 3);
+
+      const data = await fetchWithFallback(
+        `${API_BASE_URL}/news?${params}`, 
+        { success: true, data: fallbackRelated }
+      );
 
       if (data.success) {
         // Filter out current article
