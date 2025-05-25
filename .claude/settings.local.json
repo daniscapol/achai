@@ -87,7 +87,9 @@
       "Bash(sudo npx playwright:*)",
       "Bash(pgrep:*)",
       "Bash(ss:*)",
-      "Bash(API_PORT=3002 node src/api/server.js)"
+      "Bash(API_PORT=3002 node src/api/server.js)",
+      "Bash(git push:*)",
+      "Bash(git reset:*)"
     ],
     "deny": []
   }
