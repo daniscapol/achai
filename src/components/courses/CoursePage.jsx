@@ -26,7 +26,7 @@ const CoursePage = () => {
   const loadCourse = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/courses/${slug}`);
+      const response = await fetch(`${API_BASE_URL}/courses?slug=${slug}`);
       const data = await response.json();
 
       if (data.success && data.data) {

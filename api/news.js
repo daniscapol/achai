@@ -36,7 +36,7 @@ export default async function handler(req, res) {
           
           // Increment view count
           await query(
-            'UPDATE news_articles SET views_count = COALESCE(views_count, 0) + 1 WHERE id = $1',
+            'UPDATE news_articles SET view_count = COALESCE(view_count, 0) + 1 WHERE id = $1',
             [result.rows[0].id]
           );
           

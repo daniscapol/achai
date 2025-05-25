@@ -76,7 +76,7 @@ const NewsArticlePage = () => {
   const loadArticle = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/news/${slug}`);
+      const response = await fetch(`${API_BASE_URL}/news?slug=${slug}`);
       const data = await response.json();
 
       if (data.success && data.data) {
