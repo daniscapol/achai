@@ -19,10 +19,10 @@ export default async function handler(req, res) {
         // Get single article by slug
         const result = await query(`
           SELECT 
-            id, title, slug, content, summary as excerpt, 
-            author, category, published_at, updated_at, views_count
+            id, title, slug, content, excerpt, 
+            author_id, category_id, published_at, updated_at, view_count as views_count
           FROM news_articles 
-          WHERE slug = $1 AND is_published = true
+          WHERE slug = $1 AND status = 'published'
         `, [slug]);
         
         if (!result.rows[0]) {
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         
         // Increment view count
         await query(
-          'UPDATE news_articles SET views_count = COALESCE(views_count, 0) + 1 WHERE id = $1',
+          'UPDATE news_articles SET view_count = COALESCE(view_count, 0) + 1 WHERE id = $1',
           [result.rows[0].id]
         );
         

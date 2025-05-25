@@ -21,10 +21,10 @@ export default async function handler(req, res) {
         if (slug) {
           const result = await query(`
             SELECT 
-              id, title, slug, content, summary as excerpt, 
-              author, category, published_at, updated_at, views_count
+              id, title, slug, content, excerpt, 
+              author_id, category_id, published_at, updated_at, view_count as views_count
             FROM news_articles 
-            WHERE slug = $1 AND is_published = true
+            WHERE slug = $1 AND status = 'published'
           `, [slug]);
           
           if (!result.rows[0]) {
@@ -50,11 +50,11 @@ export default async function handler(req, res) {
         if (popular) {
           const result = await query(`
             SELECT 
-              id, title, slug, content, summary as excerpt, 
-              author, category, published_at, updated_at, views_count
+              id, title, slug, content, excerpt, 
+              author_id, category_id, published_at, updated_at, view_count as views_count
             FROM news_articles 
-            WHERE is_published = true
-            ORDER BY views_count DESC, published_at DESC
+            WHERE status = 'published'
+            ORDER BY view_count DESC, published_at DESC
             LIMIT $1
           `, [parseInt(limit)]);
           
@@ -65,7 +65,7 @@ export default async function handler(req, res) {
         }
         
         const offset = (parseInt(page) - 1) * parseInt(limit);
-        let whereClause = 'WHERE is_published = true';
+        let whereClause = 'WHERE status = \'published\'';
         let queryParams = [parseInt(limit), offset];
         let paramCount = 2;
         
@@ -84,7 +84,7 @@ export default async function handler(req, res) {
         
         // Get total count
         const countResult = await query(
-          `SELECT COUNT(*) FROM news_articles ${whereClause}`,
+          `SELECT COUNT(*) FROM news_articles ${whereClause.replace('is_published', 'status')}`,
           queryParams.slice(0, -2)
         );
         const total = parseInt(countResult.rows[0].count);
@@ -92,10 +92,10 @@ export default async function handler(req, res) {
         // Get articles
         const articlesResult = await query(`
           SELECT 
-            id, title, slug, content, summary as excerpt, 
-            author, category, published_at, updated_at, views_count
+            id, title, slug, content, excerpt, 
+            author_id, category_id, published_at, updated_at, view_count as views_count
           FROM news_articles 
-          ${whereClause}
+          ${whereClause.replace('is_published', 'status')}
           ORDER BY published_at DESC
           LIMIT $1 OFFSET $2
         `, queryParams);

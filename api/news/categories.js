@@ -16,10 +16,13 @@ export default async function handler(req, res) {
     if (method === 'GET') {
       try {
         const result = await query(`
-          SELECT DISTINCT category as name, category as slug
-          FROM news_articles 
-          WHERE is_published = true AND category IS NOT NULL
-          ORDER BY category
+          SELECT c.id, c.name, c.slug
+          FROM news_categories c
+          WHERE EXISTS (
+            SELECT 1 FROM news_articles n 
+            WHERE n.category_id = c.id AND n.status = 'published'
+          )
+          ORDER BY c.name
         `);
         
         return res.status(200).json({

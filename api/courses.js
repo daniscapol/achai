@@ -32,13 +32,14 @@ export default async function handler(req, res) {
         if (slug) {
           const result = await query(`
             SELECT 
-              id, title, slug, description, content, thumbnail_url,
-              instructor_name, instructor_bio, price, currency,
-              duration_hours, difficulty_level as difficulty, status,
-              enrollment_count, rating, rating_count,
-              created_at, updated_at, category_name, category_slug
-            FROM courses 
-            WHERE slug = $1 AND status = 'published'
+              c.id, c.title, c.slug, c.description, c.content, c.thumbnail as thumbnail_url,
+              c.instructor_name, c.instructor_bio, c.price, c.currency,
+              c.duration_hours, c.difficulty_level as difficulty, c.status,
+              c.enrollment_count, c.rating, c.rating_count,
+              c.created_at, c.updated_at, cc.name as category_name, cc.slug as category_slug
+            FROM courses c
+            LEFT JOIN course_categories cc ON c.category_id = cc.id
+            WHERE c.slug = $1 AND c.status = 'published'
           `, [slug]);
           
           if (!result.rows[0]) {
@@ -80,7 +81,7 @@ export default async function handler(req, res) {
         
         // Get total count
         const countResult = await query(
-          `SELECT COUNT(*) FROM courses ${whereClause}`,
+          `SELECT COUNT(*) FROM courses c LEFT JOIN course_categories cc ON c.category_id = cc.id ${whereClause.replace('status =', 'c.status =').replace('category_slug =', 'cc.slug =').replace('difficulty_level =', 'c.difficulty_level =')}`,
           queryParams.slice(0, -2)
         );
         const total = parseInt(countResult.rows[0].count);
@@ -100,14 +101,15 @@ export default async function handler(req, res) {
         // Get courses
         const coursesResult = await query(`
           SELECT 
-            id, title, slug, description, content, thumbnail_url,
-            instructor_name, instructor_bio, price, currency,
-            duration_hours, difficulty_level as difficulty, status,
-            enrollment_count, rating, rating_count,
-            created_at, updated_at, category_name, category_slug
-          FROM courses 
-          ${whereClause}
-          ${orderBy}
+            c.id, c.title, c.slug, c.description, c.content, c.thumbnail as thumbnail_url,
+            c.instructor_name, c.instructor_bio, c.price, c.currency,
+            c.duration_hours, c.difficulty_level as difficulty, c.status,
+            c.enrollment_count, c.rating, c.rating_count,
+            c.created_at, c.updated_at, cc.name as category_name, cc.slug as category_slug
+          FROM courses c
+          LEFT JOIN course_categories cc ON c.category_id = cc.id
+          ${whereClause.replace('status =', 'c.status =').replace('category_slug =', 'cc.slug =').replace('difficulty_level =', 'c.difficulty_level =')}
+          ${orderBy.replace('created_at', 'c.created_at').replace('enrollment_count', 'c.enrollment_count').replace('rating', 'c.rating')}
           LIMIT $${queryParams.length - 1} OFFSET $${queryParams.length}
         `, queryParams);
         
