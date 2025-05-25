@@ -116,6 +116,9 @@ const Header = ({
             { path: '/ready-to-use', label: t('navigation.ready_to_use'), href: '/ready-to-use', badge: t('common.new'), onClick: onNavigateReadyToUse },
             { path: '/browse-categories', label: t('navigation.categories'), href: '/browse-categories', onClick: onNavigateNewCategories },
             { path: '/products', label: t('navigation.products'), href: '/products', onClick: onNavigateProducts },
+            { path: '/news', label: 'News', href: '/news', onClick: () => window.location.href = '/news' },
+            { path: '/courses', label: 'Courses', href: '/courses', onClick: () => window.location.href = '/courses' },
+            { path: '/agents', label: 'AI Agents', href: '/agents', badge: 'Beta', onClick: () => window.location.href = '/agents' },
             // Temporarily hide Netflix UI option since it's not fully implemented
             // { path: '/netflix-products', label: 'Netflix UI', href: '/netflix-products', badge: 'New', onClick: onNavigateNetflixProducts },
             // Removed Product Admin from top navbar - accessible via secure-admin route
@@ -227,6 +230,8 @@ const Header = ({
                 { path: '/ready-to-use', label: t('navigation.ready_to_use'), href: '/ready-to-use', badge: t('common.new'), onClick: onNavigateReadyToUse },
                 { path: '/browse-categories', label: t('navigation.categories'), href: '/browse-categories', onClick: onNavigateNewCategories },
                 { path: '/products', label: t('navigation.products'), href: '/products', onClick: onNavigateProducts },
+                { path: '/news', label: 'News', href: '/news', onClick: () => window.location.href = '/news' },
+                { path: '/courses', label: 'Courses', href: '/courses', onClick: () => window.location.href = '/courses' },
                 // Temporarily hide Netflix UI option since it's not fully implemented
                 // { path: '/netflix-products', label: 'Netflix UI', href: '/netflix-products', badge: 'New', onClick: onNavigateNetflixProducts },
                 // Removed Product Admin from mobile menu - accessible via secure-admin route

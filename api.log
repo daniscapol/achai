@@ -1,61 +1,228 @@
-Loaded fallback data: 5 servers, 3 clients, 4 agents
-Attempting to connect to AWS PostgreSQL database...
-Initializing AWS PostgreSQL database schema...
-Mock query executed: 
-      CREATE TABLE IF NOT EXISTS products (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        description TEXT,
-        price DECIMAL(10, 2) DEFAULT 0,
-        image_url VARCHAR(512),
-        icon_url VARCHAR(512),
-        category VARCHAR(100),
-        categories TEXT[],
-        sku VARCHAR(50),
-        product_type VARCHAR(50) DEFAULT 'mcp_server',
-        github_url VARCHAR(512),
-        official BOOLEAN DEFAULT FALSE,
-        docs_url VARCHAR(512),
-        demo_url VARCHAR(512),
-        language VARCHAR(100),
-        license VARCHAR(100),
-        creator VARCHAR(100),
-        version VARCHAR(50),
-        installation_command TEXT,
-        tags TEXT[],
-        inventory_count INTEGER DEFAULT 0,
-        is_featured BOOLEAN DEFAULT FALSE,
-        is_active BOOLEAN DEFAULT TRUE,
-        slug VARCHAR(255) NOT NULL,
-        stars_numeric INTEGER DEFAULT 0,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-     undefined
+Connecting to PostgreSQL at achai.cn2ayqgqu2w8.us-east-2.rds.amazonaws.com:5432 as achai...
+Attempting to connect to PostgreSQL database...
+DB Config: {
+  user: 'achai',
+  host: 'achai.cn2ayqgqu2w8.us-east-2.rds.amazonaws.com',
+  database: 'achai',
+  port: 5432,
+  hasPassword: true
+}
+Initializing PostgreSQL database schema on achai.cn2ayqgqu2w8.us-east-2.rds.amazonaws.com...
+PostgreSQL database connection successful
+PostgreSQL database connected successfully!
+Workflow database tables initialized successfully
+Workflow database tables initialized
+✅ Default workflow templates initialized
+Default workflow templates initialized
+🚀 Initializing News and Courses database...
+📰 Creating news tables...
+Query error: error: column "status" does not exist
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async initNewsAndCourses (file:///home/pumba/websiteloco/good/api/init-news-courses.js:17:5)
+    at async initDatabase (file:///home/pumba/websiteloco/good/src/api/server.js:52:7) {
+  length: 96,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'indexcmds.c',
+  line: '1888',
+  routine: 'ComputeIndexAttrs'
+}
+❌ Error initializing database: error: column "status" does not exist
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async initNewsAndCourses (file:///home/pumba/websiteloco/good/api/init-news-courses.js:17:5)
+    at async initDatabase (file:///home/pumba/websiteloco/good/src/api/server.js:52:7) {
+  length: 96,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'indexcmds.c',
+  line: '1888',
+  routine: 'ComputeIndexAttrs'
+}
+Initializing News and Courses with basic schema...
+Basic News and Courses schema created successfully
 Products table created or verified
-Mock query executed: 
-      CREATE INDEX IF NOT EXISTS idx_products_name ON products(name);
-      CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);
-      CREATE INDEX IF NOT EXISTS idx_products_is_featured ON products(is_featured) WHERE is_featured = TRUE;
-      CREATE INDEX IF NOT EXISTS idx_products_product_type ON products(product_type);
-      CREATE UNIQUE INDEX IF NOT EXISTS idx_products_slug ON products(slug);
-     undefined
+Products table schema updated successfully
 Database indexes created or verified
-Mock query executed: SELECT COUNT(*) FROM products undefined
 Database schema initialized successfully
 
 ------------------------------------------------------
 🚀 API Server running on port 3001
 ------------------------------------------------------
-✅ Connected to AWS database successfully
+✅ Connected to PostgreSQL database successfully
+   Host: achai.cn2ayqgqu2w8.us-east-2.rds.amazonaws.com
+   User: achai
+   Database: achai
    
-💡 All data is being served directly from AWS database
+💡 All data is being served from PostgreSQL database
 ------------------------------------------------------
 
-AWS Database connected successfully!
-Mock query executed: SELECT * FROM products ORDER BY created_at DESC LIMIT $1 OFFSET $2 [ 10, 0 ]
-Mock query executed: SELECT COUNT(*) FROM products undefined
-Mock query executed: SELECT * FROM products ORDER BY created_at DESC LIMIT $1 OFFSET $2 [ 50, 0 ]
-Mock query executed: SELECT COUNT(*) FROM products undefined
-Mock query executed: SELECT * FROM products ORDER BY created_at DESC LIMIT $1 OFFSET $2 [ 50, 0 ]
-Mock query executed: SELECT COUNT(*) FROM products undefined
+Query error: error: null value in column "slug" of relation "news_articles" violates not-null constraint
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.create (file:///home/pumba/websiteloco/good/src/utils/News.js:217:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:76:24 {
+  length: 399,
+  severity: 'ERROR',
+  code: '23502',
+  detail: 'Failing row contains (12, null, Test News Article, Test summary, This is a test article, null, null, null, null, null, 2025-05-24 23:28:01.177, 2025-05-24 23:28:01.177, t, Technical Articles, {}, 0, f, Test Author, null).',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'news_articles',
+  column: 'slug',
+  dataType: undefined,
+  constraint: undefined,
+  file: 'execMain.c',
+  line: '1987',
+  routine: 'ExecConstraints'
+}
+Error in News.create: error: null value in column "slug" of relation "news_articles" violates not-null constraint
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.create (file:///home/pumba/websiteloco/good/src/utils/News.js:217:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:76:24 {
+  length: 399,
+  severity: 'ERROR',
+  code: '23502',
+  detail: 'Failing row contains (12, null, Test News Article, Test summary, This is a test article, null, null, null, null, null, 2025-05-24 23:28:01.177, 2025-05-24 23:28:01.177, t, Technical Articles, {}, 0, f, Test Author, null).',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'news_articles',
+  column: 'slug',
+  dataType: undefined,
+  constraint: undefined,
+  file: 'execMain.c',
+  line: '1987',
+  routine: 'ExecConstraints'
+}
+News API Error: error: null value in column "slug" of relation "news_articles" violates not-null constraint
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.create (file:///home/pumba/websiteloco/good/src/utils/News.js:217:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:76:24 {
+  length: 399,
+  severity: 'ERROR',
+  code: '23502',
+  detail: 'Failing row contains (12, null, Test News Article, Test summary, This is a test article, null, null, null, null, null, 2025-05-24 23:28:01.177, 2025-05-24 23:28:01.177, t, Technical Articles, {}, 0, f, Test Author, null).',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'news_articles',
+  column: 'slug',
+  dataType: undefined,
+  constraint: undefined,
+  file: 'execMain.c',
+  line: '1987',
+  routine: 'ExecConstraints'
+}
+Query error: error: null value in column "slug" of relation "news_articles" violates not-null constraint
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.create (file:///home/pumba/websiteloco/good/src/utils/News.js:217:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:76:24 {
+  length: 399,
+  severity: 'ERROR',
+  code: '23502',
+  detail: 'Failing row contains (13, null, Test News Article, Test summary, This is a test article, null, null, null, null, null, 2025-05-24 23:29:26.381, 2025-05-24 23:29:26.381, t, Technical Articles, {}, 0, f, Test Author, null).',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'news_articles',
+  column: 'slug',
+  dataType: undefined,
+  constraint: undefined,
+  file: 'execMain.c',
+  line: '1987',
+  routine: 'ExecConstraints'
+}
+Error in News.create: error: null value in column "slug" of relation "news_articles" violates not-null constraint
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.create (file:///home/pumba/websiteloco/good/src/utils/News.js:217:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:76:24 {
+  length: 399,
+  severity: 'ERROR',
+  code: '23502',
+  detail: 'Failing row contains (13, null, Test News Article, Test summary, This is a test article, null, null, null, null, null, 2025-05-24 23:29:26.381, 2025-05-24 23:29:26.381, t, Technical Articles, {}, 0, f, Test Author, null).',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'news_articles',
+  column: 'slug',
+  dataType: undefined,
+  constraint: undefined,
+  file: 'execMain.c',
+  line: '1987',
+  routine: 'ExecConstraints'
+}
+News API Error: error: null value in column "slug" of relation "news_articles" violates not-null constraint
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.create (file:///home/pumba/websiteloco/good/src/utils/News.js:217:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:76:24 {
+  length: 399,
+  severity: 'ERROR',
+  code: '23502',
+  detail: 'Failing row contains (13, null, Test News Article, Test summary, This is a test article, null, null, null, null, null, 2025-05-24 23:29:26.381, 2025-05-24 23:29:26.381, t, Technical Articles, {}, 0, f, Test Author, null).',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'news_articles',
+  column: 'slug',
+  dataType: undefined,
+  constraint: undefined,
+  file: 'execMain.c',
+  line: '1987',
+  routine: 'ExecConstraints'
+}

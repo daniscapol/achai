@@ -8,8 +8,64 @@ DB Config: {
   hasPassword: true
 }
 Initializing PostgreSQL database schema on achai.cn2ayqgqu2w8.us-east-2.rds.amazonaws.com...
-PostgreSQL database connected successfully!
 PostgreSQL database connection successful
+PostgreSQL database connected successfully!
+Workflow database tables initialized successfully
+Workflow database tables initialized
+✅ Default workflow templates initialized
+Default workflow templates initialized
+🚀 Initializing News and Courses database...
+📰 Creating news tables...
+Query error: error: column "status" does not exist
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async initNewsAndCourses (file:///home/pumba/websiteloco/good/api/init-news-courses.js:17:5)
+    at async initDatabase (file:///home/pumba/websiteloco/good/src/api/server.js:52:7) {
+  length: 96,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'indexcmds.c',
+  line: '1888',
+  routine: 'ComputeIndexAttrs'
+}
+❌ Error initializing database: error: column "status" does not exist
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async initNewsAndCourses (file:///home/pumba/websiteloco/good/api/init-news-courses.js:17:5)
+    at async initDatabase (file:///home/pumba/websiteloco/good/src/api/server.js:52:7) {
+  length: 96,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'indexcmds.c',
+  line: '1888',
+  routine: 'ComputeIndexAttrs'
+}
+Initializing News and Courses with basic schema...
+Basic News and Courses schema created successfully
 Products table created or verified
 Products table schema updated successfully
 Database indexes created or verified
@@ -26,224 +82,3 @@ Database schema initialized successfully
 💡 All data is being served from PostgreSQL database
 ------------------------------------------------------
 
-Updating product with data: {
-  "name_en": "Test English Updated",
-  "name_pt": "Teste Português Atualizado",
-  "description_en": "Test English description updated with more than 10 characters",
-  "description_pt": "Teste descrição portuguesa atualizada com mais de 10 caracteres"
-}
-Multilingual fields for update:
-- name_en: Test English Updated
-- name_pt: Teste Português Atualizado
-- description_en: Test English description updated with more than 10 characters
-- description_pt: Teste descrição portuguesa atualizada com mais de 10 caracteres
-Update query: 
-        UPDATE products 
-        SET name_en = $1, name_pt = $2, description_en = $3, description_pt = $4, slug = $5, updated_at = NOW()
-        WHERE id = $6 
-        RETURNING *
-      
-Update values: [
-  'Test English Updated',
-  'Teste Português Atualizado',
-  'Test English description updated with more than 10 characters',
-  'Teste descrição portuguesa atualizada com mais de 10 caracteres',
-  'test-english-updated',
-  '583'
-]
-Creating product with data: {
-  "product_type": "ai_agent",
-  "name_en": "Test Create English",
-  "name_pt": "Teste Criar Português",
-  "description_en": "Test create English description with more than 10 characters",
-  "description_pt": "Teste criar descrição portuguesa com mais de 10 caracteres",
-  "category": "AI Agent",
-  "github_url": "https://github.com/test",
-  "license": "MIT"
-}
-Multilingual fields received:
-- name_en: Test Create English
-- name_pt: Teste Criar Português
-- description_en: Test create English description with more than 10 characters
-- description_pt: Teste criar descrição portuguesa com mais de 10 caracteres
-Executing SQL query with required fields including slug
-Values being inserted:
-- finalName: Test Create English
-- finalDescription: Test create English description with more than 10 characters
-- name_en: Test Create English
-- name_pt: Teste Criar Português
-- description_en: Test create English description with more than 10 characters
-- description_pt: Teste criar descrição portuguesa com mais de 10 caracteres
-- finalSlug: test-create-english
-Query error: error: INSERT has more target columns than expressions
-    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async Object.query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
-    at async Product.create (file:///home/pumba/websiteloco/good/src/models/Product.js:135:22)
-    at async file:///home/pumba/websiteloco/good/src/api/productRoutes.js:99:21 {
-  length: 117,
-  severity: 'ERROR',
-  code: '42601',
-  detail: undefined,
-  hint: undefined,
-  position: '375',
-  internalPosition: undefined,
-  internalQuery: undefined,
-  where: undefined,
-  schema: undefined,
-  table: undefined,
-  column: undefined,
-  dataType: undefined,
-  constraint: undefined,
-  file: 'analyze.c',
-  line: '1043',
-  routine: 'transformInsertRow'
-}
-Error creating product: error: INSERT has more target columns than expressions
-    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async Object.query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
-    at async Product.create (file:///home/pumba/websiteloco/good/src/models/Product.js:135:22)
-    at async file:///home/pumba/websiteloco/good/src/api/productRoutes.js:99:21 {
-  length: 117,
-  severity: 'ERROR',
-  code: '42601',
-  detail: undefined,
-  hint: undefined,
-  position: '375',
-  internalPosition: undefined,
-  internalQuery: undefined,
-  where: undefined,
-  schema: undefined,
-  table: undefined,
-  column: undefined,
-  dataType: undefined,
-  constraint: undefined,
-  file: 'analyze.c',
-  line: '1043',
-  routine: 'transformInsertRow'
-}
-Error details: INSERT has more target columns than expressions
-Error code: 42601
-Error creating product: error: INSERT has more target columns than expressions
-    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async Object.query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
-    at async Product.create (file:///home/pumba/websiteloco/good/src/models/Product.js:135:22)
-    at async file:///home/pumba/websiteloco/good/src/api/productRoutes.js:99:21 {
-  length: 117,
-  severity: 'ERROR',
-  code: '42601',
-  detail: undefined,
-  hint: undefined,
-  position: '375',
-  internalPosition: undefined,
-  internalQuery: undefined,
-  where: undefined,
-  schema: undefined,
-  table: undefined,
-  column: undefined,
-  dataType: undefined,
-  constraint: undefined,
-  file: 'analyze.c',
-  line: '1043',
-  routine: 'transformInsertRow'
-}
-Creating product with data: {
-  "product_type": "ai_agent",
-  "name_en": "Test Create English V2",
-  "name_pt": "Teste Criar Português V2",
-  "description_en": "Test create English description with more than 10 characters V2",
-  "description_pt": "Teste criar descrição portuguesa com mais de 10 caracteres V2",
-  "category": "AI Agent",
-  "github_url": "https://github.com/test",
-  "license": "MIT"
-}
-Multilingual fields received:
-- name_en: Test Create English V2
-- name_pt: Teste Criar Português V2
-- description_en: Test create English description with more than 10 characters V2
-- description_pt: Teste criar descrição portuguesa com mais de 10 caracteres V2
-Executing SQL query with required fields including slug
-Values being inserted:
-- finalName: Test Create English V2
-- finalDescription: Test create English description with more than 10 characters V2
-- name_en: Test Create English V2
-- name_pt: Teste Criar Português V2
-- description_en: Test create English description with more than 10 characters V2
-- description_pt: Teste criar descrição portuguesa com mais de 10 caracteres V2
-- finalSlug: test-create-english-v2
-Query error: error: INSERT has more target columns than expressions
-    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async Object.query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
-    at async Product.create (file:///home/pumba/websiteloco/good/src/models/Product.js:135:22)
-    at async file:///home/pumba/websiteloco/good/src/api/productRoutes.js:99:21 {
-  length: 117,
-  severity: 'ERROR',
-  code: '42601',
-  detail: undefined,
-  hint: undefined,
-  position: '375',
-  internalPosition: undefined,
-  internalQuery: undefined,
-  where: undefined,
-  schema: undefined,
-  table: undefined,
-  column: undefined,
-  dataType: undefined,
-  constraint: undefined,
-  file: 'analyze.c',
-  line: '1043',
-  routine: 'transformInsertRow'
-}
-Error creating product: error: INSERT has more target columns than expressions
-    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async Object.query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
-    at async Product.create (file:///home/pumba/websiteloco/good/src/models/Product.js:135:22)
-    at async file:///home/pumba/websiteloco/good/src/api/productRoutes.js:99:21 {
-  length: 117,
-  severity: 'ERROR',
-  code: '42601',
-  detail: undefined,
-  hint: undefined,
-  position: '375',
-  internalPosition: undefined,
-  internalQuery: undefined,
-  where: undefined,
-  schema: undefined,
-  table: undefined,
-  column: undefined,
-  dataType: undefined,
-  constraint: undefined,
-  file: 'analyze.c',
-  line: '1043',
-  routine: 'transformInsertRow'
-}
-Error details: INSERT has more target columns than expressions
-Error code: 42601
-Error creating product: error: INSERT has more target columns than expressions
-    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async Object.query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
-    at async Product.create (file:///home/pumba/websiteloco/good/src/models/Product.js:135:22)
-    at async file:///home/pumba/websiteloco/good/src/api/productRoutes.js:99:21 {
-  length: 117,
-  severity: 'ERROR',
-  code: '42601',
-  detail: undefined,
-  hint: undefined,
-  position: '375',
-  internalPosition: undefined,
-  internalQuery: undefined,
-  where: undefined,
-  schema: undefined,
-  table: undefined,
-  column: undefined,
-  dataType: undefined,
-  constraint: undefined,
-  file: 'analyze.c',
-  line: '1043',
-  routine: 'transformInsertRow'
-}

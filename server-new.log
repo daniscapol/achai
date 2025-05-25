@@ -1,0 +1,1452 @@
+Connecting to PostgreSQL at achai.cn2ayqgqu2w8.us-east-2.rds.amazonaws.com:5432 as achai...
+Attempting to connect to PostgreSQL database...
+DB Config: {
+  user: 'achai',
+  host: 'achai.cn2ayqgqu2w8.us-east-2.rds.amazonaws.com',
+  database: 'achai',
+  port: 5432,
+  hasPassword: true
+}
+Initializing PostgreSQL database schema on achai.cn2ayqgqu2w8.us-east-2.rds.amazonaws.com...
+PostgreSQL database connected successfully!
+PostgreSQL database connection successful
+Workflow database tables initialized successfully
+Workflow database tables initialized
+✅ Default workflow templates initialized
+Default workflow templates initialized
+🚀 Initializing News and Courses database...
+📰 Creating news tables...
+Query error: error: column "status" does not exist
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async initNewsAndCourses (file:///home/pumba/websiteloco/good/api/init-news-courses.js:17:5)
+    at async initDatabase (file:///home/pumba/websiteloco/good/src/api/server.js:52:7) {
+  length: 96,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'indexcmds.c',
+  line: '1888',
+  routine: 'ComputeIndexAttrs'
+}
+❌ Error initializing database: error: column "status" does not exist
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async initNewsAndCourses (file:///home/pumba/websiteloco/good/api/init-news-courses.js:17:5)
+    at async initDatabase (file:///home/pumba/websiteloco/good/src/api/server.js:52:7) {
+  length: 96,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'indexcmds.c',
+  line: '1888',
+  routine: 'ComputeIndexAttrs'
+}
+Initializing News and Courses with basic schema...
+Basic News and Courses schema created successfully
+Products table created or verified
+Products table schema updated successfully
+Database indexes created or verified
+Database schema initialized successfully
+
+------------------------------------------------------
+🚀 API Server running on port 3001
+------------------------------------------------------
+✅ Connected to PostgreSQL database successfully
+   Host: achai.cn2ayqgqu2w8.us-east-2.rds.amazonaws.com
+   User: achai
+   Database: achai
+   
+💡 All data is being served from PostgreSQL database
+------------------------------------------------------
+
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async Course.getById (file:///home/pumba/websiteloco/good/src/utils/Course.js:54:22)
+    at async file:///home/pumba/websiteloco/good/src/api/coursesRoutes.js:165:20 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in Course.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async Course.getById (file:///home/pumba/websiteloco/good/src/utils/Course.js:54:22)
+    at async file:///home/pumba/websiteloco/good/src/api/coursesRoutes.js:165:20 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Course API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async Course.getById (file:///home/pumba/websiteloco/good/src/utils/Course.js:54:22)
+    at async file:///home/pumba/websiteloco/good/src/api/coursesRoutes.js:165:20 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async Course.getById (file:///home/pumba/websiteloco/good/src/utils/Course.js:54:22)
+    at async file:///home/pumba/websiteloco/good/src/api/coursesRoutes.js:165:20 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in Course.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async Course.getById (file:///home/pumba/websiteloco/good/src/utils/Course.js:54:22)
+    at async file:///home/pumba/websiteloco/good/src/api/coursesRoutes.js:165:20 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Course API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async Course.getById (file:///home/pumba/websiteloco/good/src/utils/Course.js:54:22)
+    at async file:///home/pumba/websiteloco/good/src/api/coursesRoutes.js:165:20 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Query error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error in News.getById: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+News API Error: error: invalid input syntax for type integer: "NaN"
+    at /home/pumba/websiteloco/good/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async query (file:///home/pumba/websiteloco/good/src/utils/db.js:66:12)
+    at async News.getById (file:///home/pumba/websiteloco/good/src/utils/News.js:47:22)
+    at async file:///home/pumba/websiteloco/good/src/api/newsRoutes.js:140:21 {
+  length: 146,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}

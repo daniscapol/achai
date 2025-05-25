@@ -81,7 +81,13 @@
       "Bash(sudo service:*)",
       "Bash(wget:*)",
       "Bash(sudo apt:*)",
-      "Bash(sudo apt install:*)"
+      "Bash(sudo apt install:*)",
+      "Bash(echo:*)",
+      "Bash(npx playwright:*)",
+      "Bash(sudo npx playwright:*)",
+      "Bash(pgrep:*)",
+      "Bash(ss:*)",
+      "Bash(API_PORT=3002 node src/api/server.js)"
     ],
     "deny": []
   }

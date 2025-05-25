@@ -78,3 +78,58 @@ For more detailed information about MCP, refer to the official [Model Context Pr
 - Add useful comments for complex animations
 - Test on mobile and desktop viewports
 - Ensure focus states are visible for accessibility
+
+## AI Agent System
+
+### Server Requirements
+The AI agent system requires both frontend and backend servers running simultaneously:
+
+```bash
+# Terminal 1: Backend API Server (required for email proxy)
+cd /home/pumba/websiteloco/good
+node src/api/server.js
+
+# Terminal 2: Frontend Development Server  
+cd /home/pumba/websiteloco/good
+npm run dev
+```
+
+### Agent Development Guidelines
+- All agents are located in `src/components/agents/`
+- Use the BaseAgent pattern for consistent structure
+- Agents require customer-provided API keys (zero-cost model)
+- Store API keys securely in localStorage via ApiKeyManager
+- Always include error handling and progress indicators
+
+### Email Workflow Agent
+The Smart Email Workflow agent automates email campaigns by:
+1. Reading Google Sheets with contact data
+2. Analyzing contacts using OpenAI GPT-4
+3. Generating personalized emails with AI
+4. Sending emails via Resend/SendGrid/Mailgun
+5. Tracking results and updating sheets
+
+**Required API Keys:**
+- OpenAI API Key (for AI analysis and email generation)
+- Email Service API Key (Resend recommended)
+
+**Google Sheets Format:**
+| Name | Email | Context |
+|------|-------|---------|
+| John Doe | john@example.com | Interested in premium features |
+
+**Testing Commands:**
+```bash
+# Test backend email endpoint
+curl -X POST http://localhost:3001/api/send-email -H "Content-Type: application/json" -d '{"service":"resend","apiKey":"your-key","emailData":{"to":"test@test.com","subject":"Test","body":"Test","name":"Test"}}'
+
+# Verify CORS from frontend
+curl -X POST http://localhost:3001/api/send-email -H "Origin: http://localhost:5174" -v
+```
+
+### Agent Architecture
+- Customer API key integration eliminates operational costs
+- Browser-based execution for security and scalability
+- CORS proxy for email services to bypass browser restrictions
+- Persistent key management with validation
+- Real-time progress tracking and error handling

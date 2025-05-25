@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import productRoutes from './productRoutes.js';
 import updateImageRoutes from './updateImageRoutes.js';
+import workflowDb from '../../api/workflows.js';
 import db from '../utils/db.js';
 import fs from 'fs';
 import path from 'path';
@@ -36,6 +37,124 @@ async function initDatabase() {
     // Test database connection first
     await db.testConnection();
     console.log('PostgreSQL database connection successful');
+    
+    // Initialize workflow database tables
+    await workflowDb.initializeWorkflowDatabase();
+    console.log('Workflow database tables initialized');
+    
+    // Initialize default workflow templates
+    await workflowDb.initializeDefaultTemplates();
+    console.log('Default workflow templates initialized');
+    
+    // Initialize News and Courses database with improved error handling
+    try {
+      const { initNewsAndCourses } = await import('../../api/init-news-courses.js');
+      await initNewsAndCourses();
+      console.log('News and Courses database initialized');
+    } catch (newsCoursesError) {
+      console.log('Initializing News and Courses with basic schema...');
+      
+      // Create minimal schema for News and Courses if full initialization fails
+      try {
+        await db.query(`
+          -- Create basic news categories
+          CREATE TABLE IF NOT EXISTS news_categories (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL UNIQUE,
+            slug VARCHAR(100) NOT NULL UNIQUE,
+            description TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+
+          -- Create basic authors table
+          CREATE TABLE IF NOT EXISTS authors (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) UNIQUE NOT NULL,
+            bio TEXT,
+            avatar_url VARCHAR(512),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+
+          -- Create basic news articles table
+          CREATE TABLE IF NOT EXISTS news_articles (
+            id SERIAL PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            slug VARCHAR(255) NOT NULL UNIQUE,
+            content TEXT NOT NULL,
+            excerpt TEXT,
+            featured_image VARCHAR(512),
+            author_id INTEGER REFERENCES authors(id) ON DELETE SET NULL,
+            category_id INTEGER REFERENCES news_categories(id) ON DELETE SET NULL,
+            status VARCHAR(20) CHECK (status IN ('draft', 'published', 'archived')) DEFAULT 'draft',
+            published_at TIMESTAMP,
+            view_count INTEGER DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+
+          -- Create basic course categories
+          CREATE TABLE IF NOT EXISTS course_categories (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL UNIQUE,
+            slug VARCHAR(100) NOT NULL UNIQUE,
+            description TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+
+          -- Create basic courses table
+          CREATE TABLE IF NOT EXISTS courses (
+            id SERIAL PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            slug VARCHAR(255) NOT NULL UNIQUE,
+            description TEXT NOT NULL,
+            content TEXT NOT NULL,
+            thumbnail VARCHAR(512),
+            instructor_name VARCHAR(255) NOT NULL,
+            instructor_bio TEXT,
+            price DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+            currency VARCHAR(3) DEFAULT 'USD',
+            duration_hours DECIMAL(5, 2),
+            difficulty_level VARCHAR(20) CHECK (difficulty_level IN ('beginner', 'intermediate', 'advanced')) DEFAULT 'beginner',
+            category_id INTEGER REFERENCES course_categories(id) ON DELETE SET NULL,
+            status VARCHAR(20) CHECK (status IN ('draft', 'published', 'archived')) DEFAULT 'draft',
+            enrollment_count INTEGER DEFAULT 0,
+            rating DECIMAL(3, 2) DEFAULT 0.00 CHECK (rating >= 0 AND rating <= 5),
+            rating_count INTEGER DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+
+          -- Insert default categories
+          INSERT INTO news_categories (name, slug, description) VALUES
+            ('Product Updates', 'product-updates', 'Latest updates and releases for our products'),
+            ('Industry News', 'industry-news', 'News and trends in the AI and MCP ecosystem'),
+            ('Company News', 'company-news', 'Updates about our company and team'),
+            ('Technical Articles', 'technical-articles', 'In-depth technical content and insights')
+          ON CONFLICT (slug) DO NOTHING;
+
+          INSERT INTO course_categories (name, slug, description) VALUES
+            ('AI Development', 'ai-development', 'Courses on AI and machine learning development'),
+            ('MCP Integration', 'mcp-integration', 'Learn how to integrate Model Context Protocol'),
+            ('Agent Development', 'agent-development', 'Build and deploy AI agents'),
+            ('Web Development', 'web-development', 'Modern web development with AI integration'),
+            ('Data Science', 'data-science', 'Data analysis and science with AI tools')
+          ON CONFLICT (slug) DO NOTHING;
+
+          -- Insert default author
+          INSERT INTO authors (name, email, bio) VALUES
+            ('Admin', 'admin@achai.com', 'achAI Administrator')
+          ON CONFLICT (email) DO NOTHING;
+        `);
+        
+        console.log('Basic News and Courses schema created successfully');
+      } catch (basicSchemaError) {
+        console.log('News and Courses tables may already exist:', basicSchemaError.message);
+      }
+    }
     
     
     // First ensure the products table exists with proper schema
@@ -266,9 +385,216 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Email sending endpoint for agents
+app.post('/api/send-email', async (req, res) => {
+  try {
+    const { service, apiKey, emailData } = req.body;
+
+    if (!service || !apiKey || !emailData) {
+      return res.status(400).json({ error: 'Missing required fields: service, apiKey, emailData' });
+    }
+
+    let result;
+
+    switch (service) {
+      case 'resend':
+        result = await sendWithResend(apiKey, emailData);
+        break;
+      case 'sendgrid':
+        result = await sendWithSendGrid(apiKey, emailData);
+        break;
+      case 'mailgun':
+        result = await sendWithMailgun(apiKey, emailData);
+        break;
+      default:
+        return res.status(400).json({ error: `Unsupported email service: ${service}` });
+    }
+
+    res.status(200).json({ success: true, result });
+
+  } catch (error) {
+    console.error('Email sending error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message || 'Failed to send email' 
+    });
+  }
+});
+
+async function sendWithResend(apiKey, emailData) {
+  const fetch = (await import('node-fetch')).default;
+  
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      from: 'onboarding@resend.dev',
+      to: ['daniscapol2@gmail.com'], // Force to your verified email for testing
+      subject: `[TEST] ${emailData.subject} (intended for: ${emailData.to})`,
+      text: `This email was intended for: ${emailData.to}\n\n${emailData.body}\n\n---\nThis is a test email sent to your verified address.`
+    })
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Resend error: ${error}`);
+  }
+
+  return await response.json();
+}
+
+async function sendWithSendGrid(apiKey, emailData) {
+  const fetch = (await import('node-fetch')).default;
+  
+  const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      personalizations: [{
+        to: [{ email: emailData.to, name: emailData.name }]
+      }],
+      from: { email: 'noreply@yourdomain.com', name: 'Your Name' },
+      subject: emailData.subject,
+      content: [{
+        type: 'text/plain',
+        value: emailData.body
+      }]
+    })
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`SendGrid error: ${error}`);
+  }
+
+  return { message: 'Email sent successfully' };
+}
+
+async function sendWithMailgun(apiKey, emailData) {
+  const fetch = (await import('node-fetch')).default;
+  const domain = emailData.domain || 'sandboxXXX.mailgun.org';
+  
+  const formData = new URLSearchParams();
+  formData.append('from', `Your Name <noreply@${domain}>`);
+  formData.append('to', emailData.to);
+  formData.append('subject', emailData.subject);
+  formData.append('text', emailData.body);
+
+  const response = await fetch(`https://api.mailgun.net/v3/${domain}/messages`, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Basic ' + Buffer.from('api:' + apiKey).toString('base64'),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: formData
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Mailgun error: ${error}`);
+  }
+
+  return await response.json();
+}
+
+// Import news and courses routes
+import newsRoutes from './newsRoutes.js';
+import coursesRoutes from './coursesRoutes.js';
+
 // Routes
 app.use('/api/products', productRoutes);
 app.use('/api/admin', updateImageRoutes);
+
+// News and Courses API routes (using database)
+app.use('/api/news', newsRoutes);
+app.use('/api/courses', coursesRoutes);
+
+// Mock data routes for testing (commented out - using database routes now)
+// app.get('/api/news', (req, res) => {
+//   const mockNews = [
+//     {
+//       id: 1,
+//       title: "New MCP Server for Weather Data",
+//       content: "We've just released a new MCP server that provides weather data from multiple sources...",
+//       excerpt: "A new MCP server for weather data is now available",
+//       author: "ACHAI Team",
+//       published_date: "2024-01-15T10:00:00Z",
+//       tags: ["mcp", "weather", "api"],
+//       category: "Releases",
+//       featured_image: "/assets/news/weather-server.jpg",
+//       status: "published"
+//     }
+//   ];
+//   res.json(mockNews);
+// });
+
+// Workflow API endpoints
+app.post('/api/workflows', async (req, res) => {
+  try {
+    const { workflow, userId = 'anonymous' } = req.body;
+    const savedWorkflow = await workflowDb.saveWorkflow(workflow, userId);
+    res.json({ success: true, workflow: savedWorkflow });
+  } catch (error) {
+    console.error('Error saving workflow:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.get('/api/workflows/templates', async (req, res) => {
+  try {
+    const templates = await workflowDb.getWorkflowTemplates();
+    res.json({ success: true, templates });
+  } catch (error) {
+    console.error('Error loading workflow templates:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.get('/api/workflows/:id', async (req, res) => {
+  try {
+    const workflow = await workflowDb.loadWorkflow(req.params.id);
+    res.json({ success: true, workflow });
+  } catch (error) {
+    console.error('Error loading workflow:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/workflow-executions', async (req, res) => {
+  try {
+    const execution = await workflowDb.saveWorkflowExecution(req.body);
+    res.json({ success: true, execution });
+  } catch (error) {
+    console.error('Error saving workflow execution:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.put('/api/workflow-executions/:id', async (req, res) => {
+  try {
+    const execution = await workflowDb.updateWorkflowExecution(req.params.id, req.body);
+    res.json({ success: true, execution });
+  } catch (error) {
+    console.error('Error updating workflow execution:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.get('/api/workflow-executions/:workflowId', async (req, res) => {
+  try {
+    const executions = await workflowDb.getWorkflowExecutions(req.params.workflowId);
+    res.json({ success: true, executions });
+  } catch (error) {
+    console.error('Error loading workflow executions:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import TechHubProductManagementDemo from './TechHubProductManagementDemo';
+import NewsManagement from './admin/NewsManagement';
+import CourseManagement from './admin/CourseManagement';
 
 const SecureAdminPage = () => {
   const { t } = useTranslation();
@@ -8,7 +10,7 @@ const SecureAdminPage = () => {
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [message, setMessage] = useState('');
-  // Only products tab available now
+  const [activeTab, setActiveTab] = useState('products');
 
   // Hardcoded credentials as specified
   const validUsername = 'pumba';
@@ -108,18 +110,50 @@ const SecureAdminPage = () => {
         </button>
       </div>
       
-      {/* Product Management - Only Available Tab */}
+      {/* Admin Tabs */}
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-gray-200 mb-4 flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0v10l-8 4m0-10L4 7m8 4v10" />
-          </svg>
-          {t('admin.product_management')}
-        </h2>
+        <div className="border-b border-zinc-700">
+          <nav className="-mb-px flex space-x-8">
+            <button
+              onClick={() => setActiveTab('products')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'products'
+                  ? 'border-purple-500 text-purple-400'
+                  : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-300'
+              }`}
+            >
+              Products
+            </button>
+            <button
+              onClick={() => setActiveTab('news')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'news'
+                  ? 'border-purple-500 text-purple-400'
+                  : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-300'
+              }`}
+            >
+              News
+            </button>
+            <button
+              onClick={() => setActiveTab('courses')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'courses'
+                  ? 'border-purple-500 text-purple-400'
+                  : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-300'
+              }`}
+            >
+              Courses
+            </button>
+          </nav>
+        </div>
       </div>
-      
-      {/* Product Management Content */}
-      <TechHubProductManagementDemo />
+
+      {/* Tab Content */}
+      <div className="mt-6">
+        {activeTab === 'products' && <TechHubProductManagementDemo />}
+        {activeTab === 'news' && <NewsManagement />}
+        {activeTab === 'courses' && <CourseManagement />}
+      </div>
     </div>
   );
 };

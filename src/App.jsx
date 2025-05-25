@@ -25,6 +25,15 @@ import GlobalSearchBar from './components/GlobalSearchBar';
 import AuthRequired from './components/auth/AuthRequired';
 import ReadyToUsePage from './components/ReadyToUsePage';
 import AboutUsPage from './components/AboutUsPage';
+import AgentRunner from './components/agents/AgentRunner';
+import ApiKeyManager from './components/agents/ApiKeyManager';
+// News and Courses components
+import NewsPage from './components/news/NewsPage';
+import NewsArticlePage from './components/news/NewsArticlePage';
+import NewsCategoryPage from './components/news/NewsCategoryPage';
+import CoursesPage from './components/courses/CoursesPage';
+import CoursePage from './components/courses/CoursePage';
+import CourseCategoryPage from './components/courses/CourseCategoryPage';
 import { AnimatePresence, prefersReducedMotion } from './components/animations';
 import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
@@ -1859,6 +1868,15 @@ function App() {
                     <SearchResultsPage />
                   </SearchResultsLayout>
                 } />
+                <Route path="/:lang/agents" element={<AgentRunner />} />
+                <Route path="/:lang/agents/keys" element={<ApiKeyManager />} />
+                {/* News and Courses routes */}
+                <Route path="/:lang/news" element={<NewsPage />} />
+                <Route path="/:lang/news/:slug" element={<NewsArticlePage />} />
+                <Route path="/:lang/news/category/:category" element={<NewsCategoryPage />} />
+                <Route path="/:lang/courses" element={<CoursesPage />} />
+                <Route path="/:lang/courses/:slug" element={<CoursePage />} />
+                <Route path="/:lang/courses/category/:category" element={<CourseCategoryPage />} />
                 <Route path="/:lang" element={
                   <AnimatePresence 
                     show={true} 
@@ -1897,6 +1915,15 @@ function App() {
                     <SearchResultsPage />
                   </SearchResultsLayout>
                 } />
+                <Route path="/agents" element={<AgentRunner />} />
+                <Route path="/agents/keys" element={<ApiKeyManager />} />
+                {/* News and Courses legacy routes */}
+                <Route path="/news" element={<NewsPage />} />
+                <Route path="/news/:slug" element={<NewsArticlePage />} />
+                <Route path="/news/category/:category" element={<NewsCategoryPage />} />
+                <Route path="/courses" element={<CoursesPage />} />
+                <Route path="/courses/:slug" element={<CoursePage />} />
+                <Route path="/courses/category/:category" element={<CourseCategoryPage />} />
                 
                 {/* Fallback route for unknown paths */}
                 <Route path="*" element={
